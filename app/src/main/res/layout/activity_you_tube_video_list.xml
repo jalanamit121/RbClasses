@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+    <RelativeLayout
+        android:id="@+id/today_classes"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"
+        android:background="@color/white">
+        <TextView
+            android:id="@+id/noclasses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Course In Your Bucket"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/proximanovaregular"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="@color/gradientViolet" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/all_course"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="65dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <include
+        layout="@layout/footer"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

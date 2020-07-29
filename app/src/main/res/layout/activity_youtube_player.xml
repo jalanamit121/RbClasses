@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:clickable="true"
+    tools:context=".YoutubePlayer">
+    <com.google.android.youtube.player.YouTubePlayerView
+        android:id="@+id/youtube_player"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_bar_home"
+        android:layout_marginTop="5dp">
+
+    </com.google.android.youtube.player.YouTubePlayerView>
+    <Button
+        android:id="@+id/btn_study_material"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Study Material"
+        android:layout_below="@id/youtube_player"
+        android:background="#909FF1"
+        android:layout_centerInParent="true"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:padding="16dp"
+        android:textColor="#ffffff"/>
+
+    <RelativeLayout
+        android:id="@+id/relative_layout_live"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btn_study_material"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:layout_above="@id/editTextMessageLive"
+            android:id="@+id/liveMessageRecyclerViewLive"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/textNoMessageLive"
+            android:textSize="18sp"
+            />
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:id="@+id/progressBarLive"
+
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:hint="Enter your Message ..."
+            android:textColorHint="#000"
+            android:textColor="#000"
+            android:layout_marginEnd="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="55dp"
+            android:id="@+id/editTextMessageLive"
+            />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="55dp"
+            android:layout_marginEnd="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_send_black_24dp"
+            android:id="@+id/sendMessageLive"
+            />
+    </RelativeLayout>
+
+
+
+
+
+    <include
+        layout="@layout/footer"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="50dp" />
+
+</RelativeLayout>

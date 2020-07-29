@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "107246277834",
+    "firebase_url": "https://rbclasses-38b47.firebaseio.com",
+    "project_id": "rbclasses-38b47",
+    "storage_bucket": "rbclasses-38b47.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107246277834:android:da27f1a69c5d370eb41033",
+        "android_client_info": {
+          "package_name": "com.winbee.rbclasses"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "107246277834-up7dvqoq34cu5uutqs98mr4122kq8fua.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.winbee.rbclasses",
+            "certificate_hash": "b3e15f9d1fd46c1a761a965e43ee6762aee521b8"
+          }
+        },
+        {
+          "client_id": "107246277834-ln51jkrg92nrch2l6bg4tujp7nn7anvv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAo9HsUuZnToVzlZUGoAqRXanogEQCyXg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "107246277834-ln51jkrg92nrch2l6bg4tujp7nn7anvv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DailyQuizActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+
+            <RelativeLayout
+                android:id="@+id/layout_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bottom_layout">
+
+                <TextView
+                    android:id="@+id/txt_ask"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="What would you like to ask?"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="5dp"/>
+
+                <LinearLayout
+                    android:id="@+id/edit_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bottom_layout"
+                    android:gravity="center"
+                    android:layout_below="@id/txt_ask"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp">
+
+                    <EditText
+                        android:id="@+id/editTextTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bottom_layout"
+                        android:fontFamily="@font/proximanovaregular"
+                        android:hint="Enter Your Post Title"
+                        android:textColor="@color/edit_text"
+                        android:textColorHint="@color/edit_text"
+                        android:inputType="text"
+                        android:padding="18dp"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/edit_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bottom_layout"
+                    android:gravity="center"
+                    android:layout_below="@id/edit_title"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp">
+
+                    <EditText
+                        android:id="@+id/editTextQuestion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bottom_layout"
+                        android:fontFamily="@font/proximanovaregular"
+                        android:hint="Enter Your Query Here"
+                        android:textColor="@color/edit_text"
+                        android:textColorHint="@color/edit_text"
+                        android:inputType="text"
+                        android:padding="18dp"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_option"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Options Here:"
+                    android:textStyle="bold"
+                    android:layout_below="@id/edit_question"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="5dp"/>
+                <LinearLayout
+                    android:id="@+id/edit_option1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bottom_layout"
+                    android:gravity="center"
+                    android:layout_below="@id/txt_option"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="5dp"
+                        android:src="@drawable/ic_looks_one_black_24dp"/>
+
+                    <EditText
+                        android:id="@+id/editTextOtion1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bottom_layout"
+                        android:fontFamily="@font/proximanovaregular"
+                        android:hint="Option A"
+                        android:textColor="@color/edit_text"
+                        android:textColorHint="@color/edit_text"
+                        android:inputType="text"
+                        android:padding="18dp"
+                        android:layout_marginStart="5dp"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/edit_option2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bottom_layout"
+                    android:gravity="center"
+                    android:layout_below="@id/edit_option1"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="5dp"
+                        android:src="@drawable/ic_looks_two_black_24dp"/>
+
+                    <EditText
+                        android:id="@+id/editTextOtion2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bottom_layout"
+                        android:fontFamily="@font/proximanovaregular"
+                        android:hint="Option B"
+                        android:textColor="@color/edit_text"
+                        android:textColorHint="@color/edit_text"
+                        android:inputType="text"
+                        android:padding="18dp"
+                        android:layout_marginStart="5dp"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/edit_option3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bottom_layout"
+                    android:gravity="center"
+                    android:layout_below="@id/edit_option2"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="5dp"
+                        android:src="@drawable/ic_looks_3_black_24dp"/>
+
+                    <EditText
+                        android:id="@+id/editTextOtion3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bottom_layout"
+                        android:fontFamily="@font/proximanovaregular"
+                        android:hint="Option C"
+                        android:textColor="@color/edit_text"
+                        android:textColorHint="@color/edit_text"
+                        android:inputType="text"
+                        android:padding="18dp"
+                        android:layout_marginStart="5dp"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/edit_option4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bottom_layout"
+                    android:gravity="center"
+                    android:layout_below="@id/edit_option3"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_looks_4_black_24dp"/>
+
+                    <EditText
+                        android:id="@+id/editTextOtion4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bottom_layout"
+                        android:fontFamily="@font/proximanovaregular"
+                        android:hint="Option D"
+                        android:padding="18dp"
+                        android:textColor="@color/edit_text"
+                        android:textColorHint="@color/edit_text"
+                        android:inputType="text"
+                        android:layout_marginStart="5dp"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_horizontal"
+                    android:layout_below="@id/edit_option4"
+                    android:textSize="18dp"
+                    android:text="Know Correct Answer" />
+
+
+
+                <!--   Default RadioButtons  -->
+                <LinearLayout
+                    android:id="@+id/know_solution"
+                    android:weightSum="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:visibility="visible"
+                    android:layout_below="@id/textView1"
+                    android:padding="15dp">
+
+
+
+                    <RelativeLayout
+                        android:id="@+id/radioButtonYes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        >
+
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="YES"
+                            android:textSize="22sp"
+                            android:textColor="@android:color/black"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+
+
+
+                            />
+
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/radioButtonNo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        >
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="NO"
+                            android:textSize="22sp"
+                            android:textColor="@android:color/black"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+
+
+
+                            />
+
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/edit_solution"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bottom_layout"
+                    android:gravity="center"
+                    android:layout_below="@id/know_solution"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="10dp">
+
+                    <EditText
+                        android:id="@+id/editTextSolution"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bottom_layout"
+                        android:fontFamily="@font/proximanovaregular"
+                        android:hint="Enter Answer"
+                        android:padding="18dp"
+                        android:textColor="@color/edit_text"
+                        android:textColorHint="@color/edit_text"
+                        android:inputType="text"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+                <Button
+                    android:id="@+id/buttonPostMcq"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@drawable/mcq_button"
+                    android:fontFamily="@font/proximanovaregular"
+                    android:padding="16dp"
+                    android:visibility="gone"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_below="@id/edit_solution"
+                    android:text="POST MCQ"
+                    android:textColor="#699BF0" />
+                <Button
+                    android:id="@+id/buttonPostMcq1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@drawable/mcq_button"
+                    android:fontFamily="@font/proximanovaregular"
+                    android:padding="16dp"
+                    android:visibility="gone"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_below="@id/edit_solution"
+                    android:text="POST MCQ 1"
+                    android:textColor="#699BF0" />
+            </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/gec_asked_question_recycle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="105dp"
+                android:layout_below="@id/layout_question"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

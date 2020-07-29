@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NotificationActivity">
+    <RelativeLayout
+        android:id="@+id/today_classes"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/noclasses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Notification Today"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/proximanovaregular"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="@color/gradientViolet" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sek_home_recycle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="5dp"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+</RelativeLayout>

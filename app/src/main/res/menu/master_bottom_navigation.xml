@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigationHome"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+    <item
+        android:id="@+id/navigationLive"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Live Classes" />
+
+    <item
+        android:id="@+id/navigationTest"
+        android:icon="@drawable/ic_effort"
+        android:title="Test Series" />
+
+    <item
+        android:id="@+id/navigationCurrent"
+        android:icon="@drawable/ic_baseline_notifications_24"
+        android:title="Current Affairs" />
+    <item
+        android:id="@+id/navigationMyProfile"
+        android:icon="@drawable/ic_user"
+        android:title="Profile" />
+
+
+
+
+<!--    <item-->
+<!--        android:id="@+id/navigationMenu"-->
+<!--        android:icon="@android:drawable/ic_menu_sort_by_size"-->
+<!--        android:title="Menu" />-->
+
+
+
+
+
+</menu>

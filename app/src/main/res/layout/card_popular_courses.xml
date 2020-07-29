@@ -1,0 +1,112 @@
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="@dimen/card_itemcourse_elevation"
+    app:cardBackgroundColor="#fff"
+    android:id="@+id/course_view"
+    android:elevation="2dp"
+    android:layout_marginTop="7dp">
+
+<!--    app:cardElevation="10dp"-->
+
+    <RelativeLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:visibility="visible"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/course_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/android_developer" />
+        <TextView
+            android:id="@+id/txt_course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SSC"
+            android:textColor="#0A2773"
+            android:layout_toRightOf="@id/course_image"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="10dp"/>
+        <ImageView
+            android:id="@+id/img_rupee"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:visibility="visible"
+            android:src="@drawable/ic_rupee"
+            android:layout_toLeftOf="@id/txt_discount"
+            android:layout_below="@id/course_image"/>
+        <TextView
+            android:id="@+id/txt_discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text=""
+            android:visibility="visible"
+            android:layout_below="@id/course_image"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/img_rupee1"
+            android:textColor="#A59D9D"
+            android:textSize="16dp" />
+        <ImageView
+            android:id="@+id/img_rupee1"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="10dp"
+            android:visibility="visible"
+            android:src="@drawable/ic_rupee"
+            android:layout_toLeftOf="@id/txt_actual_price"
+            android:layout_below="@id/course_image"/>
+
+        <TextView
+            android:id="@+id/txt_actual_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text=""
+            android:visibility="visible"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/course_image"
+            android:layout_marginRight="10dp"
+            android:textColor="#111"
+            android:textSize="16dp" />
+        <ImageView
+            android:id="@+id/img_lock"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:visibility="gone"
+            android:layout_below="@id/course_image"
+            android:src="@drawable/ic_money"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/today_classes"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"
+        android:background="@color/white">
+        <TextView
+            android:id="@+id/noclasses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Course In Your Bucket"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/proximanovaregular"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="@color/gradientViolet" />
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

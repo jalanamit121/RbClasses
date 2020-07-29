@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context=".ResetPassWordActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/backbtn"-->
+        <!--            android:layout_width="35dp"-->
+        <!--            android:layout_height="35dp"-->
+        <!--            android:layout_alignParentStart="true"-->
+        <!--            android:layout_alignParentTop="true"-->
+        <!--            android:layout_marginLeft="10dp"-->
+        <!--            android:layout_marginTop="20dp"-->
+        <!--            android:padding="4dp"-->
+        <!--            android:src="@drawable/backbtn" />-->
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingTop="66dp"
+            android:paddingRight="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/proximanovaregular"
+                    android:gravity="center"
+                    android:text="Reset Password"
+                    android:textColor="#3c4b5d"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/proximanovaregular"
+                    android:gravity="center"
+                    android:text="Enter your Reset details to access your account"
+                    android:textColor="@color/darkgrey"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circularbordersolidtop"
+                android:gravity="center"
+                android:padding="18dp">
+
+                <EditText
+                    android:id="@+id/editTextResetOtp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:textColor="@color/edit_text"
+                    android:fontFamily="@font/proximanovaregular"
+                    android:hint="Enter OTP"
+                    android:textColorHint="@color/edit_text"
+                    android:inputType="text"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circularbluebordersolidmiddle"
+                android:orientation="horizontal"
+                android:padding="18dp">
+
+                <EditText
+                    android:id="@+id/editTextNewPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:fontFamily="@font/proximanovaregular"
+                    android:hint="New Password"
+                    android:inputType="textPassword"
+                    android:textColor="@color/edit_text"
+                    android:textColorHint="@color/edit_text"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circularbluebordersolidmiddle"
+                android:orientation="horizontal"
+                android:padding="18dp">
+
+                <EditText
+                    android:id="@+id/editTextRePassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:fontFamily="@font/proximanovaregular"
+                    android:hint="Re Enter Password"
+                    android:textColor="@color/edit_text"
+                    android:inputType="textPassword"
+                    android:textColorHint="@color/edit_text"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text=""/>
+            <TextView
+                android:id="@+id/text_otp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text=""/>
+
+
+
+            <Button
+                android:id="@+id/buttonReset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/circularbluebordersolid"
+                android:fontFamily="@font/proximanovaregular"
+                android:padding="16dp"
+                android:text="Continue"
+                android:textColor="@color/white" />
+
+
+
+        </LinearLayout>
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+</ScrollView>

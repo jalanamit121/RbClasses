@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/parent.contentLayout"
+    tools:context=".YouTubeVideoList">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/title_bar_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:background="@drawable/header_layout"
+                        android:layout_alignParentTop="true">
+                        <ImageView
+                            android:id="@+id/WebsiteHome"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="20dp"
+                            android:src="@drawable/ic_baseline_menu_24"
+                            />
+
+                        <ImageView
+                            android:id="@+id/sideBarHome"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_toRightOf="@id/WebsiteHome"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:src="@drawable/rblogo" />
+
+
+                        <ImageView
+                            android:id="@+id/img_share"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:src="@drawable/ic_share_black_24dp" />
+
+                        <TextView
+                            android:id="@+id/titleHome"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            style="@style/viewParent.headerText"
+                            android:text="RB Classes"
+                            android:textColor="@android:color/black"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/today_classes"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone"
+                        android:background="@color/white">
+                        <TextView
+                            android:id="@+id/noclasses"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="No Class Today"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/proximanovaregular"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/gradientViolet" />
+                    </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/all_liveClasses"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="65dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="4dp"
+                        android:nestedScrollingEnabled="false"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <include
+        layout="@layout/footer"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="match_parent" />
+
+
+</RelativeLayout>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.winbee.rbclasses">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/rblogo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        android:windowSoftInputMode="adjustPan">
+        <activity android:name=".LiveDataPurchasedActivity"></activity>
+        <activity android:name=".PermiumSellActivity" />
+        <activity android:name=".LiveDataActivity" />
+        <activity android:name=".CurrentAffairsActivity" />
+        <activity android:name=".AboutUsActivity" />
+        <activity android:name=".McqSolutionActivity" />
+        <activity android:name=".DailyQuizActivity" />
+        <activity
+            android:name=".NewDoubtActivity"
+            android:label="Doubt"
+            android:parentActivityName=".DoubtActivity" />
+        <activity
+            android:name=".DoubtSolutionActivity"
+            android:label="Doubt"
+            android:parentActivityName=".DoubtActivity" />
+        <activity
+            android:name=".DoubtActivity"
+            android:label="Doubt"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".NotificationActivity"
+            android:label="Notification"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RegisterActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".OtpVerficationActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".IntroSliderActivity" />
+        <activity android:name=".ForgetPasswordActivity" />
+        <activity android:name=".ResetPassWordActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".PdfWebActivity"/>
+        <activity
+            android:name=".StudyMaterial"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".YoutubePlayer"
+            android:label="RB Classes"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".YouTubeVideoList" />
+        <activity
+            android:name=".CourseStaggedActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".DashboardCourseActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Profile"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SplashPageActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_live_Bc4ITN4OG0PCjn" />
+    </application>
+
+</manifest>
