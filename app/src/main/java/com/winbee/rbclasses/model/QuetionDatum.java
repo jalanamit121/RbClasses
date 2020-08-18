@@ -46,6 +46,9 @@ public class QuetionDatum implements Serializable {
     @SerializedName("Is_Attempted")
     @Expose
     private Boolean is_Attempted;
+    @SerializedName("AttemptedSolution")
+    @Expose
+    private String attemptedSolution;
 
     public String getDATE() {
         return dATE;
@@ -149,6 +152,14 @@ public class QuetionDatum implements Serializable {
 
     public void setIs_Attempted(Boolean is_Attempted) {
         this.is_Attempted = is_Attempted;
+    }
+
+    public String getAttemptedSolution() {
+        return attemptedSolution;
+    }
+
+    public void setAttemptedSolution(String attemptedSolution) {
+        this.attemptedSolution = attemptedSolution;
     }
 
 }

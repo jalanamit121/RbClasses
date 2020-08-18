@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class AskDoubtQuestion implements Serializable {
-
     @SerializedName("file_name")
     @Expose
     private String file_name;
@@ -25,6 +24,12 @@ public class AskDoubtQuestion implements Serializable {
     @SerializedName("file_create_date")
     @Expose
     private String file_create_date;
+    @SerializedName("file_duration_time")
+    @Expose
+    private String file_duration_time;
+    @SerializedName("file_description")
+    @Expose
+    private String file_description;
     @SerializedName("DocumentId")
     @Expose
     private String documentId;
@@ -75,6 +80,22 @@ public class AskDoubtQuestion implements Serializable {
 
     public void setFile_create_date(String file_create_date) {
         this.file_create_date = file_create_date;
+    }
+
+    public String getFile_duration_time() {
+        return file_duration_time;
+    }
+
+    public void setFile_duration_time(String file_duration_time) {
+        this.file_duration_time = file_duration_time;
+    }
+
+    public String getFile_description() {
+        return file_description;
+    }
+
+    public void setFile_description(String file_description) {
+        this.file_description = file_description;
     }
 
     public String getDocumentId() {

@@ -1,12 +1,15 @@
 package com.winbee.rbclasses;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -26,6 +29,9 @@ public class NewDoubtActivity extends AppCompatActivity {
     private String CurrentUserName;
     private ProgressBarUtil progressBarUtil;
     Button submit;
+    private ImageView WebsiteHome,img_share;
+    LinearLayout layout_user,layout_test_series,layout_home,layout_doubt,layout_notification;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

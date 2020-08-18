@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.winbee.rbclasses.DoubtSolutionActivity;
 import com.winbee.rbclasses.LocalData;
 import com.winbee.rbclasses.R;
@@ -39,21 +38,20 @@ public class AskDoubtAdapter extends RecyclerView.Adapter<AskDoubtAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull AskDoubtAdapter.ViewHolder holder, final int position) {
         //setting data toAd apter List
-        holder.text_question.setText(list.get(position).getFile_name_to_show());
-        holder.text_like.setText(list.get(position).getFile_likes());
-        holder.text_comments.setText(list.get(position).getFile_comments()+" Comments");
-        holder.text_user.setText(list.get(position).getFile_create_name());
-//        String test = list.get(position).getFile_create_name();
-//        //char first = test.charAt(0);
-//        holder.question_image.setText(list.get(position).getFile_create_name().charAt(0));
-
+        holder.txt_ask_title.setText(list.get(position).getFile_name_to_show());
+        holder.txt_ask_question.setText(list.get(position).getFile_description());
+        holder.txt_user.setText(list.get(position).getFile_create_name());
+        holder.txt_time.setText(list.get(position).getFile_duration_time());
+        holder.txt_commments.setText(list.get(position).getFile_comments());
         holder.branch_live.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LocalData.FileName=list.get(position).getFile_name();
-                LocalData.FileNameToShow=list.get(position).getFile_name_to_show();
-                LocalData.FileCreateName=list.get(position).getFile_create_name();
-                LocalData.FileDate=list.get(position).getFile_create_date();
+                LocalData.User=list.get(position).getFile_create_name();
+                LocalData.Title=list.get(position).getFile_name_to_show();
+                LocalData.Discription=list.get(position).getFile_description();
+                LocalData.Duration=list.get(position).getFile_duration_time();
+                LocalData.Commnts=list.get(position).getFile_comments();
                 Bundle bundle = new Bundle();
                 Intent intent = new Intent(context, DoubtSolutionActivity.class);
                 bundle.putSerializable("file_name",list.get(position));
@@ -72,14 +70,15 @@ public class AskDoubtAdapter extends RecyclerView.Adapter<AskDoubtAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView text_question,text_like,text_comments,text_user,question_image;
+        private TextView txt_ask_title,txt_ask_question,txt_time,txt_user,txt_commments;
         private RelativeLayout branch_live;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            text_question = itemView.findViewById(R.id.text_question);
-            text_like = itemView.findViewById(R.id.text_like);
-            text_comments = itemView.findViewById(R.id.text_comments);
-            text_user = itemView.findViewById(R.id.text_user);
+            txt_ask_title = itemView.findViewById(R.id.txt_ask_title);
+            txt_ask_question = itemView.findViewById(R.id.txt_ask_question);
+            txt_time = itemView.findViewById(R.id.txt_time);
+            txt_commments= itemView.findViewById(R.id.txt_commments);
+            txt_user = itemView.findViewById(R.id.txt_user);
             branch_live = itemView.findViewById(R.id.branch_live);
         }
     }

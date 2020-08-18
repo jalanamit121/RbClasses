@@ -9,31 +9,31 @@ import com.winbee.rbclasses.HomeFragment;
 import com.winbee.rbclasses.LiveFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
-//    String[] tabarray = new String[]{"Home","Live Classes"};
+  //    String[] tabarray = new String[]{"Home","Live Classes"};
 //    Integer tabnumber = 2;
-    int mNumOfTabs;
+  int mNumOfTabs;
 
-    public ViewPagerAdapter(FragmentManager fm, int NumOfTabs) {
-        super(fm);
-        this.mNumOfTabs=NumOfTabs;
+  public ViewPagerAdapter(FragmentManager fm, int NumOfTabs) {
+    super(fm);
+    this.mNumOfTabs=NumOfTabs;
+  }
+
+  @Override
+  public Fragment getItem(int position) {
+    switch (position) {
+      case 0:
+        HomeFragment one = new HomeFragment();
+        return one;
+      case 1:
+        CourseFragment two = new CourseFragment();
+        return two;
+
     }
+    return null;
+  }
 
-    @Override
-    public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                HomeFragment one = new HomeFragment();
-                return one;
-            case 1:
-                CourseFragment two = new CourseFragment();
-                return two;
-
-        }
-        return null;
-    }
-
-    @Override
-    public int getCount() {
-        return mNumOfTabs;
-    }
+  @Override
+  public int getCount() {
+    return mNumOfTabs;
+  }
 }

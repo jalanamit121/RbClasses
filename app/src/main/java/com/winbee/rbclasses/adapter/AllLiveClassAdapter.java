@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import com.winbee.rbclasses.LocalData;
 import com.winbee.rbclasses.R;
+import com.winbee.rbclasses.VimeoActivity;
+import com.winbee.rbclasses.YoutubeLibaray;
 import com.winbee.rbclasses.YoutubePlayer;
 import com.winbee.rbclasses.model.CourseContentModel;
 import com.winbee.rbclasses.model.LiveClass;
@@ -54,71 +56,85 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
         }
 
         holder.title.setText(list.get(position).getTopic());
+        Picasso.get().load(list.get(position).getThumbnail()).fit().into(holder.youtubeThubnail);
         holder.teacher.setText("By "+list.get(position).getFaculty());
-        if (list.get(position).getClassType().equals(2)) {
+        if (list.get(position).getClassType().equals(2)) { //classtype 2 means- recoded video
             holder.live_status.setVisibility(View.GONE);
-                if (list.get(position).getAccessType().equals(1)) {
+            if (list.get(position).getAccessType().equals(1) ) {//access type 1 means - recroded free video
+                if (list.get(position).getType().equalsIgnoreCase("Vimeo")){
                     holder.img_lock.setVisibility(View.GONE);
                     holder.img_Unlock.setVisibility(View.VISIBLE);
                     holder.card_view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
                             LocalData.LiveId = list.get(position).getURL();
                             LocalData.DocumentId = list.get(position).getDocumentId();
-                            Intent intent = new Intent(context, YoutubePlayer.class);
+                            Intent intent = new Intent(context, VimeoActivity.class);
                             context.startActivity(intent);
                         }
 
                     });
-                } else if (list.get(position).getAccessType().equals(2)) {
-                    holder.img_lock.setVisibility(View.VISIBLE);
-                    holder.card_view.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                            builder.setTitle("RB Classes");
-                            builder.setMessage("To View Please Purchased Course");
-                            builder.setCancelable(false);
-
-                            builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-
-                                    dialogInterface.cancel();
-
-                                }
-                            });
-
-                            builder.show();
-                        }
-                    });
-
-                }
-
-        }else if (list.get(position).getClassType().equals(1)){
-                if (list.get(position).getAccessType().equals(1)) {
+                }else if (list.get(position).getType().equalsIgnoreCase("YouTube")){
                     holder.img_lock.setVisibility(View.GONE);
                     holder.img_Unlock.setVisibility(View.VISIBLE);
                     holder.card_view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if (list.get(position).getClass_status_dec().equalsIgnoreCase("Live") ||
-                                    list.get(position).getClass_status_dec().equalsIgnoreCase("Completed")) {
-                                LocalData.LiveId = list.get(position).getURL();
-                                LocalData.DocumentId = list.get(position).getDocumentId();
-                                Intent intent = new Intent(context, YoutubePlayer.class);
-                                context.startActivity(intent);
-                            }else if (list.get(position).getClass_status_dec().equalsIgnoreCase("Not Started Yet")) {
-                                Toast.makeText(context, "Class Not Started", Toast.LENGTH_SHORT).show();
-                            }
+                            LocalData.LiveId = list.get(position).getURL();
+                            LocalData.DocumentId = list.get(position).getDocumentId();
+                            Intent intent = new Intent(context, YoutubeLibaray.class);
+                            context.startActivity(intent);
                         }
                     });
-                } else if (list.get(position).getAccessType().equals(2)) {
-                    holder.live_status.setVisibility(View.VISIBLE);
-                    holder.img_lock.setVisibility(View.VISIBLE);
-                    holder.img_Unlock.setVisibility(View.GONE);
                 }
+            } else if (list.get(position).getAccessType().equals(2)) { // access type 2 means- paid video
+                holder.img_lock.setVisibility(View.VISIBLE);
+                holder.card_view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("RB Classes");
+                        builder.setMessage("To View Please Purchased Course");
+                        builder.setCancelable(false);
+
+                        builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                dialogInterface.cancel();
+
+                            }
+                        });
+
+                        builder.show();
+                    }
+                });
+
+            }
+
+        }else if (list.get(position).getClassType().equals(1)){// class type 1 means-live class
+            if (list.get(position).getAccessType().equals(1)) { //access type 1 means- free live class
+                holder.img_lock.setVisibility(View.GONE);
+                holder.img_Unlock.setVisibility(View.VISIBLE);
+                holder.card_view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (list.get(position).getClass_status_dec().equalsIgnoreCase("Live") ||
+                                list.get(position).getClass_status_dec().equalsIgnoreCase("Completed")) {
+                            LocalData.LiveId = list.get(position).getURL();
+                            LocalData.DocumentId = list.get(position).getDocumentId();
+                            Intent intent = new Intent(context, YoutubeLibaray.class);
+                            context.startActivity(intent);
+                        }else if (list.get(position).getClass_status_dec().equalsIgnoreCase("Not Started Yet")) {
+                            Toast.makeText(context, "Class Not Started", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            } else if (list.get(position).getAccessType().equals(2)) {// access type 2 means- paid live class
+                holder.live_status.setVisibility(View.VISIBLE);
+                holder.img_lock.setVisibility(View.VISIBLE);
+                holder.img_Unlock.setVisibility(View.GONE);
+            }
 
         }
 

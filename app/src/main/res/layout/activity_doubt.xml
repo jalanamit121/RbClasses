@@ -1,166 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".DoubtActivity">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <RelativeLayout tools:context=".DoubtActivity" android:background="@color/white" android:layout_height="match_parent" android:layout_width="match_parent" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <RelativeLayout android:background="@color/white" android:layout_height="120dp" android:layout_width="match_parent" android:visibility="gone" android:layout_below="@id/title_bar_home" android:layout_marginBottom="10dp" android:id="@+id/today_classes">
 
-            <LinearLayout
-                android:id="@+id/layout_new_doubt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="24dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/bottom_layout"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:paddingRight="24dp">
+    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/noclasses" android:textColor="@color/gradientViolet" android:textStyle="bold" android:textSize="16dp" android:fontFamily="@font/proximanovaregular" android:layout_centerInParent="true" android:text="No Doubt"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/proximanovaregular"
-                        android:gravity="center"
-                        android:layout_marginTop="5dp"
-                        android:text="Post Your Doubt"
-                        android:textColor="#3c4b5d"
-                        android:textSize="22sp" />
+</RelativeLayout>
 
 
-                </LinearLayout>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout android:layout_height="match_parent" android:layout_width="match_parent" android:layout_marginBottom="110dp" android:id="@+id/doubt_activity">
+
+    <androidx.recyclerview.widget.RecyclerView android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_marginBottom="105dp" android:id="@+id/gec_asked_question_recycle" app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" android:nestedScrollingEnabled="false"/>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
+    <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_above="@id/footer">
 
-                    <EditText
-                        android:id="@+id/editTextQuestionTitleFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/proximanovaregular"
-                        android:hint="Question Title"
-                        android:padding="18dp"
-                        android:textColor="@color/edit_text"
-                        android:background="@drawable/bottom_layout"
-                        android:textColorHint="@color/edit_text"
-                        android:inputType="text|textMultiLine"
-                        android:maxLines="10"
-                        android:textSize="14sp" />
+    <Button android:background="@color/dashboard_subtitle" android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/btn_asked" android:textColor="@color/white" android:text="Ask Doubt" android:layout_alignParentBottom="true"/>
 
-                </LinearLayout>
+</LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="90dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+    <include android:layout_height="match_parent" android:layout_width="match_parent" layout="@layout/footer"/>
 
-                    <EditText
-                        android:id="@+id/editTextQuestionDescriptionFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bottom_layout"
-                        android:fontFamily="@font/proximanovaregular"
-                        android:hint="Description"
-                        android:inputType="text|textMultiLine"
-                        android:maxLines="10"
-                        android:padding="18dp"
-                        android:textColor="@color/edit_text"
-                        android:textColorHint="@color/edit_text"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/circularbluebordersolidmiddle"
-                    android:orientation="horizontal"
-                    android:visibility="gone"
-                    android:padding="18dp">
-
-                    <EditText
-                        android:id="@+id/editTextUserid"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:fontFamily="@font/proximanovaregular"
-                        android:hint="Userid"
-                        android:inputType="text"
-                        android:textColorHint="@color/edit_text"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/circularbordersolidbottom"
-                    android:orientation="horizontal"
-                    android:visibility="gone"
-                    android:padding="18dp">
-
-                    <EditText
-                        android:id="@+id/editTextDocumentId"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:fontFamily="@font/proximanovaregular"
-                        android:hint="DocumentId"
-                        android:inputType="text"
-                        android:textColorHint="@color/edit_text"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-
-                <Button
-                    android:id="@+id/buttonSubmit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="14dp"
-                    android:background="@drawable/mcq_button"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:text="Post Doubt"
-                    android:padding="10dp"
-                    android:layout_gravity="center"
-                    android:textColor="#699BF0" />
-
-            </LinearLayout>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/gec_asked_question_recycle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/layout_new_doubt"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="60dp"
-                android:nestedScrollingEnabled="false"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-        </RelativeLayout>
-    </ScrollView>
-    <include
-        layout="@layout/footer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 </RelativeLayout>

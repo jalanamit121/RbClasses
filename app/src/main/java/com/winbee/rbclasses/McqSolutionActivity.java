@@ -1,11 +1,13 @@
 package com.winbee.rbclasses;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.WebApi.ClientApi;
@@ -23,6 +25,8 @@ public class McqSolutionActivity extends AppCompatActivity {
     private McqSolutionAdapter adapter;
     private ArrayList<McqSolutionModel> list;
     private RecyclerView askedSolution;
+    String UserId,UserName;
+    ImageView WebsiteHome,img_share;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +34,14 @@ public class McqSolutionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mcq_solution);
         progressBarUtil   =  new ProgressBarUtil(this);
         askedSolution = findViewById(R.id.gec_asked_solution_recycle);
+        UserId=SharedPrefManager.getInstance(this).refCode().getUserId();
+        UserName=SharedPrefManager.getInstance(this).refCode().getName();
         callAskedSolutionApiService();
     }
     private void callAskedSolutionApiService(){
         progressBarUtil.showProgress();
         ClientApi apiCall = ApiClient.getClient().create(ClientApi.class);
-        Call<ArrayList<McqSolutionModel>> call = apiCall.getMcqQuestionSolution(LocalData.QuestionID);
+        Call<ArrayList<McqSolutionModel>> call = apiCall.getMcqQuestionSolution(LocalData.QuestionID,UserId,UserName);
         // Call<ArrayList<UrlQuestion>> call = mService.getQuestion(urlName.getDocumentId());
 
         call.enqueue(new Callback<ArrayList<McqSolutionModel>>() {

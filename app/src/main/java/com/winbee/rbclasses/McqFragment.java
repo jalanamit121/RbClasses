@@ -1,21 +1,26 @@
 package com.winbee.rbclasses;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
+import com.winbee.rbclasses.Utils.SpinnerAdapter;
 import com.winbee.rbclasses.WebApi.ClientApi;
 import com.winbee.rbclasses.adapter.McqAskedQuestion;
 import com.winbee.rbclasses.model.McqAskedQuestionModel;
@@ -31,7 +36,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DailyQuizActivity extends AppCompatActivity {
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class McqFragment extends Fragment implements McqAskedQuestion.OnSolutionClicked {
     LinearLayout edit_solution;
     EditText editTextTitle,editTextQuestion,editTextOtion1,editTextOtion2,editTextOtion3,editTextOtion4,editTextSolution;
     Button buttonPostMcq,buttonPostMcq1;
@@ -41,26 +50,55 @@ public class DailyQuizActivity extends AppCompatActivity {
     private RecyclerView mcq_recycycler;
     private List<QuetionDatum> list;
     private McqAskedQuestion adapter;
+    private Spinner select_option;
+    SwipeRefreshLayout fragment_mcq;
+
+
+
+    public McqFragment() {
+        // Required empty public constructor
+    }
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_daily_quiz);
-        progressBarUtil = new ProgressBarUtil(this);
-        mcq_recycycler = findViewById(R.id.gec_asked_question_recycle);
-        UserID = SharedPrefManager.getInstance(this).refCode().getUserId();
-        editTextTitle = findViewById(R.id.editTextTitle);
-        editTextQuestion = findViewById(R.id.editTextQuestion);
-        editTextOtion1 =findViewById(R.id.editTextOtion1);
-        editTextOtion2 = findViewById(R.id.editTextOtion2);
-        editTextOtion3 = findViewById(R.id.editTextOtion3);
-        editTextOtion4 = findViewById(R.id.editTextOtion4);
-        editTextSolution =findViewById(R.id.editTextSolution);
-        edit_solution = findViewById(R.id.edit_solution);
-        radioButtonYes =findViewById(R.id.radioButtonYes);
-        radioButtonNo = findViewById(R.id.radioButtonNo);
-        buttonPostMcq=findViewById(R.id.buttonPostMcq);
-        buttonPostMcq1=findViewById(R.id.buttonPostMcq1);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+
+        return inflater.inflate(R.layout.fragment_mcq, container, false);
+    }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        progressBarUtil = new ProgressBarUtil(getContext());
+        mcq_recycycler = getActivity().findViewById(R.id.gec_asked_question_recycle);
+        UserID = SharedPrefManager.getInstance(getActivity()).refCode().getUserId();
+        editTextTitle = getActivity().findViewById(R.id.editTextTitle);
+        editTextQuestion = getActivity().findViewById(R.id.editTextQuestion);
+        editTextOtion1 = getActivity().findViewById(R.id.editTextOtion1);
+        editTextOtion2 = getActivity().findViewById(R.id.editTextOtion2);
+        editTextOtion3 = getActivity().findViewById(R.id.editTextOtion3);
+        editTextOtion4 = getActivity().findViewById(R.id.editTextOtion4);
+        editTextSolution = getActivity().findViewById(R.id.editTextSolution);
+        edit_solution = getActivity().findViewById(R.id.edit_solution);
+        select_option = getActivity().findViewById(R.id.select_option);
+        radioButtonYes = getActivity().findViewById(R.id.radioButtonYes);
+        radioButtonNo = getActivity().findViewById(R.id.radioButtonNo);
+        buttonPostMcq=getActivity().findViewById(R.id.buttonPostMcq);
+        buttonPostMcq1=getActivity().findViewById(R.id.buttonPostMcq1);
+        fragment_mcq=getActivity().findViewById(R.id.fragment_mcq);
+        fragment_mcq.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                callApiService();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        fragment_mcq.setRefreshing(false);
+                    }
+                },4000);
+            }
+        });
         radioButtonYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +116,7 @@ public class DailyQuizActivity extends AppCompatActivity {
         radioButtonNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                edit_solution.setVisibility(View.GONE);
                 buttonPostMcq1.setVisibility(View.VISIBLE);
                 buttonPostMcq1.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -89,8 +128,15 @@ public class DailyQuizActivity extends AppCompatActivity {
             }
         });
         callApiService();
+        String[] titleArray = getResources ( ).getStringArray ( R.array.option );
+        SpinnerAdapter adapter = new SpinnerAdapter( getActivity() , titleArray );
+        //adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        select_option.setAdapter ( adapter );
+        String valToSet = select_option.getSelectedItem().toString();
+        System.out.println("Suree: "+valToSet);
 
     }
+
     private void userValidation() {
         final String title = editTextTitle.getText().toString().trim();
         final String question = editTextQuestion.getText().toString().trim();
@@ -98,7 +144,7 @@ public class DailyQuizActivity extends AppCompatActivity {
         final String option2 = editTextOtion2.getText().toString().trim();
         final String option3 = editTextOtion3.getText().toString().trim();
         final String option4 = editTextOtion4.getText().toString().trim();
-        final String solution = editTextSolution.getText().toString().trim();
+        final Object solution = select_option.getSelectedItem();
 
         if (TextUtils.isEmpty(title)) {
             editTextTitle.setError("Please enter title");
@@ -133,11 +179,6 @@ public class DailyQuizActivity extends AppCompatActivity {
             editTextOtion4.requestFocus();
             return;
         }
-        if (TextUtils.isEmpty(solution)) {
-            editTextSolution.setError("Enter Solution");
-            editTextSolution.requestFocus();
-            return;
-        }
 
 
         McqQuestionModel mcqQuestionModel;
@@ -148,7 +189,7 @@ public class DailyQuizActivity extends AppCompatActivity {
         mcqQuestionModel.setOpt2(option2);
         mcqQuestionModel.setOpt3(option3);
         mcqQuestionModel.setOpt4(option4);
-        mcqQuestionModel.setSolution(solution);
+        mcqQuestionModel.setSolution(String.valueOf(solution));
 
 
         CallSignupApi(mcqQuestionModel);
@@ -164,8 +205,17 @@ public class DailyQuizActivity extends AppCompatActivity {
                 int statusCode = response.code();
                 if (statusCode == 200 && response.body().getResponse() == true) {
                     progressBarUtil.hideProgress();
-                    Intent intent = new Intent(DailyQuizActivity.this, DailyQuizActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(String.valueOf(getActivity()));
+//                    startActivity(intent);
+                    McqFragment mcqFragment = new McqFragment();
+                    if (getActivity()!=null){
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.containerDisscussion,mcqFragment,"McqFragment");
+                        ft.commit();}else{
+                        Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();}
+                    Toast.makeText(getContext(), "Query Submitted ", Toast.LENGTH_SHORT).show();
+                    //callApiService();
                 } else {
                     progressBarUtil.hideProgress();
                 }
@@ -175,7 +225,7 @@ public class DailyQuizActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<McqQuestionModel> call, Throwable t) {
                 progressBarUtil.hideProgress();
-                Toast.makeText(DailyQuizActivity.this,"Failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Failed", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -240,7 +290,7 @@ public class DailyQuizActivity extends AppCompatActivity {
         progressBarUtil.showProgress();
         ClientApi mService = ApiClient.getClient().create(ClientApi.class);
         Call<McqQuestionModel> call = mService.mcqQuestionNo(UserID, mcqQuestionModel1.getQuestionTitle(), mcqQuestionModel1.getQuestion(), mcqQuestionModel1.getOpt1(),
-                mcqQuestionModel1.getOpt2(), mcqQuestionModel1.getOpt3(), mcqQuestionModel1.getOpt4(), 1, 0, "NA");
+                mcqQuestionModel1.getOpt2(), mcqQuestionModel1.getOpt3(), mcqQuestionModel1.getOpt4(), 1, 0, "N.A.");
         call.enqueue(new Callback<McqQuestionModel>() {
             @Override
             public void onResponse(Call<McqQuestionModel> call, Response<McqQuestionModel> response) {
@@ -248,8 +298,17 @@ public class DailyQuizActivity extends AppCompatActivity {
                 //List<RefUser> list ;
                 if (statusCode == 200 && response.body().getResponse() == true) {
                     progressBarUtil.hideProgress();
-                    Intent intent = new Intent(DailyQuizActivity.this, DailyQuizActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(String.valueOf(getActivity()));
+//                    startActivity(intent);
+                    McqFragment mcqFragment = new McqFragment();
+                    if (getActivity()!=null){
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.containerDisscussion,mcqFragment,"McqFragment");
+                        ft.commit();}else{
+                        Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();}
+                    Toast.makeText(getContext(), "Query Submitted", Toast.LENGTH_SHORT).show();
+                    callApiService();
                 } else {
                     progressBarUtil.hideProgress();
                     // Toast.makeText(getActivity(), "User Already exist", Toast.LENGTH_LONG).show();
@@ -260,7 +319,7 @@ public class DailyQuizActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<McqQuestionModel> call, Throwable t) {
                 progressBarUtil.hideProgress();
-                Toast.makeText(DailyQuizActivity.this, "Failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Failed", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -280,7 +339,7 @@ public class DailyQuizActivity extends AppCompatActivity {
                         //courses.setVisibility(View.VISIBLE);
                         list = new ArrayList<>(Arrays.asList(Objects.requireNonNull(purchasedMainModel).getData()));
                         System.out.println("Suree body: " + response.body());
-                        adapter = new McqAskedQuestion(DailyQuizActivity.this, list);
+                        adapter = new McqAskedQuestion(getActivity(), list,McqFragment.this);
                         mcq_recycycler.setAdapter(adapter);
                         progressBarUtil.hideProgress();
                     } else {
@@ -289,13 +348,13 @@ public class DailyQuizActivity extends AppCompatActivity {
                 }
                 else{
                     System.out.println("Suree: response code" + response.message());
-                    Toast.makeText(DailyQuizActivity.this, "NetWork Issue,Please Check Network Connection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "NetWork Issue,Please Check Network Connection", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<McqAskedQuestionModel> call, Throwable t) {
-                Toast.makeText(DailyQuizActivity.this,"Failed" + t.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"Failed" + t.getMessage(),Toast.LENGTH_SHORT).show();
 
                 System.out.println("Suree: Error "+t.getMessage());
             }
@@ -303,25 +362,14 @@ public class DailyQuizActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-
-        if (id == R.id.logout) {
-            logout();
-        }
-        return super.onOptionsItemSelected(item);
-
-    }
-    private void logout() {
-        SharedPrefManager.getInstance(this).logout();
-        startActivity(new Intent(this, LoginActivity.class));
-        Objects.requireNonNull(this).finish();
+    public void onsolutionclicked() {
+        McqFragment mcqFragment = new McqFragment();
+        if (getActivity()!=null){
+            FragmentTransaction ft = getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.containerDisscussion,mcqFragment,"McqFragment");
+            ft.commit();}else{
+            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();}
     }
 }
+

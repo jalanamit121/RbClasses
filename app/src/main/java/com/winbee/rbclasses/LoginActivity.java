@@ -1,7 +1,12 @@
 package com.winbee.rbclasses;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -10,7 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.WebApi.ClientApi;
@@ -19,6 +26,8 @@ import com.winbee.rbclasses.model.RefCode;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.balsikandar.crashreporter.CrashReporter.getContext;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -29,11 +38,16 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBarUtil progressBarUtil;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     LinearLayout forgetPassword;
+    private static final int REQUEST_CODE = 101;
+    String IMEINumber;
+    String android_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        android_id = Settings.Secure.getString(getContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
             startActivity(new Intent(this, MainActivity.class));
@@ -60,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.buttonLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // FireBaseValidation();
+                // FireBaseValidation();
                 userValidation();
 
             }
@@ -74,6 +88,13 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
             }
         });
+//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+//        if (ActivityCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
+//            return;
+//        }
+//        IMEINumber = telephonyManager.getDeviceId();
+
     }
 
     private void userValidation() {
@@ -105,12 +126,13 @@ public class LoginActivity extends AppCompatActivity {
 
         progressBarUtil.showProgress();
         ClientApi mService = ApiClient.getClient().create(ClientApi.class);
-        Call<RefCode> call = mService.refCodeSignIn(1, refCode.getUsername(), refCode.getPassword(), refCode.getRef_code());
+        Call<RefCode> call = mService.refCodeSignIn(1, refCode.getUsername(), refCode.getPassword(), refCode.getRef_code(),android_id);
+        Log.i("tag", "callRefCodeSignInApi: "+android_id);
         call.enqueue(new Callback<RefCode>() {
             @Override
             public void onResponse(Call<RefCode> call, Response<RefCode> response) {
                 int statusCode = response.code();
-                if (statusCode == 200 && response.body().getOrg_Code() != null) {
+                if (statusCode == 200 && response.body().getLoginStatus()!=false) {
                     progressBarUtil.hideProgress();
                     Constants.CurrentUser = response.body();
                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(Constants.CurrentUser);
@@ -125,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                 } else {
                     progressBarUtil.hideProgress();
-                    Toast.makeText(LoginActivity.this, "Invalid UserName Password ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, response.body().getMessageFailure(), Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -139,7 +161,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+//        switch (requestCode) {
+//            case REQUEST_CODE: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    //Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    //Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
+//    }
 
     @Override
     public void onBackPressed() {

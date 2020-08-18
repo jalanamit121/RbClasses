@@ -3,8 +3,6 @@ package com.winbee.rbclasses.WebApi;
 
 
 import com.winbee.rbclasses.model.AskDoubtQuestion;
-import com.winbee.rbclasses.model.BannerModel;
-import com.winbee.rbclasses.model.BranchName;
 import com.winbee.rbclasses.model.CourseContentModel;
 import com.winbee.rbclasses.model.CourseContentPdfModel;
 import com.winbee.rbclasses.model.CourseModel;
@@ -42,7 +40,18 @@ public interface ClientApi {
             @Query("SubURL") int SubURL,
             @Query("username") String username,
             @Query("password") String password,
-            @Query("refcode") String refcode
+            @Query("refcode") String refcode,
+            @Query("IMEI") String IMEI
+    );
+
+    //logout
+    @POST("fetch_user_cover_information.php")
+    Call<RefCode> refCodeLogout(
+            @Query("SubURL") int SubURL,//3
+            @Query("username") String username,
+            @Query("password") String password,
+            @Query("refcode") String refcode,
+            @Query("IMEI") String IMEI
     );
 
     //register
@@ -125,18 +134,18 @@ public interface ClientApi {
     );
 
     @POST("insert_mcq.php")
-    Call<McqQuestionSolutionModel> getMcqSolution(
+    Call<McqQuestionModel> mcqQuestionYes(
             @Query("UserId") String UserId,
+            @Query("Question") String Question,
+            @Query("QuestionTitle") String QuestionTitle,
+            @Query("Opt1") String Opt1,
+            @Query("Opt2") String Opt2,
+            @Query("Opt3") String Opt3,
+            @Query("Opt4") String Opt4,
             @Query("SubURL") int SubURL,
-            @Query("Solution") String Solution,
-            @Query("QuestionId") String QuestionId
+            @Query("SolutionFlag") int SolutionFlag,
+            @Query("Solution") String Solution
     );
-
-    @POST("view-MCQ-data.php")
-    Call<ArrayList<McqSolutionModel>> getMcqQuestionSolution(
-            @Query("question_id") String question_id
-    );
-
     @POST("insert_mcq.php")
     Call<McqQuestionModel> mcqQuestionNo(
             @Query("UserId") String UserId,
@@ -157,18 +166,22 @@ public interface ClientApi {
             @Query("SubURL") int SubURL
     );
 
+
     @POST("insert_mcq.php")
-    Call<McqQuestionModel> mcqQuestionYes(
+    Call<McqQuestionSolutionModel> getMcqSolution(
             @Query("UserId") String UserId,
-            @Query("Question") String Question,
-            @Query("QuestionTitle") String QuestionTitle,
-            @Query("Opt1") String Opt1,
-            @Query("Opt2") String Opt2,
-            @Query("Opt3") String Opt3,
-            @Query("Opt4") String Opt4,
             @Query("SubURL") int SubURL,
-            @Query("SolutionFlag") int SolutionFlag,
-            @Query("Solution") String Solution
+            @Query("Solution") String Solution,
+            @Query("QuestionId") String QuestionId
+    );
+
+    @POST("view-MCQ-data.php")
+    Call<ArrayList<McqSolutionModel>> getMcqQuestionSolution(
+            @Query("question_id") String question_id,
+            @Query("user_id") String user_id,
+            @Query("user_name") String user_name
+
+            //user_id,user_name
     );
 
     @POST("fetch-current-affair.php")

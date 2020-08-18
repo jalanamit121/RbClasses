@@ -1,12 +1,14 @@
 package com.winbee.rbclasses;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
@@ -62,9 +64,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class YoutubePlayer extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
         public static final String API_KEY = "AIzaSyBlEPocq2s2bDmWDMBRXAf8Mhf3wlFNYGI";
         public static final String VIDEO_ID = "j36wPW4bGIs";
-        private Button btn_study_material;
-        private ImageView img_share,WebsiteHome;
-        MessageAdapter adapter;
+        private ImageView fullscreen_view,fullscreen_view_exit;
         FirebaseAuth auth =FirebaseAuth.getInstance();
         EditText textMessage;
         ImageView sendButton;
@@ -74,25 +74,50 @@ public class YoutubePlayer extends YouTubeBaseActivity implements YouTubePlayer.
         RelativeLayout relativeLayoutLive;
         MessageAdapter messageAdapter;
         ArrayList<LiveChatModel> messagesArrayList;
-        private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
-
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         public static String userIdAuth;
         private YouTubePlayerView youTubePlayerView;
-        Boolean fullscreen=false;
+
         YouTubePlayer player;
+        private boolean fullscreen=false;
 
         @Override
         protected void onCreate(Bundle savedInstanceState){
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_youtube_player);
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
                 textMessage=findViewById(R.id.editTextMessageLive);
                 sendButton=findViewById(R.id.sendMessageLive);
                 messageRecyclerView=findViewById(R.id.liveMessageRecyclerViewLive);
                 textView=findViewById(R.id.textNoMessageLive);
-              //  progressBar=findViewById(R.id.progressBarLive);
+                /** Initializing YouTube Player View **/
+                youTubePlayerView=findViewById(R.id.youtube_player);
+                youTubePlayerView.initialize(API_KEY,this);
+                fullscreen_view=findViewById(R.id.fullscreen_view);
+                fullscreen_view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                                fullscreen = true;
+                                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+                                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) youTubePlayerView.getLayoutParams();
+                                // fullscreen_view_exit.setVisibility(View.VISIBLE);
+                                // ise wale se full screen kar raha hu okkkk
+                        }
+                });
+
+//                fullscreen_view_exit.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//                                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) youTubePlayerView.getLayoutParams();
+//                                fullscreen_view.setVisibility(View.VISIBLE);
+//                                fullscreen_view_exit.setVisibility(View.GONE);
+//                        }
+//                });
+
+                //  progressBar=findViewById(R.id.progressBarLive);
                 progressBarUtil = new ProgressBarUtil(this);
                 relativeLayoutLive=findViewById(R.id.relative_layout_live);
                 messagesArrayList=new ArrayList<>();
@@ -104,62 +129,7 @@ public class YoutubePlayer extends YouTubeBaseActivity implements YouTubePlayer.
                 });
 
                 retriveMessages();
-                layout_home = findViewById(R.id.layout_home);
-                layout_home.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                                Intent home = new Intent(YoutubePlayer.this,MainActivity.class);
-                                startActivity(home);
-                        }
-                });
 
-                layout_course = findViewById(R.id.layout_course);
-                layout_course.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                                Intent live = new Intent(YoutubePlayer.this, YouTubeVideoList.class);
-                                startActivity(live);
-                        }
-                });
-                layout_test = findViewById(R.id.layout_test);
-                layout_test.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                                Toast.makeText(YoutubePlayer.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-//                Intent doubt = new Intent(MainActivity.this,DoubtActivity.class);
-//                startActivity(doubt);
-                        }
-                });
-                layout_current = findViewById(R.id.layout_current);
-                layout_current.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                                Intent intent = new Intent(YoutubePlayer.this, CurrentAffairsActivity.class);
-                                startActivity(intent);
-                        }
-                });
-                layout_doubt = findViewById(R.id.layout_doubt);
-                layout_doubt.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                                Intent intent = new Intent(YoutubePlayer.this, DoubtActivity.class);
-                                startActivity(intent);
-                        }
-                });
-
-
-
-                btn_study_material=findViewById(R.id.btn_study_material);
-                btn_study_material.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                                Intent intent = new Intent(YoutubePlayer.this,StudyMaterial.class);
-                                startActivity(intent);
-                        }
-                });
-                /** Initializing YouTube Player View **/
-                youTubePlayerView=findViewById(R.id.youtube_player);
-                youTubePlayerView.initialize(API_KEY,this);
         }
 
         private void setSupportActionBar(Toolbar toolbar) {
@@ -178,23 +148,23 @@ public class YoutubePlayer extends YouTubeBaseActivity implements YouTubePlayer.
                 player.play();
                 player.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
                 this.player=player;
-                player.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
-                        @Override
-                        public void onFullscreen(boolean b) {
-                                if (b){
-                                        player.play();
-                                        fullscreen=true;
-
-                                }
-                                if (!b){
-                                        if (!player.isPlaying()){
-                                                player.play();
-                                        }
-                                        fullscreen=false;
-
-                                }
-                        }
-                });
+//                player.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
+//                        @Override
+//                        public void onFullscreen(boolean b) {
+//                                if (b){
+//                                        player.play();
+//                                        fullscreen=true;
+//
+//                                }
+//                                if (!b){
+//                                        if (!player.isPlaying()){
+//                                                player.play();
+//                                        }
+//                                        fullscreen=false;
+//
+//                                }
+//                        }
+//                });
 
                 /** Start buffering **/
                 if (!wasRestored) {
@@ -280,7 +250,7 @@ public class YoutubePlayer extends YouTubeBaseActivity implements YouTubePlayer.
                                                         Animation in = new AlphaAnimation(0.0f, 1.0f);
                                                         in.setDuration(1000);
                                                         textView.setAnimation(in);
-                                                         textView.setText("No Messages Yet...");
+                                                        textView.setText("No Messages Yet...");
                                                         addingDataToMessagedAdapter(messagesArrayList);
                                                         messageAdapter.notifyDataSetChanged();
 
@@ -326,77 +296,81 @@ public class YoutubePlayer extends YouTubeBaseActivity implements YouTubePlayer.
 
 
         private void sendMessage() {
-              FirebaseUser user= auth.getCurrentUser();
-              if (user!=null){
-                if (auth!=null){
-                userIdAuth = auth.getCurrentUser().getUid();
-                final String Message= textMessage.getText().toString();
-                if (Message.isEmpty()){
-                        Toast.makeText(this, "Please enter something", Toast.LENGTH_SHORT).show();
+                FirebaseUser user= auth.getCurrentUser();
+                if (user!=null){
+                        if (auth!=null){
+                                userIdAuth = auth.getCurrentUser().getUid();
+                                final String Message= textMessage.getText().toString();
+                                if (Message.isEmpty()){
+                                        Toast.makeText(this, "Please enter something", Toast.LENGTH_SHORT).show();
 
 
-                }else{
-                        final Date currentTime = Calendar.getInstance().getTime();
-                        progressBarUtil.hideProgress();
-                        final Map<String,String> messageInfo = new HashMap<>();
-                        messageInfo.put("userId",userIdAuth);
-                        messageInfo.put("message",Message);
-                        messageInfo.put("time", String.valueOf(currentTime));
-                        textMessage.setText("");
+                                }else{
+                                        final Date currentTime = Calendar.getInstance().getTime();
+                                        progressBarUtil.hideProgress();
+                                        final Map<String,String> messageInfo = new HashMap<>();
+                                        messageInfo.put("userId",userIdAuth);
+                                        messageInfo.put("message",Message);
+                                        messageInfo.put("time", String.valueOf(currentTime));
+                                        textMessage.setText("");
 
-                        if (LocalData.DocumentId!=null) {
-                                db.collection(LocalData.DocumentId)
-                                        .add(messageInfo)
-                                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<DocumentReference> task) {
-                                                        if (task.isSuccessful()) {
-                                                                String docId = Objects.requireNonNull(task.getResult()).getId();
+                                        if (LocalData.DocumentId!=null) {
+                                                db.collection(LocalData.DocumentId)
+                                                        .add(messageInfo)
+                                                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<DocumentReference> task) {
+                                                                        if (task.isSuccessful()) {
+                                                                                String docId = Objects.requireNonNull(task.getResult()).getId();
 
-                                                                Log.d(TAG, "onComplete: message sent" + Message);
-                                                                final Map<String, String> updatedMessageInfo = new HashMap<>();
-                                                                updatedMessageInfo.put("docId", docId);
-                                                                updatedMessageInfo.put("userId", userIdAuth);
-                                                                updatedMessageInfo.put("message", Message);
-                                                                updatedMessageInfo.put("time", String.valueOf(currentTime));
+                                                                                Log.d(TAG, "onComplete: message sent" + Message);
+                                                                                final Map<String, String> updatedMessageInfo = new HashMap<>();
+                                                                                updatedMessageInfo.put("docId", docId);
+                                                                                updatedMessageInfo.put("userId", userIdAuth);
+                                                                                updatedMessageInfo.put("message", Message);
+                                                                                updatedMessageInfo.put("time", String.valueOf(currentTime));
 
 
-                                                                db.collection(LocalData.DocumentId)
-                                                                        .document(docId)
-                                                                        .set(updatedMessageInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                        @Override
-                                                                        public void onComplete(@NonNull Task<Void> task) {
-                                                                                if (task.isSuccessful()) {
-                                                                                        Log.d(TAG, "onComplete: done");
-                                                                                        Log.d(TAG, "onComplete: " + updatedMessageInfo);
-                                                                                } else {
-                                                                                        Log.d(TAG, "onComplete: error");
-                                                                                }
+                                                                                db.collection(LocalData.DocumentId)
+                                                                                        .document(docId)
+                                                                                        .set(updatedMessageInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                        @Override
+                                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                                                if (task.isSuccessful()) {
+                                                                                                        Log.d(TAG, "onComplete: done");
+                                                                                                        Log.d(TAG, "onComplete: " + updatedMessageInfo);
+                                                                                                } else {
+                                                                                                        Log.d(TAG, "onComplete: error");
+                                                                                                }
+                                                                                        }
+                                                                                });
+
+
+                                                                                progressBarUtil.hideProgress();
+                                                                        } else {
+                                                                                Toast.makeText(YoutubePlayer.this, "Something is wrong", Toast.LENGTH_SHORT).show();
+                                                                                Log.d(TAG, "onComplete: failed");
+                                                                                progressBarUtil.hideProgress();
                                                                         }
-                                                                });
+                                                                }
+                                                        });
 
 
-                                                                progressBarUtil.hideProgress();
-                                                        } else {
-                                                                Toast.makeText(YoutubePlayer.this, "Something is wrong", Toast.LENGTH_SHORT).show();
-                                                                Log.d(TAG, "onComplete: failed");
-                                                                progressBarUtil.hideProgress();
-                                                        }
-                                                }
-                                        });
-
-
-                        }}}
+                                        }}}
                 }else Toast.makeText(this, "something is wrong", Toast.LENGTH_SHORT).show();}
         @Override
         public void onBackPressed() {
-                        if (fullscreen){
-                                player.setFullscreen(false);
-                                player.play();
 
-                        }
-                        else {
-                                super.onBackPressed();
-                        }
+                if (!fullscreen){
+                        super.onBackPressed();
+
+                }
+                else{
+                        player.setFullscreen(false);
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                        player.play();
+                        fullscreen=false;
+
+                }
         }
 }

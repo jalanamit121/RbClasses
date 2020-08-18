@@ -1,94 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusable="true"
-    android:clickable="true"
-    tools:context=".YoutubePlayer">
-    <com.google.android.youtube.player.YouTubePlayerView
-        android:id="@+id/youtube_player"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title_bar_home"
-        android:layout_marginTop="5dp">
+<?xml version="1.0" encoding="UTF-8"?>
 
-    </com.google.android.youtube.player.YouTubePlayerView>
-    <Button
-        android:id="@+id/btn_study_material"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="View Study Material"
-        android:layout_below="@id/youtube_player"
-        android:background="#909FF1"
-        android:layout_centerInParent="true"
-        android:layout_margin="10dp"
-        android:visibility="gone"
-        android:padding="16dp"
-        android:textColor="#ffffff"/>
+    <RelativeLayout tools:context=".YoutubePlayer" android:clickable="true" android:focusable="true" android:layout_height="match_parent" android:layout_width="match_parent" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
-        android:id="@+id/relative_layout_live"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/btn_study_material"
-        >
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white"
-            android:layout_above="@id/editTextMessageLive"
-            android:id="@+id/liveMessageRecyclerViewLive"
-            />
+    <com.google.android.youtube.player.YouTubePlayerView android:layout_height="wrap_content" android:layout_width="match_parent" app:showFullScreenButton="true" app:showSeekBar="true" android:id="@+id/youtube_player"> </com.google.android.youtube.player.YouTubePlayerView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:id="@+id/textNoMessageLive"
-            android:textSize="18sp"
-            />
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="gone"
-            android:id="@+id/progressBarLive"
+    <ImageView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/fullscreen_view" android:src="@drawable/ic_baseline_fullscreen_24" android:layout_marginRight="5dp" android:visibility="visible" android:layout_alignParentEnd="true" android:layout_below="@id/youtube_player"/>
 
-            />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:hint="Enter your Message ..."
-            android:textColorHint="#000"
-            android:textColor="#000"
-            android:layout_marginEnd="60dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="55dp"
-            android:id="@+id/editTextMessageLive"
-            />
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="55dp"
-            android:layout_marginEnd="10dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_send_black_24dp"
-            android:id="@+id/sendMessageLive"
-            />
-    </RelativeLayout>
+    <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/btn_study_material" android:visibility="gone" android:layout_below="@id/youtube_player" android:textColor="#ffffff" android:padding="16dp" android:layout_margin="10dp" android:layout_centerInParent="true" android:background="#909FF1" android:text="View Study Material"/>
 
 
+    <RelativeLayout android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/relative_layout_live" android:layout_below="@id/fullscreen_view">
+
+    <androidx.recyclerview.widget.RecyclerView android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/liveMessageRecyclerViewLive" android:background="@android:color/white" android:layout_above="@id/editTextMessageLive"/>
+
+    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textNoMessageLive" android:layout_centerInParent="true" android:textSize="18sp"/>
+
+    <ProgressBar android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/progressBarLive" android:visibility="gone" android:layout_centerInParent="true"/>
+
+    <EditText android:clickable="true" android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/editTextMessageLive" android:textColor="#000" android:layout_marginBottom="5dp" android:layout_marginStart="10dp" android:layout_marginEnd="60dp" android:textColorHint="#000" android:hint="Enter your Message ..." android:layout_alignParentBottom="true"/>
+
+    <ImageView android:layout_height="40dp" android:layout_width="40dp" android:id="@+id/sendMessageLive" android:src="@drawable/ic_send_black_24dp" android:layout_alignParentEnd="true" android:layout_marginBottom="5dp" android:layout_marginEnd="10dp" android:layout_alignParentBottom="true"/>
+
+    <!-- </RelativeLayout>-->
 
 
-
-    <include
-        layout="@layout/footer"
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_height="50dp" />
+</RelativeLayout>
 
 </RelativeLayout>

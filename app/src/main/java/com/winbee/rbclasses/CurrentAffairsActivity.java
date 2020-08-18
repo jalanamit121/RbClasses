@@ -1,11 +1,19 @@
 package com.winbee.rbclasses;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +26,7 @@ import com.winbee.rbclasses.WebApi.ClientApi;
 import com.winbee.rbclasses.adapter.CurrentAdapter;
 import com.winbee.rbclasses.adapter.SekHomeAdapter;
 import com.winbee.rbclasses.model.CurrentAffairsModel;
+import com.winbee.rbclasses.model.RefCode;
 import com.winbee.rbclasses.model.UpdateModel;
 
 import java.util.ArrayList;
@@ -27,6 +36,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.balsikandar.crashreporter.CrashReporter.getContext;
+
 public class CurrentAffairsActivity extends AppCompatActivity {
     private ProgressBarUtil progressBarUtil;
     private ArrayList<CurrentAffairsModel> currentAffairsModels;
@@ -34,6 +45,10 @@ public class CurrentAffairsActivity extends AppCompatActivity {
     private RecyclerView sek_home_recycle;
     private RelativeLayout today_classes;
     private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
+    private static final int REQUEST_CODE = 101;
+    String IMEINumber;
+    String UserMobile,UserPassword,android_id;
+
 
 
     @Override
@@ -41,6 +56,17 @@ public class CurrentAffairsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_affairs);
         progressBarUtil   =  new ProgressBarUtil(this);
+        android_id = Settings.Secure.getString(getContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        UserMobile=SharedPrefManager.getInstance(this).refCode().getUsername();
+        UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
+//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+//        if (ActivityCompat.checkSelfPermission(CurrentAffairsActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(CurrentAffairsActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
+//            return;
+//        }
+//        IMEINumber = telephonyManager.getDeviceId();
+
         sek_home_recycle=findViewById(R.id.sek_home_recycle);
         today_classes=findViewById(R.id.today_classes);
         layout_home = findViewById(R.id.layout_home);
@@ -81,7 +107,7 @@ public class CurrentAffairsActivity extends AppCompatActivity {
         layout_doubt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CurrentAffairsActivity.this, DoubtActivity.class);
+                Intent intent = new Intent(CurrentAffairsActivity.this, DiscussionActivity.class);
                 startActivity(intent);
             }
         });
@@ -165,8 +191,46 @@ public class CurrentAffairsActivity extends AppCompatActivity {
 
     }
     private void logout() {
-        SharedPrefManager.getInstance(this).logout();
-        startActivity(new Intent(this, LoginActivity.class));
-        Objects.requireNonNull(this).finish();
+
+        progressBarUtil.showProgress();
+        ClientApi mService = ApiClient.getClient().create(ClientApi.class);
+        Call<RefCode> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
+        Log.i("tag", "callRefCodeSignInApi: "+IMEINumber+UserMobile+UserPassword);
+        call.enqueue(new Callback<RefCode>() {
+            @Override
+            public void onResponse(Call<RefCode> call, Response<RefCode> response) {
+                int statusCode = response.code();
+                if (statusCode == 200 && response.body().getLoginStatus()!=false) {
+                    progressBarUtil.hideProgress();
+                    SharedPrefManager.getInstance(CurrentAffairsActivity.this).logout();
+                    startActivity(new Intent(CurrentAffairsActivity.this, LoginActivity.class));
+                    //Objects.requireNonNull(this).finish();
+                    finish();
+
+                } else {
+                    progressBarUtil.hideProgress();
+                    Toast.makeText(CurrentAffairsActivity.this, response.body().getMessageFailure(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RefCode> call, Throwable t) {
+                Toast.makeText(CurrentAffairsActivity.this, "Failed" + t.getMessage(), Toast.LENGTH_LONG).show();
+                System.out.println(t.getLocalizedMessage());
+            }
+        });
     }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+//        switch (requestCode) {
+//            case REQUEST_CODE: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    //Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    //Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
+//    }
 }

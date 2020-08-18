@@ -10,10 +10,11 @@ public class LocalData {
     public static String Email="";
     public static String NotesData="";
     public static String FileName="";
-    public static String FileNameToShow="";
-    public static String FileCreateName="";
-    public static String FileDate="";
     public static String DocumentId="";
+    public static String Title="";
+    public static String Duration="";
+    public static String Commnts="";
+
 
 
 

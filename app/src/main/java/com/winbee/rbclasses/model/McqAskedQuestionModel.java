@@ -7,15 +7,15 @@ import java.io.Serializable;
 
 public class McqAskedQuestionModel implements Serializable {
 
-@SerializedName("Response")
-@Expose
-private Boolean response;
-@SerializedName("Message")
-@Expose
-private Object message;
-@SerializedName("QuetionData")
-@Expose
-private QuetionDatum[] QuetionData;
+    @SerializedName("Response")
+    @Expose
+    private Boolean response;
+    @SerializedName("Message")
+    @Expose
+    private Object message;
+    @SerializedName("QuetionData")
+    @Expose
+    private QuetionDatum[] QuetionData;
 
     public McqAskedQuestionModel(Boolean response, Object message, QuetionDatum[] quetionData) {
         this.response = response;
@@ -24,23 +24,23 @@ private QuetionDatum[] QuetionData;
     }
 
     public Boolean getResponse() {
-return response;
-}
+        return response;
+    }
 
-public void setResponse(Boolean response) {
-this.response = response;
-}
+    public void setResponse(Boolean response) {
+        this.response = response;
+    }
 
-public Object getMessage() {
-return message;
-}
+    public Object getMessage() {
+        return message;
+    }
 
-public void setMessage(Object message) {
-this.message = message;
-}
+    public void setMessage(Object message) {
+        this.message = message;
+    }
 
-public QuetionDatum[] getData(){
-return QuetionData;
+    public QuetionDatum[] getData(){
+        return QuetionData;
     }
 
 }

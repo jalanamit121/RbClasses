@@ -1,79 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_marginTop="5dp"
-android:layout_marginBottom="5dp"
-android:id="@+id/branch_live1"
-    android:padding="10dp"
-android:elevation="4dp"
-    android:layout_marginStart="5dp"
-    android:layout_marginEnd="5dp"
-android:clickable="true"
-android:background="@drawable/shadow"
-android:layout_marginRight="15dp">
-<RelativeLayout
-    android:id="@+id/branch_live"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/question_image"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="5dp"
-        android:src="@drawable/ic_edit"/>
-    <TextView
-        android:id="@+id/text_question"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="17sp"
-        android:layout_toRightOf="@id/question_image"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:text="question"/>
-    <ImageView
-        android:id="@+id/like"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="5dp"
-        android:visibility="gone"
-        android:layout_toLeftOf="@id/text_like"
-        android:layout_below="@id/question_image"
-        android:src="@drawable/ic_like"/>
-    <TextView
-        android:id="@+id/text_like"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:textSize="15sp"
-        android:layout_toLeftOf="@id/text_comments"
-        android:layout_below="@id/text_question"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="16dp"
-        android:text="10"/>
-    <TextView
-        android:id="@+id/text_comments"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:visibility="gone"
-        android:layout_below="@id/text_question"
-        android:layout_marginStart="35dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="16dp"
-        android:text=""/>
-    <TextView
-        android:id="@+id/text_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="17sp"
-        android:layout_below="@id/text_question"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="16dp"
-        android:text=""/>
+<?xml version="1.0" encoding="UTF-8"?>
 
+    <RelativeLayout android:layout_marginRight="15dp" android:background="@drawable/shadow" android:clickable="true" android:layout_marginEnd="5dp" android:layout_marginStart="5dp" android:elevation="4dp" android:padding="6dp" android:id="@+id/branch_live1" android:layout_marginBottom="5dp" android:layout_marginTop="5dp" android:layout_height="wrap_content" android:layout_width="match_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <RelativeLayout android:background="@drawable/bottom_layout" android:layout_marginEnd="5dp" android:layout_marginStart="5dp" android:id="@+id/branch_live" android:layout_marginBottom="10dp" android:layout_marginTop="5dp" android:layout_height="wrap_content" android:layout_width="match_parent">
+
+    <de.hdodenhof.circleimageview.CircleImageView android:layout_marginStart="15dp" android:id="@+id/question_image" android:layout_marginTop="10dp" android:layout_height="40dp" android:layout_width="40dp" android:src="@drawable/ic_businessman" android:layout_marginLeft="20dp"/>
+
+    <TextView android:layout_marginStart="6dp" android:id="@+id/txt_user" android:layout_marginTop="10dp" android:layout_height="20dp" android:layout_width="wrap_content" android:layout_toRightOf="@id/question_image" android:fontFamily="@font/proximanovaregular" android:text="Amit"/>
+
+    <TextView android:layout_marginStart="5dp" android:id="@+id/txt_query" android:layout_height="20dp" android:layout_width="wrap_content" android:layout_toRightOf="@id/question_image" android:fontFamily="@font/proximanovaregular" android:text="Doubt" android:layout_below="@id/txt_user" android:textColor="#2979FF"/>
+
+    <TextView android:layout_marginStart="15dp" android:id="@+id/txt_time" android:layout_height="20dp" android:layout_width="wrap_content" android:layout_toRightOf="@id/txt_query" android:fontFamily="@font/proximanovaregular" android:text="18 days" android:layout_below="@id/txt_user" android:textColor="@color/edit_text"/>
+
+    <TextView android:layout_marginStart="10dp" android:id="@+id/txt_ask_title" android:layout_marginTop="10dp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:fontFamily="@font/proximanovaregular" android:text="What would you like to ask?" android:layout_below="@id/question_image" android:textSize="16sp"/>
+
+    <TextView android:layout_marginStart="10dp" android:id="@+id/txt_ask_question" android:layout_marginTop="5dp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:fontFamily="@font/proximanovaregular" android:text="What would you like to ask?" android:layout_below="@id/txt_ask_title" android:textSize="16sp"/>
+
+    <TextView android:layout_marginStart="10dp" android:id="@+id/txt_commments" android:layout_marginBottom="5dp" android:layout_marginTop="5dp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="0 Comment" android:layout_below="@id/txt_ask_question" android:textColor="#002718" android:textSize="12sp"/>
 
 </RelativeLayout>
+
 </RelativeLayout>

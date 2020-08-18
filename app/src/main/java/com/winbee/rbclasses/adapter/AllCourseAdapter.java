@@ -46,11 +46,6 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-//        holder.txt_course.setText(list1.get(position).getBucket_Name());
-//        holder.txt_discount.setText(list1.get(position).getDisplay_price());
-//        holder.txt_discount.setPaintFlags(holder.txt_discount.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//        holder.txt_actual_price.setText(list1.get(position).getDiscount_price());
-//        Picasso.get().load(list1.get(position).getBucket_Image()).fit().into(holder.course_image);
         if (list1.get(position).getPaid().equals(0)) {
             holder.layout1.setVisibility(View.VISIBLE);
             holder.txt_course.setText(list1.get(position).getBucket_Name());
@@ -76,28 +71,28 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
         }else if (list1.get(position).getPaid().equals(1)){
             holder.layout1.setVisibility(View.GONE);
         }
-                 if (list1.get(position).getDiscount_price().equalsIgnoreCase("0.00")){
-                     holder.img_rupee.setVisibility(View.GONE);
-                     holder.img_rupee1.setVisibility(View.GONE);
-                     holder.txt_actual_price.setVisibility(View.VISIBLE);
-                     holder.txt_actual_price.setText("Free");
-                     holder.txt_discount.setVisibility(View.GONE);
-                     holder.layout1.setOnClickListener(new View.OnClickListener() {
-                         @Override
-                         public void onClick(View view) {
-                             LocalData.ChildId=list1.get(position).getChild_Link();
-                             LocalData.PayImage=list1.get(position).getBucket_Cover_Image();
-                             LocalData.Discription=list1.get(position).getBucket_Name();
-                             LocalData.TotalVideo=String.valueOf(list1.get(position).getTotal_Video());
-                             LocalData.TotalDocument=String.valueOf(list1.get(position).getTotal_Document());
-                             LocalData.DiscountPrice=list1.get(position).getDiscount_price();
-                             LocalData.ActualPrice=list1.get(position).getDisplay_price();
-                             LocalData.CourseId=list1.get(position).getBucket_ID();
-                             Intent intent = new Intent(context, LiveDataPurchasedActivity.class);
-                             context.startActivity(intent);
-                         }
-                     });
-                 }
+        if (list1.get(position).getDiscount_price().equalsIgnoreCase("0.00")){
+            holder.img_rupee.setVisibility(View.GONE);
+            holder.img_rupee1.setVisibility(View.GONE);
+            holder.txt_actual_price.setVisibility(View.VISIBLE);
+            holder.txt_actual_price.setText("Free");
+            holder.txt_discount.setVisibility(View.GONE);
+            holder.layout1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LocalData.ChildId=list1.get(position).getChild_Link();
+                    LocalData.PayImage=list1.get(position).getBucket_Cover_Image();
+                    LocalData.Discription=list1.get(position).getBucket_Name();
+                    LocalData.TotalVideo=String.valueOf(list1.get(position).getTotal_Video());
+                    LocalData.TotalDocument=String.valueOf(list1.get(position).getTotal_Document());
+                    LocalData.DiscountPrice=list1.get(position).getDiscount_price();
+                    LocalData.ActualPrice=list1.get(position).getDisplay_price();
+                    LocalData.CourseId=list1.get(position).getBucket_ID();
+                    Intent intent = new Intent(context, LiveDataPurchasedActivity.class);
+                    context.startActivity(intent);
+                }
+            });
+        }
 
 
 

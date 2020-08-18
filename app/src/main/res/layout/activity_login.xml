@@ -1,185 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/bg_color"
-    android:fitsSystemWindows="true">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="24dp"
-            android:paddingTop="66dp"
-            android:paddingRight="24dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:gravity="center"
-                    android:text="@string/log_in"
-                    android:textColor="#3c4b5d"
-                    android:textSize="22sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:gravity="center"
-                    android:text="@string/login_desc"
-                    android:textColor="@color/darkgrey"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/circularbordersolidtop"
-                android:gravity="center"
-                android:padding="18dp">
-
-                <EditText
-                    android:id="@+id/editTextUsername"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:hint="Mobile No"
-                    android:textColor="@color/edit_text"
-                    android:textColorHint="@color/edit_text"
-                    android:inputType="number"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/circularbordersolidbottom"
-                android:orientation="horizontal"
-                android:padding="18dp">
-
-                <EditText
-                    android:id="@+id/editTextPassword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:hint="Your Password"
-                    android:textColor="@color/edit_text"
-                    android:inputType="textPassword"
-                    android:textColorHint="@color/edit_text"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/circularbluebordersolidmiddle"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                android:padding="18dp">
-
-                <TextView
-                    android:id="@+id/link_referal_code"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:text="RBC001"
-                    android:textColor="@color/edit_text"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/link_forget_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/forgetPassword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:gravity="center"
-                    android:text="Forget Password"
-                    android:textColor="#3c4b5d"
-                    android:textSize="16dip" />
-            </LinearLayout>
-
-
-
-            <Button
-                android:id="@+id/buttonLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="14dp"
-                android:background="@drawable/circularbluebordersolid"
-                android:fontFamily="@font/proximanovaregular"
-                android:padding="16dp"
-                android:text="Continue"
-                android:onClick="nextactivity"
-                android:textColor="@color/white" />
-
-
-            <LinearLayout
-                android:id="@+id/link_signup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:gravity="center"
-                    android:text="No account yet?"
-                    android:textColor="#3c4b5d"
-                    android:textSize="16dip" />
-
-                <TextView
-                    android:id="@+id/textViewRegister"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:gravity="center"
-                    android:text=" Create One"
-                    android:onClick="registeractivity"
-                    android:textColor="#8e9cfe"
-                    android:textSize="16dip" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-        <ProgressBar
-            android:visibility="gone"
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" />
-    </RelativeLayout>
-</ScrollView>
+<?xml version="1.0" encoding="UTF-8"?>    <ScrollView android:fitsSystemWindows="true" android:background="@color/bg_color" android:layout_height="fill_parent" android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">    <RelativeLayout android:layout_height="match_parent" android:layout_width="match_parent">    <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:paddingRight="24dp" android:paddingTop="66dp" android:paddingLeft="24dp" android:orientation="vertical">    <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="vertical" android:layout_marginBottom="20dp">    <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:textSize="22sp" android:textColor="#3c4b5d" android:text="@string/log_in" android:gravity="center" android:fontFamily="@font/proximanovaregular"/>    <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:textSize="16sp" android:textColor="@color/darkgrey" android:text="@string/login_desc" android:gravity="center" android:fontFamily="@font/proximanovaregular" android:layout_marginTop="10dp"/></LinearLayout>    <LinearLayout android:background="@drawable/circularbordersolidtop" android:layout_height="wrap_content" android:layout_width="match_parent" android:gravity="center" android:padding="18dp">    <EditText android:background="@null" android:layout_height="wrap_content" android:layout_width="match_parent" android:textSize="14sp" android:textColor="@color/edit_text" android:fontFamily="@font/proximanovaregular" android:inputType="number" android:textColorHint="@color/edit_text" android:hint="Mobile No" android:id="@+id/editTextUsername"/></LinearLayout>    <LinearLayout android:background="@drawable/circularbordersolidbottom" android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="horizontal" android:padding="18dp">    <EditText android:background="@null" android:layout_height="wrap_content" android:layout_width="wrap_content" android:textSize="14sp" android:textColor="@color/edit_text" android:fontFamily="@font/proximanovaregular" android:inputType="textPassword" android:textColorHint="@color/edit_text" android:hint="Your Password" android:id="@+id/editTextPassword"/></LinearLayout>    <LinearLayout android:background="@drawable/circularbluebordersolidmiddle" android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="horizontal" android:padding="18dp" android:visibility="gone">    <TextView android:background="@null" android:layout_height="wrap_content" android:layout_width="wrap_content" android:textSize="14sp" android:textColor="@color/edit_text" android:text="RBC001" android:fontFamily="@font/proximanovaregular" android:id="@+id/link_referal_code"/></LinearLayout>    <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="horizontal" android:layout_marginBottom="24dp" android:padding="10dp" android:id="@+id/link_forget_password">    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textSize="16dip" android:textColor="#3c4b5d" android:text="Forget Password" android:gravity="center" android:fontFamily="@font/proximanovaregular" android:id="@+id/forgetPassword"/></LinearLayout>    <Button android:background="@drawable/circularbluebordersolid" android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_marginBottom="14dp" android:textColor="@color/white" android:text="Continue" android:fontFamily="@font/proximanovaregular" android:layout_marginTop="24dp" android:padding="16dp" android:id="@+id/buttonLogin" android:onClick="nextactivity"/>    <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="horizontal" android:layout_marginBottom="24dp" android:gravity="center" android:padding="10dp" android:id="@+id/link_signup">    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textSize="16dip" android:textColor="#3c4b5d" android:text="No account yet?" android:gravity="center" android:fontFamily="@font/proximanovaregular"/>    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textSize="16dip" android:textColor="#8e9cfe" android:text=" Create One" android:gravity="center" android:fontFamily="@font/proximanovaregular" android:id="@+id/textViewRegister" android:onClick="registeractivity"/></LinearLayout></LinearLayout>    <ProgressBar android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/progressBar" android:visibility="gone" android:layout_centerVertical="true" android:layout_centerHorizontal="true"/></RelativeLayout></ScrollView>

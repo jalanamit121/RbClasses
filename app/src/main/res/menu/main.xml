@@ -1,32 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<?xml version="1.0" encoding="UTF-8"?>
 
-    <item
-        android:id="@+id/profile"
-        android:title="Profile"
-        android:icon="@drawable/ic_adress" />
-    <item
-        android:id="@+id/about"
-        android:title="About Us"
-        android:icon="@drawable/ic_adress" />
-    <item
-        android:id="@+id/website"
-        android:icon="@drawable/ic_adress"
-        android:title="WebSite"
-         />
-    <item
-        android:id="@+id/share"
-        android:icon="@drawable/ic_share_black_24dp"
-        android:title="Share"
-         />
-    <item
-        android:id="@+id/rate"
-        android:title="Rate Us"
-        android:icon="@drawable/ic_review" />
-    <item
-        android:id="@+id/logout"
-        android:title="Logout"
-        android:icon="@drawable/ic_logout" />
+    <menu xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Profile" android:icon="@drawable/ic_adress" android:id="@+id/profile"/>
+
+    <item android:title="About Us" android:icon="@drawable/ic_adress" android:id="@+id/about"/>
+
+    <item android:title="WebSite" android:icon="@drawable/ic_adress" android:id="@+id/website"/>
+
+    <item android:title="Share" android:icon="@drawable/ic_share_black_24dp" android:id="@+id/share"/>
+
+    <item android:title="Rate Us" android:icon="@drawable/ic_review" android:id="@+id/rate"/>
+
+    <item android:title="Logout" android:icon="@drawable/ic_logout" android:id="@+id/logout"/>
 
 </menu>

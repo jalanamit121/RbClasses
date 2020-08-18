@@ -1,15 +1,26 @@
 package com.winbee.rbclasses.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +32,7 @@ import com.winbee.rbclasses.R;
 import com.winbee.rbclasses.model.LiveChatModel;
 
 import java.util.ArrayList;
+
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageAdapterViewHolder> {
     private static final String TAG = "MessageAdapter";
@@ -41,6 +53,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageA
     public MessageAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_message, parent, false);
         return  new MessageAdapterViewHolder(view);
+    }
+    public void updateData(ArrayList<LiveChatModel> messagesList) {
+        if (messagesArrayList == null) {
+            return;
+        }
+        this.messagesArrayList.clear();
+        messagesArrayList.addAll(messagesList);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -67,29 +87,29 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageA
 //            holder.ll.setBackgroundColor(Color.parseColor("#BD5252"));
 //        }
 //        else {
-            db.collection("Users")
-                    .document(messagesArrayList.get(position).getUserId())
-                    .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    String name = (String) documentSnapshot.get("Name");
-                    Animation in = new AlphaAnimation(0.0f, 1.0f);
-                    in.setDuration(500);
-                    holder.txtView.setAnimation(in);
-                    holder.name.setAnimation(in);
-                    holder.txtView.setText(messagesArrayList.get(position).getMessage());
-                    holder.name.setText(name);
-                }
-            });
+        db.collection("Users")
+                .document(messagesArrayList.get(position).getUserId())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                String name = (String) documentSnapshot.get("Name");
+                Animation in = new AlphaAnimation(0.0f, 1.0f);
+                in.setDuration(500);
+                holder.txtView.setAnimation(in);
+                holder.name.setAnimation(in);
+                holder.txtView.setText(messagesArrayList.get(position).getMessage());
+                holder.name.setText(name);
+            }
+        });
 
 
 
 
-        }
+    }
 
-        //   holder.txtView.setText(messagesArrayList.get(position).getMessage());
+    //   holder.txtView.setText(messagesArrayList.get(position).getMessage());
 
- //   }
+    //   }
 
     @Override
     public int getItemCount() {
@@ -107,7 +127,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageA
 
             txtView =itemView.findViewById(R.id.chatText);
             name =itemView.findViewById(R.id.nameChat);
-          //  btn_delete=itemView.findViewById(R.id.btn_delete);
+            //  btn_delete=itemView.findViewById(R.id.btn_delete);
 
 //            btn_delete.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -120,3 +140,4 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageA
         }
     }
 }
+

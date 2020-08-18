@@ -11,32 +11,32 @@ import com.winbee.rbclasses.TxnFragment;
 import com.winbee.rbclasses.YouTubeVideoList;
 
 public class ViewPagerTxnAdapter extends FragmentStatePagerAdapter {
-    //    String[] tabarray = new String[]{"Home","Live Classes"};
+  //    String[] tabarray = new String[]{"Home","Live Classes"};
 //    Integer tabnumber = 2;
-    int mNumOfTabs;
+  int mNumOfTabs;
 
-    public ViewPagerTxnAdapter(FragmentManager fm, int NumOfTabs) {
-        super(fm);
-        this.mNumOfTabs=NumOfTabs;
-    }
+  public ViewPagerTxnAdapter(FragmentManager fm, int NumOfTabs) {
+    super(fm);
+    this.mNumOfTabs=NumOfTabs;
+  }
 
-    @Override
-    public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                TxnFragment one = new TxnFragment();
-                return one;
+  @Override
+  public Fragment getItem(int position) {
+    switch (position) {
+      case 0:
+        TxnFragment one = new TxnFragment();
+        return one;
 //            case 1:
 //                TxnFragment two = new TxnFragment();
 //                return two;
 
-        }
-        return null;
     }
+    return null;
+  }
 
-    @Override
-    public int getCount() {
-        return mNumOfTabs;
-    }
+  @Override
+  public int getCount() {
+    return mNumOfTabs;
+  }
 }
 

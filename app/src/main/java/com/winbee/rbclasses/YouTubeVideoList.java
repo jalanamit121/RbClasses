@@ -1,9 +1,15 @@
 package com.winbee.rbclasses;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,18 +17,25 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.WebApi.ClientApi;
 import com.winbee.rbclasses.adapter.AllPurchasedCourseAdapter;
 import com.winbee.rbclasses.model.CourseModel;
+import com.winbee.rbclasses.model.RefCode;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.balsikandar.crashreporter.CrashReporter.getContext;
 
 public class YouTubeVideoList extends AppCompatActivity {
     private ArrayList<CourseModel> courseModels;
@@ -32,6 +45,9 @@ public class YouTubeVideoList extends AppCompatActivity {
     private RelativeLayout today_classes;
     String UserID;
     private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
+    private static final int REQUEST_CODE = 101;
+    String IMEINumber;
+    String UserMobile,UserPassword,android_id;
 
 
 
@@ -41,6 +57,17 @@ public class YouTubeVideoList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_you_tube_video_list);
         progressBarUtil   =  new ProgressBarUtil(this);
+        android_id = Settings.Secure.getString(getContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        UserMobile=SharedPrefManager.getInstance(this).refCode().getUsername();
+        UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
+//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+//        if (ActivityCompat.checkSelfPermission(YouTubeVideoList.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(YouTubeVideoList.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
+//            return;
+//        }
+//        IMEINumber = telephonyManager.getDeviceId();
+
         course_recycle = findViewById(R.id.all_course);
         today_classes=findViewById(R.id.today_classes);
         UserID=SharedPrefManager.getInstance(this).refCode().getUserId();
@@ -82,7 +109,7 @@ public class YouTubeVideoList extends AppCompatActivity {
         layout_doubt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(YouTubeVideoList.this, DoubtActivity.class);
+                Intent intent = new Intent(YouTubeVideoList.this, DiscussionActivity.class);
                 startActivity(intent);
             }
         });
@@ -178,8 +205,46 @@ public class YouTubeVideoList extends AppCompatActivity {
     }
 
     private void logout() {
-        SharedPrefManager.getInstance(this).logout();
-        startActivity(new Intent(this, LoginActivity.class));
-        Objects.requireNonNull(this).finish();
+
+        progressBarUtil.showProgress();
+        ClientApi mService = ApiClient.getClient().create(ClientApi.class);
+        Call<RefCode> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
+        Log.i("tag", "callRefCodeSignInApi: "+IMEINumber+UserMobile+UserPassword);
+        call.enqueue(new Callback<RefCode>() {
+            @Override
+            public void onResponse(Call<RefCode> call, Response<RefCode> response) {
+                int statusCode = response.code();
+                if (statusCode == 200 && response.body().getLoginStatus()!=false) {
+                    progressBarUtil.hideProgress();
+                    SharedPrefManager.getInstance(YouTubeVideoList.this).logout();
+                    startActivity(new Intent(YouTubeVideoList.this, LoginActivity.class));
+                    //Objects.requireNonNull(this).finish();
+                    finish();
+
+                } else {
+                    progressBarUtil.hideProgress();
+                    Toast.makeText(YouTubeVideoList.this, response.body().getMessageFailure(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RefCode> call, Throwable t) {
+                Toast.makeText(YouTubeVideoList.this, "Failed" + t.getMessage(), Toast.LENGTH_LONG).show();
+                System.out.println(t.getLocalizedMessage());
+            }
+        });
     }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+//        switch (requestCode) {
+//            case REQUEST_CODE: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    //Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    //Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
+//    }
 }

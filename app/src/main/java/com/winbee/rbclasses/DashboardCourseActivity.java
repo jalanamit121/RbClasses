@@ -4,9 +4,15 @@
 
 package com.winbee.rbclasses;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,20 +20,36 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.ViewPager.ViewPagerLivePurchasedAdapter;
 import com.winbee.rbclasses.ViewPager.ViewPagerTxnAdapter;
+import com.winbee.rbclasses.WebApi.ClientApi;
+import com.winbee.rbclasses.model.RefCode;
 
 import java.util.Objects;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.balsikandar.crashreporter.CrashReporter.getContext;
+
 public class DashboardCourseActivity extends AppCompatActivity {
 
-  private TextView studentNameMyProfile,mobile,email;
-  String Name,Mobile,Email;
+    private TextView studentNameMyProfile,mobile,email;
+    String Name,Mobile,Email;
     private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
+    private static final int REQUEST_CODE = 101;
+    String IMEINumber;
+    String UserMobile,UserPassword;
+    private  ProgressBarUtil progressBarUtil;
+    String android_id;
 
 
 
@@ -35,6 +57,18 @@ public class DashboardCourseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_course);
+        progressBarUtil   =  new ProgressBarUtil(this);
+        android_id = Settings.Secure.getString(getContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        UserMobile=SharedPrefManager.getInstance(this).refCode().getUsername();
+        UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
+//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+//        if (ActivityCompat.checkSelfPermission(DashboardCourseActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(DashboardCourseActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
+//            return;
+//        }
+//        IMEINumber = telephonyManager.getDeviceId();
+
         Name=SharedPrefManager.getInstance(this).refCode().getName();
         Mobile=SharedPrefManager.getInstance(this).refCode().getUsername();
         Email=SharedPrefManager.getInstance(this).refCode().getEmail();
@@ -109,7 +143,7 @@ public class DashboardCourseActivity extends AppCompatActivity {
         layout_doubt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DashboardCourseActivity.this, DoubtActivity.class);
+                Intent intent = new Intent(DashboardCourseActivity.this, DiscussionActivity.class);
                 startActivity(intent);
             }
         });
@@ -162,8 +196,46 @@ public class DashboardCourseActivity extends AppCompatActivity {
     }
 
     private void logout() {
-        SharedPrefManager.getInstance(this).logout();
-        startActivity(new Intent(this, LoginActivity.class));
-        Objects.requireNonNull(this).finish();
+
+        progressBarUtil.showProgress();
+        ClientApi mService = ApiClient.getClient().create(ClientApi.class);
+        Call<RefCode> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
+        Log.i("tag", "callRefCodeSignInApi: "+IMEINumber+UserMobile+UserPassword);
+        call.enqueue(new Callback<RefCode>() {
+            @Override
+            public void onResponse(Call<RefCode> call, Response<RefCode> response) {
+                int statusCode = response.code();
+                if (statusCode == 200 && response.body().getLoginStatus()!=false) {
+                    progressBarUtil.hideProgress();
+                    SharedPrefManager.getInstance(DashboardCourseActivity.this).logout();
+                    startActivity(new Intent(DashboardCourseActivity.this, LoginActivity.class));
+                    //Objects.requireNonNull(this).finish();
+                    finish();
+
+                } else {
+                    progressBarUtil.hideProgress();
+                    Toast.makeText(DashboardCourseActivity.this, response.body().getMessageFailure(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RefCode> call, Throwable t) {
+                Toast.makeText(DashboardCourseActivity.this, "Failed" + t.getMessage(), Toast.LENGTH_LONG).show();
+                System.out.println(t.getLocalizedMessage());
+            }
+        });
     }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+//        switch (requestCode) {
+//            case REQUEST_CODE: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    //Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    //Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
+//    }
 }

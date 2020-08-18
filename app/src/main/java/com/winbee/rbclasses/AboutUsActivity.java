@@ -1,10 +1,18 @@
 package com.winbee.rbclasses;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,16 +20,34 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
+import com.winbee.rbclasses.WebApi.ClientApi;
+import com.winbee.rbclasses.model.RefCode;
+
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.balsikandar.crashreporter.CrashReporter.getContext;
 
 public class AboutUsActivity extends AppCompatActivity {
     private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
     private TextView aboutus_textview10,aboutus_textview15;
+    String UserMobile,UserPassword,android_id;
+    private  ProgressBarUtil progressBarUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
+        progressBarUtil   =  new ProgressBarUtil(this);
+        android_id = Settings.Secure.getString(getContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        UserMobile=SharedPrefManager.getInstance(this).refCode().getUsername();
+        UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
+
 
         aboutus_textview15 = findViewById(R.id.aboutus_textview15);
         aboutus_textview10 = findViewById(R.id.aboutus_textview10);
@@ -69,8 +95,6 @@ public class AboutUsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(AboutUsActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-//                Intent doubt = new Intent(MainActivity.this,DoubtActivity.class);
-//                startActivity(doubt);
             }
         });
         layout_current = findViewById(R.id.layout_current);
@@ -85,7 +109,7 @@ public class AboutUsActivity extends AppCompatActivity {
         layout_doubt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AboutUsActivity.this, DoubtActivity.class);
+                Intent intent = new Intent(AboutUsActivity.this, DiscussionActivity.class);
                 startActivity(intent);
             }
         });
@@ -135,8 +159,32 @@ public class AboutUsActivity extends AppCompatActivity {
 
     }
     private void logout() {
-        SharedPrefManager.getInstance(this).logout();
-        startActivity(new Intent(this, LoginActivity.class));
-        Objects.requireNonNull(this).finish();
+
+        progressBarUtil.showProgress();
+        ClientApi mService = ApiClient.getClient().create(ClientApi.class);
+        Call<RefCode> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
+        call.enqueue(new Callback<RefCode>() {
+            @Override
+            public void onResponse(Call<RefCode> call, Response<RefCode> response) {
+                int statusCode = response.code();
+                if (statusCode == 200 && response.body().getLoginStatus()!=false) {
+                    progressBarUtil.hideProgress();
+                    SharedPrefManager.getInstance(AboutUsActivity.this).logout();
+                    startActivity(new Intent(AboutUsActivity.this, LoginActivity.class));
+                    finish();
+
+                } else {
+                    progressBarUtil.hideProgress();
+                    Toast.makeText(AboutUsActivity.this, response.body().getMessageFailure(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RefCode> call, Throwable t) {
+                Toast.makeText(AboutUsActivity.this, "Failed" + t.getMessage(), Toast.LENGTH_LONG).show();
+                System.out.println(t.getLocalizedMessage());
+            }
+        });
     }
 }

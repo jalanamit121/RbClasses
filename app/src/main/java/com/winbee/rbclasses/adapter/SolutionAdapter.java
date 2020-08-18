@@ -36,17 +36,11 @@ public class SolutionAdapter extends RecyclerView.Adapter<SolutionAdapter.ViewHo
     public void onBindViewHolder(@NonNull SolutionAdapter.ViewHolder holder, final int position) {
         //setting data toAd apter List
 
-        if (list.get(position).getType().equalsIgnoreCase("Asked")) {
-            holder.text_question.setText(list.get(position).getQuestion());
-            holder.text_date.setText(list.get(position).getDATE());
-            holder.text_user.setText(list.get(position).getUser());
+        holder.txt_user.setText(list.get(position).getUser());
+        holder.txt_time.setText(list.get(position).getDuration());
+        holder.txt_ask_title.setText(list.get(position).getQuestion());
 
-        }else if(list.get(position).getType().equalsIgnoreCase("Solution")){
-            holder.text_solution.setText(list.get(position).getQuestion());
-            holder.text_date_solution.setText(list.get(position).getDATE());
-            holder.text_user_solution.setText(list.get(position).getUser());
 
-        }
 
 
 
@@ -61,17 +55,14 @@ public class SolutionAdapter extends RecyclerView.Adapter<SolutionAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView text_question,text_user,text_date,text_solution,text_user_solution,text_date_solution;
+        private TextView txt_user,txt_time,txt_ask_title;
         private RelativeLayout branch_live;
         private ImageView img_question,img_solution;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            text_question = itemView.findViewById(R.id.text_question);
-            text_user = itemView.findViewById(R.id.text_user);
-            text_date = itemView.findViewById(R.id.text_date);
-            text_solution = itemView.findViewById(R.id.text_solution);
-            text_user_solution = itemView.findViewById(R.id.text_user_solution);
-            text_date_solution = itemView.findViewById(R.id.text_date_solution);
+            txt_user = itemView.findViewById(R.id.txt_user);
+            txt_time = itemView.findViewById(R.id.txt_time);
+            txt_ask_title = itemView.findViewById(R.id.txt_ask_title);
             branch_live = itemView.findViewById(R.id.branch_live);
         }
     }

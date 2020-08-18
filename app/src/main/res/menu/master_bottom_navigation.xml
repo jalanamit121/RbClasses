@@ -1,40 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<?xml version="1.0" encoding="UTF-8"?>
 
-    <item
-        android:id="@+id/navigationHome"
-        android:icon="@drawable/ic_home"
-        android:title="Home" />
-    <item
-        android:id="@+id/navigationLive"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="Live Classes" />
+    <menu xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/navigationTest"
-        android:icon="@drawable/ic_effort"
-        android:title="Test Series" />
+  <item android:title="Home" android:icon="@drawable/ic_home" android:id="@+id/navigationHome"/>
 
-    <item
-        android:id="@+id/navigationCurrent"
-        android:icon="@drawable/ic_baseline_notifications_24"
-        android:title="Current Affairs" />
-    <item
-        android:id="@+id/navigationMyProfile"
-        android:icon="@drawable/ic_user"
-        android:title="Profile" />
+  <item android:title="Live Classes" android:icon="@android:drawable/ic_menu_search" android:id="@+id/navigationLive"/>
+
+  <item android:title="Test Series" android:icon="@drawable/ic_effort" android:id="@+id/navigationTest"/>
+
+  <item android:title="Current Affairs" android:icon="@drawable/ic_baseline_notifications_24" android:id="@+id/navigationCurrent"/>
+
+  <item android:title="Profile" android:icon="@drawable/ic_user" android:id="@+id/navigationMyProfile"/>
+
+  <!-- <item-->
 
 
+  <!-- android:id="@+id/navigationMenu"-->
 
 
-<!--    <item-->
-<!--        android:id="@+id/navigationMenu"-->
-<!--        android:icon="@android:drawable/ic_menu_sort_by_size"-->
-<!--        android:title="Menu" />-->
+  <!-- android:icon="@android:drawable/ic_menu_sort_by_size"-->
 
 
-
+  <!-- android:title="Menu" />-->
 
 
 </menu>

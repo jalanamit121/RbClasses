@@ -53,9 +53,6 @@ public class AllPurchasedCourseAdapter extends RecyclerView.Adapter<AllPurchased
             holder.txt_course.setText(list1.get(position).getBucket_Name());
             holder.img_rupee.setVisibility(View.GONE);
             holder.img_rupee1.setVisibility(View.GONE);
-//            holder.txt_discount.setText(list1.get(position).getDisplay_price());
-//            holder.txt_discount.setPaintFlags(holder.txt_discount.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//            holder.txt_actual_price.setText(list1.get(position).getDiscount_price());
             Picasso.get().load(list1.get(position).getBucket_Image()).fit().into(holder.course_image);
             holder.layout1.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -66,7 +63,7 @@ public class AllPurchasedCourseAdapter extends RecyclerView.Adapter<AllPurchased
                 }
             });
         }else {
-holder.layout1.setVisibility(View.GONE);
+            holder.layout1.setVisibility(View.GONE);
         }
 
 

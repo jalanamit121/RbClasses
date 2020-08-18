@@ -1,53 +1,131 @@
 package com.winbee.rbclasses;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.WebApi.ClientApi;
 import com.winbee.rbclasses.adapter.SolutionAdapter;
+import com.winbee.rbclasses.model.RefCode;
 import com.winbee.rbclasses.model.SolutionDoubtQuestion;
 import com.winbee.rbclasses.model.SolutionQuestion;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.balsikandar.crashreporter.CrashReporter.getContext;
+
 public class DoubtSolutionActivity extends AppCompatActivity {
     private ProgressBarUtil progressBarUtil;
-   private SolutionAdapter adapter;
+    private SolutionAdapter adapter;
     private ArrayList<SolutionQuestion> list;
     private RecyclerView askedSolution;
     EditText editTextGiveSolution;
-    ImageView submit_solution;
-    private TextView text_question,text_user,text_date;
+    ImageView submit_solution,WebsiteHome,img_share;
+    private TextView txt_user,txt_time,txt_ask_title,txt_ask_question,txt_commments;
+    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
+    private static final int REQUEST_CODE = 101;
+    String IMEINumber;
+    String UserMobile,UserPassword,android_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doubt_solution);
+        android_id = Settings.Secure.getString(getContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        UserMobile=SharedPrefManager.getInstance(this).refCode().getUsername();
+        UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
+//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+//        if (ActivityCompat.checkSelfPermission(DoubtSolutionActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(DoubtSolutionActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
+//            return;
+//        }
+//        IMEINumber = telephonyManager.getDeviceId();
+
         askedSolution = findViewById(R.id.gec_asked_solution_recycle);
         editTextGiveSolution=findViewById(R.id.editTextGiveSolution);
         submit_solution=findViewById(R.id.submit_solution);
-        text_question=findViewById(R.id.text_question);
-        text_question.setText(LocalData.FileNameToShow);
-        text_user=findViewById(R.id.text_user);
-        text_user.setText(LocalData.FileCreateName);
-        text_date=findViewById(R.id.text_date);
-        text_date.setText(LocalData.FileDate);
+        txt_user=findViewById(R.id.txt_user);
+        txt_user.setText(LocalData.User);
+        txt_time=findViewById(R.id.txt_time);
+        txt_time.setText(LocalData.Duration);
+        txt_ask_title=findViewById(R.id.txt_ask_title);
+        txt_ask_title.setText(LocalData.Title);
+        txt_ask_question=findViewById(R.id.txt_ask_question);
+        txt_ask_question.setText(LocalData.Discription);
+        txt_commments=findViewById(R.id.txt_commments);
+        txt_commments.setText(LocalData.Commnts);
+        layout_home = findViewById(R.id.layout_home);
+        layout_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent home = new Intent(DoubtSolutionActivity.this,MainActivity.class);
+                startActivity(home);
+            }
+        });
+
+        layout_course = findViewById(R.id.layout_course);
+        layout_course.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent live = new Intent(DoubtSolutionActivity.this, YouTubeVideoList.class);
+                startActivity(live);
+            }
+        });
+        layout_test = findViewById(R.id.layout_test);
+        layout_test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(DoubtSolutionActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+//                Intent doubt = new Intent(MainActivity.this,DoubtActivity.class);
+//                startActivity(doubt);
+            }
+        });
+        layout_current = findViewById(R.id.layout_current);
+        layout_current.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DoubtSolutionActivity.this, CurrentAffairsActivity.class);
+                startActivity(intent);
+            }
+        });
+        layout_doubt = findViewById(R.id.layout_doubt);
+        layout_doubt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DoubtSolutionActivity.this, DiscussionActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
         submit_solution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,5 +223,90 @@ public class DoubtSolutionActivity extends AppCompatActivity {
         });
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+
+        if (id == R.id.logout) {
+            logout();
+        }else if(id == R.id.website){
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.rbclasses.com"));
+            startActivity(intent);
+
+        }else if(id == R.id.share){
+            try {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "RB Classes");
+                String shareMessage= "\nRB Classes download the application.\n ";
+                shareMessage = shareMessage + "\nhttps://play.google.com/store/apps/details?id="+getPackageName() ;
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                startActivity(Intent.createChooser(shareIntent, "choose one"));
+            } catch(Exception e) {
+            }
+
+        }else if(id == R.id.rate){
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" +getPackageName())));
+
+        }else if(id == R.id.profile){
+            Intent intent = new Intent(DoubtSolutionActivity.this,DashboardCourseActivity.class);
+            startActivity(intent);
+        }else if(id == R.id.about){
+            Intent intent = new Intent(DoubtSolutionActivity.this,AboutUsActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+    private void logout() {
+
+        progressBarUtil.showProgress();
+        ClientApi mService = ApiClient.getClient().create(ClientApi.class);
+        Call<RefCode> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
+        Log.i("tag", "callRefCodeSignInApi: "+IMEINumber+UserMobile+UserPassword);
+        call.enqueue(new Callback<RefCode>() {
+            @Override
+            public void onResponse(Call<RefCode> call, Response<RefCode> response) {
+                int statusCode = response.code();
+                if (statusCode == 200 && response.body().getLoginStatus()!=false) {
+                    progressBarUtil.hideProgress();
+                    SharedPrefManager.getInstance(DoubtSolutionActivity.this).logout();
+                    startActivity(new Intent(DoubtSolutionActivity.this, LoginActivity.class));
+                    //Objects.requireNonNull(this).finish();
+                    finish();
+
+                } else {
+                    progressBarUtil.hideProgress();
+                    Toast.makeText(DoubtSolutionActivity.this, response.body().getMessageFailure(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RefCode> call, Throwable t) {
+                Toast.makeText(DoubtSolutionActivity.this, "Failed" + t.getMessage(), Toast.LENGTH_LONG).show();
+                System.out.println(t.getLocalizedMessage());
+            }
+        });
+    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+//        switch (requestCode) {
+//            case REQUEST_CODE: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    //Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    //Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
+//    }
 
 }

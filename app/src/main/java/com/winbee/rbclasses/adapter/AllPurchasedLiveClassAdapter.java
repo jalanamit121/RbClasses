@@ -13,8 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.winbee.rbclasses.LocalData;
 import com.winbee.rbclasses.R;
+import com.winbee.rbclasses.VimeoActivity;
+import com.winbee.rbclasses.YoutubeLibaray;
 import com.winbee.rbclasses.YoutubePlayer;
 import com.winbee.rbclasses.model.CourseContentModel;
 
@@ -41,28 +44,58 @@ public class AllPurchasedLiveClassAdapter extends RecyclerView.Adapter<AllPurcha
 
         if (list.get(position).getClass_status_dec().equalsIgnoreCase("Live")){
             holder.live_status.setText("Live");
+            holder.card_view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LocalData.LiveId = list.get(position).getURL();
+                    LocalData.DocumentId = list.get(position).getDocumentId();
+                    Intent intent = new Intent(context, YoutubeLibaray.class);
+                    context.startActivity(intent);
+                }
+            });
         }else if (list.get(position).getClass_status_dec().equalsIgnoreCase("Completed")){
             holder.live_status.setText("");
+            holder.card_view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LocalData.LiveId = list.get(position).getURL();
+                    LocalData.DocumentId = list.get(position).getDocumentId();
+                    Intent intent = new Intent(context, YoutubeLibaray.class);
+                    context.startActivity(intent);
+                }
+            });
+        }else if (list.get(position).getClass_status_dec().equalsIgnoreCase("NA")){
+            if (list.get(position).getType().equalsIgnoreCase("Vimeo")){
+                holder.live_status.setText("");
+                holder.card_view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        LocalData.LiveId = list.get(position).getURL();
+                        LocalData.DocumentId = list.get(position).getDocumentId();
+                        Intent intent = new Intent(context, VimeoActivity.class);
+                        context.startActivity(intent);
+                    }
+                });
+            }else if (list.get(position).getType().equalsIgnoreCase("YouTube")){
+                holder.live_status.setText("");
+                holder.card_view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        LocalData.LiveId = list.get(position).getURL();
+                        LocalData.DocumentId = list.get(position).getDocumentId();
+                        Intent intent = new Intent(context, YoutubeLibaray.class);
+                        context.startActivity(intent);
+                    }
+                });
+            }
+
         }else if (list.get(position).getClass_status_dec().equalsIgnoreCase("Not Started Yet")){
             holder.live_status.setText("Scheduled");
 
         }
         holder.title.setText(list.get(position).getTopic());
+        Picasso.get().load(list.get(position).getThumbnail()).fit().into(holder.youtubeThubnail);
         holder.teacher.setText("By-" + list.get(position).getFaculty());
-        holder.card_view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (list.get(position).getClass_status_dec().equalsIgnoreCase("Live") ||
-                                list.get(position).getClass_status_dec().equalsIgnoreCase("Completed")) {
-                            LocalData.LiveId = list.get(position).getURL();
-                            LocalData.DocumentId = list.get(position).getDocumentId();
-                            Intent intent = new Intent(context, YoutubePlayer.class);
-                            context.startActivity(intent);
-                        }else if (list.get(position).getClass_status_dec().equalsIgnoreCase("Not Started Yet")){
-                            Toast.makeText(context, "Class Not Started", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
     }
 
     @Override

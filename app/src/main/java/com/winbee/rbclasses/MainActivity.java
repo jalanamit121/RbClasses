@@ -1,52 +1,70 @@
 package com.winbee.rbclasses;
 
+import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.core.app.ActivityCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import com.balsikandar.crashreporter.BuildConfig;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.ViewPager.ViewPagerAdapter;
+import com.winbee.rbclasses.WebApi.ClientApi;
+import com.winbee.rbclasses.model.RefCode;
+
+import org.jsoup.Jsoup;
 
 import java.io.IOException;
-import java.util.Objects;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.balsikandar.crashreporter.CrashReporter.getContext;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    SwipeRefreshLayout refresh_main;
+    SwipeRefreshLayout refresh_layout;
     private boolean onLiveFragment = false;
     private boolean onHomeFragment = true;
     private ImageView WebsiteHome, img_share;
     private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
-    String Dail;
+    boolean version = false;
     String sCurrentVersion,sLastestVersion;
+    private ProgressBarUtil progressBarUtil;
+    private static final int REQUEST_CODE = 101;
+    String IMEINumber;
+    String UserMobile,UserPassword;
+    String android_id;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
 
@@ -55,7 +73,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       // new GetLastesVersion().execute();
+        progressBarUtil = new ProgressBarUtil(this);
+        //   new GetLastesVersion().execute();
+        //firebase push notification
+        if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel("Notifications","Notifications", NotificationManager.IMPORTANCE_DEFAULT);
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+
+        }
+        UserMobile=SharedPrefManager.getInstance(this).refCode().getUsername();
+        UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
+        android_id = Settings.Secure.getString(getContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        FirebaseMessaging.getInstance().subscribeToTopic("rbclasses")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "";
+                        if (!task.isSuccessful()) {
+                            msg = "failed";
+                        }
+//
+                        //Toast.makeText(GecHomeActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
         Uservalidation();
         layout_home = findViewById(R.id.layout_home);
         layout_course = findViewById(R.id.layout_course);
@@ -70,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         layout_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
 //                Intent doubt = new Intent(MainActivity.this,DoubtActivity.class);
 //                startActivity(doubt);
             }
@@ -87,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         layout_doubt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, DoubtActivity.class);
+                Intent intent = new Intent(MainActivity.this, DiscussionActivity.class);
                 startActivity(intent);
             }
         });
@@ -148,17 +193,17 @@ public class MainActivity extends AppCompatActivity {
             } catch(Exception e) {
             }
 
-    }else if(id == R.id.rate){
+        }else if(id == R.id.rate){
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" +getPackageName())));
 
-    }else if(id == R.id.profile){
-           Intent intent = new Intent(MainActivity.this,DashboardCourseActivity.class);
-           startActivity(intent);
+        }else if(id == R.id.profile){
+            Intent intent = new Intent(MainActivity.this,DashboardCourseActivity.class);
+            startActivity(intent);
         }else if(id == R.id.about){
             Intent intent = new Intent(MainActivity.this,AboutUsActivity.class);
             startActivity(intent);
         }
-            return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
 
     }
     public void Uservalidation() {
@@ -182,17 +227,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-        @Override
-        public void onBackPressed () {
-            super.onBackPressed();
-        }
-
-
-    private void logout() {
-        SharedPrefManager.getInstance(this).logout();
-        startActivity(new Intent(this, LoginActivity.class));
-        Objects.requireNonNull(this).finish();
+    @Override
+    public void onBackPressed () {
+        super.onBackPressed();
     }
+
+
+//    private void logout() {
+//        SharedPrefManager.getInstance(this).logout();
+//        startActivity(new Intent(this, LoginActivity.class));
+//        Objects.requireNonNull(this).finish();
+//    }
 
 //    // showing the update pop up to user
 //    private class GetLastesVersion extends AsyncTask<String,Void,String> {
@@ -215,12 +260,21 @@ public class MainActivity extends AppCompatActivity {
 //        protected void onPostExecute(String s) {
 //            sCurrentVersion = BuildConfig.VERSION_NAME;
 //            if (sLastestVersion !=null){
-//                float cVersion = Float.parseFloat(sCurrentVersion);
-//                float lVersion = Float.parseFloat(sLastestVersion);
-//                // check the condition whether the lastet version is greater than current version
-//                if (lVersion>cVersion){
-//                    // create update alert dilog box
-//                    updateAlertDialog();
+//                String[] ver1 =sCurrentVersion.split("\\.");//"1.3.1" 1.3
+//                String[] ver2 =sLastestVersion.split("\\.");//"1.3.2" 1.2
+//                Log.i("tag", "sLastestVersion: "+sLastestVersion);
+//                int len1= ver1.length;
+//                int len2= ver2.length;
+//
+//
+//                for(int i = 0; i < len1 ; i++)
+//                {
+//                    if(!ver1[i].equals(ver2[i]))
+//                    {
+//                        Log.i("log", "onPostExecute: "+ver1[i]+" "+ver2[i]);
+//                        version = true;
+//                        updateAlertDialog();
+//                    }
 //                }
 //            }
 //        }
@@ -243,7 +297,6 @@ public class MainActivity extends AppCompatActivity {
 //                dialogInterface.dismiss();
 //            }
 //        });
-//
 //        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
 //            @Override
 //            public void onClick(DialogInterface dialogInterface, int i) {
@@ -254,6 +307,50 @@ public class MainActivity extends AppCompatActivity {
 //        });
 //
 //        builder.show();
+//    }
+
+    private void logout() {
+
+        progressBarUtil.showProgress();
+        ClientApi mService = ApiClient.getClient().create(ClientApi.class);
+        Call<RefCode> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001","0");
+        Log.i("tag", "callRefCodeSignInApi: "+android_id+UserMobile+UserPassword);
+        call.enqueue(new Callback<RefCode>() {
+            @Override
+            public void onResponse(Call<RefCode> call, Response<RefCode> response) {
+                int statusCode = response.code();
+                if (statusCode == 200 && response.body().getLoginStatus()!=false) {
+                    progressBarUtil.hideProgress();
+                    SharedPrefManager.getInstance(MainActivity.this).logout();
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    //Objects.requireNonNull(this).finish();
+                    finish();
+
+                } else {
+                    progressBarUtil.hideProgress();
+                    Toast.makeText(MainActivity.this, response.body().getMessageFailure(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RefCode> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Failed" + t.getMessage(), Toast.LENGTH_LONG).show();
+                System.out.println(t.getLocalizedMessage());
+            }
+        });
+    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+//        switch (requestCode) {
+//            case REQUEST_CODE: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    //Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    //Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
 //    }
 }
 

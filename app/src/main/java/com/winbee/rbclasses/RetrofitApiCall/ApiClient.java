@@ -14,7 +14,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ApiClient {
     private static Retrofit retrofit = null;
-    public static String BASE_URL = "http://edu.rbclasses.com//api/";
+    public static String BASE_URL = "http://edu.rbclasses.com/api/";
 
     public static Retrofit getClient() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

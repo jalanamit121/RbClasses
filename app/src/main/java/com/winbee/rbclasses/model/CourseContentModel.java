@@ -21,12 +21,6 @@ public class CourseContentModel implements Serializable {
     @SerializedName("Published")
     @Expose
     private String published;
-    @SerializedName("class_status_dec")
-    @Expose
-    private String class_status_dec;
-    @SerializedName("class_status_enc")
-    @Expose
-    private Integer class_status_enc;
     @SerializedName("Additional_info")
     @Expose
     private String additional_info;
@@ -39,6 +33,15 @@ public class CourseContentModel implements Serializable {
     @SerializedName("ClassType")
     @Expose
     private Integer classType;
+    @SerializedName("class_status_dec")
+    @Expose
+    private String class_status_dec;
+    @SerializedName("Thumbnail")
+    @Expose
+    private String thumbnail;
+    @SerializedName("class_status_enc")
+    @Expose
+    private Integer class_status_enc;
     @SerializedName("Type")
     @Expose
     private String type;
@@ -86,22 +89,6 @@ public class CourseContentModel implements Serializable {
         this.published = published;
     }
 
-    public String getClass_status_dec() {
-        return class_status_dec;
-    }
-
-    public void setClass_status_dec(String class_status_dec) {
-        this.class_status_dec = class_status_dec;
-    }
-
-    public Integer getClass_status_enc() {
-        return class_status_enc;
-    }
-
-    public void setClass_status_enc(Integer class_status_enc) {
-        this.class_status_enc = class_status_enc;
-    }
-
     public String getAdditional_info() {
         return additional_info;
     }
@@ -132,6 +119,30 @@ public class CourseContentModel implements Serializable {
 
     public void setClassType(Integer classType) {
         this.classType = classType;
+    }
+
+    public String getClass_status_dec() {
+        return class_status_dec;
+    }
+
+    public void setClass_status_dec(String class_status_dec) {
+        this.class_status_dec = class_status_dec;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public Integer getClass_status_enc() {
+        return class_status_enc;
+    }
+
+    public void setClass_status_enc(Integer class_status_enc) {
+        this.class_status_enc = class_status_enc;
     }
 
     public String getType() {

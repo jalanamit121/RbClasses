@@ -28,7 +28,7 @@ public class McqSolutionAdapter extends RecyclerView.Adapter<McqSolutionAdapter.
     @NonNull
     @Override
     public McqSolutionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.asksolutionadapter,parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mcq_solution_adapter,parent, false);
         return  new McqSolutionAdapter.ViewHolder(view);
     }
 
@@ -36,9 +36,10 @@ public class McqSolutionAdapter extends RecyclerView.Adapter<McqSolutionAdapter.
     public void onBindViewHolder(@NonNull McqSolutionAdapter.ViewHolder holder, final int position) {
         //setting data toAd apter List
 
-            holder.text_solution.setText(list.get(position).getUservalue());
-            holder.text_date_solution.setText(list.get(position).getTime());
-            holder.text_user_solution.setText(list.get(position).getUsername());
+        holder.text_user.setText(list.get(position).getUsername());
+        holder.text_user_answer.setText(list.get(position).getUservalue());
+        holder.text_user_message.setText(list.get(position).getMessage());
+        holder.text_user_date.setText(list.get(position).getTime());
 
 
 
@@ -55,17 +56,15 @@ public class McqSolutionAdapter extends RecyclerView.Adapter<McqSolutionAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView text_question,text_user,text_date,text_solution,text_user_solution,text_date_solution;
+        private TextView text_user_message,text_user_answer,text_user,text_user_date;
         private RelativeLayout branch_live;
         private ImageView img_question,img_solution;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            text_question = itemView.findViewById(R.id.text_question);
+            text_user_message = itemView.findViewById(R.id.text_user_message);
+            text_user_answer = itemView.findViewById(R.id.text_user_answer);
             text_user = itemView.findViewById(R.id.text_user);
-            text_date = itemView.findViewById(R.id.text_date);
-            text_solution = itemView.findViewById(R.id.text_solution);
-            text_user_solution = itemView.findViewById(R.id.text_user_solution);
-            text_date_solution = itemView.findViewById(R.id.text_date_solution);
+            text_user_date = itemView.findViewById(R.id.text_user_date);
             branch_live = itemView.findViewById(R.id.branch_live);
         }
     }

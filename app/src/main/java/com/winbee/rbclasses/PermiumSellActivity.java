@@ -1,10 +1,15 @@
 package com.winbee.rbclasses;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -17,7 +22,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.razorpay.Checkout;
 import com.razorpay.PaymentData;
@@ -27,6 +34,7 @@ import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.WebApi.ClientApi;
 import com.winbee.rbclasses.model.CourseModel;
 import com.winbee.rbclasses.model.PaymentModel;
+import com.winbee.rbclasses.model.RefCode;
 
 import org.json.JSONObject;
 
@@ -35,6 +43,8 @@ import java.util.Objects;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.balsikandar.crashreporter.CrashReporter.getContext;
 
 public class PermiumSellActivity extends AppCompatActivity implements PaymentResultWithDataListener {
     Button pay_btn,view_demo;
@@ -49,6 +59,9 @@ public class PermiumSellActivity extends AppCompatActivity implements PaymentRes
     private ProgressBarUtil progressBarUtil;
     ImageView payment_image;
     private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
+    private static final int REQUEST_CODE = 101;
+    String IMEINumber;
+    String UserMobile,UserPassword,android_id;
 
 
     TextView gec_branchname, someTextView,txt_total_video,txt_total_document,txt_actual_price;
@@ -56,12 +69,22 @@ public class PermiumSellActivity extends AppCompatActivity implements PaymentRes
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permium_sell);
+        android_id = Settings.Secure.getString(getContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        UserMobile=SharedPrefManager.getInstance(this).refCode().getUsername();
+        UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
+//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+//        if (ActivityCompat.checkSelfPermission(PermiumSellActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(PermiumSellActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
+//            return;
+//        }
+//        IMEINumber = telephonyManager.getDeviceId();
 
 
         UserId = SharedPrefManager.getInstance(this).refCode().getUserId();
         UserName = SharedPrefManager.getInstance(this).refCode().getUsername();
-         someTextView = (TextView) findViewById(R.id.txt_discount);
-         someTextView.setText(LocalData.DiscountPrice);
+        someTextView = (TextView) findViewById(R.id.txt_discount);
+        someTextView.setText(LocalData.DiscountPrice);
         layout_home = findViewById(R.id.layout_home);
         layout_home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +123,7 @@ public class PermiumSellActivity extends AppCompatActivity implements PaymentRes
         layout_doubt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PermiumSellActivity.this, DoubtActivity.class);
+                Intent intent = new Intent(PermiumSellActivity.this, DiscussionActivity.class);
                 startActivity(intent);
             }
         });
@@ -112,9 +135,9 @@ public class PermiumSellActivity extends AppCompatActivity implements PaymentRes
         view_demo=findViewById(R.id.view_demo);
         payment_image=findViewById(R.id.payment_image);
         Picasso.get().load(LocalData.PayImage).into(payment_image);
-        txt_total_video=findViewById(R.id.txt_total_video);
+       // txt_total_video=findViewById(R.id.txt_total_video);
         txt_total_video.setText("Total Videos("+ LocalData.TotalVideo+")");
-        txt_total_document=findViewById(R.id.txt_total_document);
+      //  txt_total_document=findViewById(R.id.txt_total_document);
         txt_total_document.setText("Total Documents("+LocalData.TotalDocument+")");
         txt_actual_price=findViewById(R.id.txt_actual_price);
         txt_actual_price.setPaintFlags(txt_actual_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -131,10 +154,10 @@ public class PermiumSellActivity extends AppCompatActivity implements PaymentRes
             }
         });
         user_id.setText(UserId);
-      amount_org_id=findViewById(R.id.amount_org_id);
+        amount_org_id=findViewById(R.id.amount_org_id);
         org_id=findViewById(R.id.org_id);
         Checkout.preload(getApplicationContext());
-        }
+    }
 
     public void startPayment() {
         Checkout checkout = new Checkout();
@@ -155,7 +178,7 @@ public class PermiumSellActivity extends AppCompatActivity implements PaymentRes
 
             options.put("description", "Purchase Course");
             options.put("order_id",LocalData.RazorpayOrderId);
-           // options.put("image", "http://edu.rbclasses.com/api/images/RBClasses-logo.jpeg");
+            // options.put("image", "http://edu.rbclasses.com/api/images/RBClasses-logo.jpeg");
             options.put("currency", "INR");
             options.put("amount",str1);
 
@@ -223,7 +246,7 @@ public class PermiumSellActivity extends AppCompatActivity implements PaymentRes
 
             @Override
             public void onFailure(Call<PaymentModel> call, Throwable t) {
-                 System.out.println("Suree: "+t.getMessage());
+                System.out.println("Suree: "+t.getMessage());
 
                 Toast.makeText(getApplicationContext(),"Failed"+t.getMessage() , Toast.LENGTH_SHORT).show();
 
@@ -231,10 +254,48 @@ public class PermiumSellActivity extends AppCompatActivity implements PaymentRes
         });
     }
     private void logout() {
-        SharedPrefManager.getInstance(this).logout();
-        startActivity(new Intent(this, LoginActivity.class));
-        Objects.requireNonNull(this).finish();
+
+        progressBarUtil.showProgress();
+        ClientApi mService = ApiClient.getClient().create(ClientApi.class);
+        Call<RefCode> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
+        Log.i("tag", "callRefCodeSignInApi: "+IMEINumber+UserMobile+UserPassword);
+        call.enqueue(new Callback<RefCode>() {
+            @Override
+            public void onResponse(Call<RefCode> call, Response<RefCode> response) {
+                int statusCode = response.code();
+                if (statusCode == 200 && response.body().getLoginStatus()!=false) {
+                    progressBarUtil.hideProgress();
+                    SharedPrefManager.getInstance(PermiumSellActivity.this).logout();
+                    startActivity(new Intent(PermiumSellActivity.this, LoginActivity.class));
+                    //Objects.requireNonNull(this).finish();
+                    finish();
+
+                } else {
+                    progressBarUtil.hideProgress();
+                    Toast.makeText(PermiumSellActivity.this, response.body().getMessageFailure(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RefCode> call, Throwable t) {
+                Toast.makeText(PermiumSellActivity.this, "Failed" + t.getMessage(), Toast.LENGTH_LONG).show();
+                System.out.println(t.getLocalizedMessage());
+            }
+        });
     }
+    //    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+//        switch (requestCode) {
+//            case REQUEST_CODE: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    //Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    //Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
+//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);

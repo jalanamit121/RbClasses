@@ -1,368 +1,338 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fitsSystemWindows="true"
-    android:scrollbars="none"
-    android:background="@color/bg_color">
+<?xml version="1.0" encoding="UTF-8"?>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <ScrollView android:background="@color/bg_color" android:scrollbars="none" android:fitsSystemWindows="true" android:layout_height="fill_parent" android:layout_width="fill_parent" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="24dp"
-            android:paddingTop="26dp"
-            android:paddingRight="24dp">
+  <RelativeLayout android:layout_height="match_parent" android:layout_width="match_parent">
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/titletxt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:gravity="center"
-                    android:text="@string/new_account"
-                    android:textColor="#3c4b5d"
-                    android:textSize="22sp" />
-
-                <TextView
-                    android:id="@+id/desctxt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:gravity="center"
-                    android:text="@string/signup_desc"
-                    android:textColor="@color/darkgrey"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
+  <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:paddingRight="24dp" android:paddingTop="26dp" android:paddingLeft="24dp" android:orientation="vertical">
 
 
-            <LinearLayout
-                android:id="@+id/userinfo_tab"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+  <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="vertical" android:layout_marginBottom="20dp">
+
+  <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:textSize="22sp" android:textColor="#3c4b5d" android:text="@string/new_account" android:gravity="center" android:fontFamily="@font/proximanovaregular" android:id="@+id/titletxt"/>
+
+  <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:textSize="16sp" android:textColor="@color/darkgrey" android:text="@string/signup_desc" android:gravity="center" android:fontFamily="@font/proximanovaregular" android:id="@+id/desctxt" android:layout_marginTop="10dp"/>
+
+</LinearLayout>
 
 
-
-                <LinearLayout
-                    android:id="@+id/namell"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/circularbordersolid"
-                    android:gravity="center"
-                    android:padding="18dp">
-
-                    <EditText
-                        android:id="@+id/editTextUsername"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:fontFamily="@font/proximanovaregular"
-                        android:hint="Name"
-                        android:textColor="@color/edit_text"
-                        android:textColorHint="@color/edit_text"
-                        android:inputType="text"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/circularbordersolid"
-                    android:gravity="center"
-                    android:padding="18dp">
+  <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="vertical" android:id="@+id/userinfo_tab">
 
 
-                    <EditText
-                        android:id="@+id/editTextPhone"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
-                        android:background="@null"
-                        android:inputType="phone"
-                        android:textSize="14sp"
-                        android:textColorHint="@color/edit_text"
-                        android:hint="@string/phone"
-                        android:textColor="@color/edit_text"
-                        android:singleLine="true"/>
+  <LinearLayout android:background="@drawable/circularbordersolid" android:layout_height="wrap_content" android:layout_width="match_parent" android:gravity="center" android:id="@+id/namell" android:layout_marginTop="20dp" android:padding="18dp">
 
-                </LinearLayout>
+  <EditText android:background="@null" android:layout_height="wrap_content" android:layout_width="match_parent" android:textSize="14sp" android:textColor="@color/edit_text" android:fontFamily="@font/proximanovaregular" android:id="@+id/editTextUsername" android:inputType="text" android:textColorHint="@color/edit_text" android:hint="Name"/>
 
-                <LinearLayout
-                    android:id="@+id/emailll"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/circularbordersolid"
-                    android:gravity="center"
-                    android:padding="18dp">
+</LinearLayout>
 
-                    <EditText
-                        android:id="@+id/editTextEmail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:fontFamily="@font/proximanovaregular"
-                        android:hint="Email"
-                        android:textColor="@color/edit_text"
-                        android:textColorHint="@color/edit_text"
-                        android:inputType="textEmailAddress"
-                        android:textSize="14sp" />
-                </LinearLayout>
 
-                <!--                <LinearLayout-->
-                <!--                    android:id="@+id/org_code"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginTop="20dp"-->
-                <!--                    android:background="@drawable/circularbordersolid"-->
-                <!--                    android:gravity="center"-->
-                <!--                    android:padding="18dp">-->
+  -<LinearLayout android:background="@drawable/circularbordersolid" android:layout_height="wrap_content" android:layout_width="match_parent" android:gravity="center" android:layout_marginTop="20dp" android:padding="18dp">
 
-                <!--                    <ss.anoop.awesomeedittext.AwesomeEditText-->
-                <!--                        android:id="@+id/editTextOrgCode"-->
-                <!--                        android:layout_width="match_parent"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:background="@null"-->
-                <!--                        android:fontFamily="@font/proximanovaregular"-->
-                <!--                        android:hint="Org Code"-->
-                <!--                        android:textColorHint="@color/edit_text"-->
-                <!--                        android:inputType="textEmailAddress"-->
-                <!--                        android:textSize="14sp" />-->
+  <EditText android:background="@null" android:layout_height="wrap_content" android:layout_width="match_parent" android:textSize="14sp" android:textColor="@color/edit_text" android:id="@+id/editTextPhone" android:inputType="phone" android:textColorHint="@color/edit_text" android:hint="@string/phone" android:singleLine="true"/>
 
-                <!--                </LinearLayout>-->
+</LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/referal_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/circularbordersolid"
-                    android:visibility="gone"
-                    android:gravity="center"
-                    android:padding="18dp">
 
-                    <TextView
-                        android:id="@+id/editTextreferal_code"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:fontFamily="@font/proximanovaregular"
-                        android:textColor="@color/edit_text"
-                        android:text="RBC001"
-                        android:textSize="14sp" />
+  -<LinearLayout android:background="@drawable/circularbordersolid" android:layout_height="wrap_content" android:layout_width="match_parent" android:gravity="center" android:id="@+id/emailll" android:layout_marginTop="20dp" android:padding="18dp">
 
-                </LinearLayout>
+  <EditText android:background="@null" android:layout_height="wrap_content" android:layout_width="match_parent" android:textSize="14sp" android:textColor="@color/edit_text" android:fontFamily="@font/proximanovaregular" android:id="@+id/editTextEmail" android:inputType="textEmailAddress" android:textColorHint="@color/edit_text" android:hint="Email"/>
+
+</LinearLayout>
+
+  <!-- <LinearLayout-->
+
+
+  <!-- android:id="@+id/org_code"-->
+
+
+  <!-- android:layout_width="match_parent"-->
+
+
+  <!-- android:layout_height="wrap_content"-->
+
+
+  <!-- android:layout_marginTop="20dp"-->
+
+
+  <!-- android:background="@drawable/circularbordersolid"-->
+
+
+  <!-- android:gravity="center"-->
+
+
+  <!-- android:padding="18dp">-->
+
+
+  <!-- <ss.anoop.awesomeedittext.AwesomeEditText-->
+
+
+  <!-- android:id="@+id/editTextOrgCode"-->
+
+
+  <!-- android:layout_width="match_parent"-->
+
+
+  <!-- android:layout_height="wrap_content"-->
+
+
+  <!-- android:background="@null"-->
+
+
+  <!-- android:fontFamily="@font/proximanovaregular"-->
+
+
+  <!-- android:hint="Org Code"-->
+
+
+  <!-- android:textColorHint="@color/edit_text"-->
+
+
+  <!-- android:inputType="textEmailAddress"-->
+
+
+  <!-- android:textSize="14sp" />-->
+
+
+  <!-- </LinearLayout>-->
 
 
 
-                <LinearLayout
+  -<LinearLayout android:background="@drawable/circularbordersolid" android:layout_height="wrap_content" android:layout_width="match_parent" android:gravity="center" android:id="@+id/referal_code" android:layout_marginTop="20dp" android:padding="18dp" android:visibility="gone">
 
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/circularbordersolid"
-                    android:gravity="center"
-                    android:padding="18dp">
+  <TextView android:background="@null" android:layout_height="wrap_content" android:layout_width="match_parent" android:textSize="14sp" android:textColor="@color/edit_text" android:text="RBC001" android:fontFamily="@font/proximanovaregular" android:id="@+id/editTextreferal_code"/>
 
-                    <EditText
-                        android:id="@+id/editTextPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:fontFamily="@font/proximanovaregular"
-                        android:hint="Password"
-                        android:textColor="@color/edit_text"
-                        android:textColorHint="@color/edit_text"
-                        android:inputType="textPassword"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-                <LinearLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/circularbordersolid"
-                    android:gravity="center"
-                    android:padding="18dp">
-
-                    <EditText
-                        android:id="@+id/editTextre_Password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:fontFamily="@font/proximanovaregular"
-                        android:hint=" Re-enter Password"
-                        android:textColor="@color/edit_text"
-                        android:textColorHint="@color/edit_text"
-                        android:inputType="textPassword"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-                <!--                <LinearLayout-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:background="@drawable/circularbordersolid"-->
-                <!--                    android:gravity="center"-->
-                <!--                    android:layout_marginTop="20dp"-->
-                <!--                    android:orientation="horizontal"-->
-                <!--                    android:padding="18dp">-->
-
-                <!--                    <TextView-->
-                <!--                        android:id="@+id/editTextReferalCode"-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:background="@null"-->
-                <!--                        android:fontFamily="@font/proximanovaregular"-->
-                <!--                        android:hint="I am :"-->
-                <!--                        android:inputType="textPassword"-->
-                <!--                        android:textColorHint="@color/edit_text"-->
-                <!--                        android:textSize="14sp" />-->
-
-                <!--                    <Space-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:layout_weight="1" />-->
-
-                <!--                    <TextView-->
-                <!--                        android:id="@+id/link_forgotpassword"-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:fontFamily="@font/proximanovaregular"-->
-                <!--                        android:gravity="right"-->
-                <!--                        android:text="Student"-->
-                <!--                        android:textColorHint="@color/edit_text"-->
-                <!--                        android:textSize="14sp" />-->
-
-                <!--                </LinearLayout>-->
+</LinearLayout>
 
 
+  -<LinearLayout android:background="@drawable/circularbordersolid" android:layout_height="wrap_content" android:layout_width="match_parent" android:gravity="center" android:layout_marginTop="20dp" android:padding="18dp">
+
+  <EditText android:background="@null" android:layout_height="wrap_content" android:layout_width="match_parent" android:textSize="14sp" android:textColor="@color/edit_text" android:fontFamily="@font/proximanovaregular" android:id="@+id/editTextPassword" android:inputType="textPassword" android:textColorHint="@color/edit_text" android:hint="Password"/>
+
+</LinearLayout>
+
+
+  -<LinearLayout android:background="@drawable/circularbordersolid" android:layout_height="wrap_content" android:layout_width="match_parent" android:gravity="center" android:layout_marginTop="20dp" android:padding="18dp">
+
+  <EditText android:background="@null" android:layout_height="wrap_content" android:layout_width="match_parent" android:textSize="14sp" android:textColor="@color/edit_text" android:fontFamily="@font/proximanovaregular" android:id="@+id/editTextre_Password" android:inputType="textPassword" android:textColorHint="@color/edit_text" android:hint=" Re-enter Password"/>
+
+</LinearLayout>
+
+  <!-- <LinearLayout-->
+
+
+  <!-- android:layout_width="match_parent"-->
+
+
+  <!-- android:layout_height="wrap_content"-->
+
+
+  <!-- android:background="@drawable/circularbordersolid"-->
+
+
+  <!-- android:gravity="center"-->
+
+
+  <!-- android:layout_marginTop="20dp"-->
+
+
+  <!-- android:orientation="horizontal"-->
+
+
+  <!-- android:padding="18dp">-->
+
+
+  <!-- <TextView-->
+
+
+  <!-- android:id="@+id/editTextReferalCode"-->
+
+
+  <!-- android:layout_width="wrap_content"-->
+
+
+  <!-- android:layout_height="wrap_content"-->
+
+
+  <!-- android:background="@null"-->
+
+
+  <!-- android:fontFamily="@font/proximanovaregular"-->
+
+
+  <!-- android:hint="I am :"-->
+
+
+  <!-- android:inputType="textPassword"-->
+
+
+  <!-- android:textColorHint="@color/edit_text"-->
+
+
+  <!-- android:textSize="14sp" />-->
+
+
+  <!-- <Space-->
+
+
+  <!-- android:layout_width="wrap_content"-->
+
+
+  <!-- android:layout_height="wrap_content"-->
+
+
+  <!-- android:layout_weight="1" />-->
+
+
+  <!-- <TextView-->
+
+
+  <!-- android:id="@+id/link_forgotpassword"-->
+
+
+  <!-- android:layout_width="wrap_content"-->
+
+
+  <!-- android:layout_height="wrap_content"-->
+
+
+  <!-- android:fontFamily="@font/proximanovaregular"-->
+
+
+  <!-- android:gravity="right"-->
+
+
+  <!-- android:text="Student"-->
+
+
+  <!-- android:textColorHint="@color/edit_text"-->
+
+
+  <!-- android:textSize="14sp" />-->
+
+
+  <!-- </LinearLayout>-->
+
+
+  <!-- <LinearLayout-->
+
+
+  <!-- android:layout_width="match_parent"-->
+
+
+  <!-- android:layout_height="wrap_content"-->
+
+
+  <!-- android:padding="15dp"-->
+
+
+  <!-- android:layout_marginTop="20dp"-->
+
+
+  <!-- android:background="@drawable/circularbordersolid"-->
+
+
+  <!-- android:id="@+id/phonenumberll"-->
+
+
+  <!-- android:gravity="center_vertical">-->
+
+
+  <!-- <Button-->
+
+
+  <!-- android:id="@+id/btnOrder"-->
+
+
+  <!-- android:layout_width="wrap_content"-->
+
+
+  <!-- android:layout_height="wrap_content"-->
+
+
+  <!-- android:layout_alignParentTop="true"-->
+
+
+  <!-- android:layout_centerHorizontal="true"-->
+
+
+  <!-- android:text="Area of Interest" />-->
+
+
+  <!-- <TextView-->
+
+
+  <!-- android:id="@+id/tvItemSelected"-->
+
+
+  <!-- android:layout_width="wrap_content"-->
+
+
+  <!-- android:layout_height="wrap_content"-->
+
+
+  <!-- android:layout_centerHorizontal="true"-->
+
+
+  <!-- android:layout_centerVertical="true"-->
+
+
+  <!-- android:gravity="center"-->
+
+
+  <!-- android:textColor="@color/colorPrimary"-->
+
+
+  <!-- android:textSize="25sp"-->
+
+
+  <!-- android:textStyle="italic" />-->
+
+
+  <!-- </LinearLayout>-->
+
+
+  <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textSize="12sp" android:text="@string/message" android:fontFamily="@font/proximanovaregular" android:id="@+id/phonenumbertextll" android:layout_marginTop="8dp" android:padding="10dp" android:textAlignment="center"/>
+
+  <Button android:background="@drawable/circularbluebordersolid" android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_marginBottom="14dp" android:textColor="@color/white" android:text="Continue" android:fontFamily="@font/proximanovaregular" android:id="@+id/buttonRegister" android:layout_marginTop="24dp" android:padding="16dp"/>
+
+</LinearLayout>
+
+  <!-- <LinearLayout-->
+
+
+  <!-- android:id="@+id/verification_tab"-->
+
+
+  <!-- android:layout_width="match_parent"-->
+
+
+  <!-- android:layout_height="wrap_content"-->
+
+
+  <!-- android:orientation="vertical"-->
+
+
+  <!-- android:gravity="center_horizontal"-->
+
+
+  <!-- android:layout_marginTop="20dp">-->
 
 
 
-                <!--                <LinearLayout-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:padding="15dp"-->
-                <!--                    android:layout_marginTop="20dp"-->
-                <!--                    android:background="@drawable/circularbordersolid"-->
-                <!--                    android:id="@+id/phonenumberll"-->
-                <!--                    android:gravity="center_vertical">-->
-                <!--                    <Button-->
-                <!--                        android:id="@+id/btnOrder"-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:layout_alignParentTop="true"-->
-                <!--                        android:layout_centerHorizontal="true"-->
-                <!--                        android:text="Area of Interest" />-->
+  -<LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="horizontal" android:layout_marginBottom="24dp" android:gravity="center" android:id="@+id/link_login" android:padding="10dp">
 
-                <!--                    <TextView-->
-                <!--                        android:id="@+id/tvItemSelected"-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:layout_centerHorizontal="true"-->
-                <!--                        android:layout_centerVertical="true"-->
-                <!--                        android:gravity="center"-->
-                <!--                        android:textColor="@color/colorPrimary"-->
-                <!--                        android:textSize="25sp"-->
-                <!--                        android:textStyle="italic" />-->
+  <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textSize="16dip" android:textColor="#3c4b5d" android:text="Already a member?" android:gravity="center" android:fontFamily="@font/proximanovaregular"/>
 
+  <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textSize="16dip" android:textColor="#8e9cfe" android:text=" Login" android:gravity="center" android:fontFamily="@font/proximanovaregular" android:id="@+id/textViewLogin" android:onClick="loginactivity"/>
 
+</LinearLayout>
 
+</LinearLayout>
 
-                <!--                </LinearLayout>-->
+  <ProgressBar android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/progressBar" android:visibility="gone" android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
 
+</RelativeLayout>
 
-                <TextView
-                    android:id="@+id/phonenumbertextll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:padding="10dp"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:text="@string/message"
-                    android:textAlignment="center"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/buttonRegister"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="14dp"
-                    android:background="@drawable/circularbluebordersolid"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:padding="16dp"
-                    android:text="Continue"
-                    android:textColor="@color/white" />
-
-            </LinearLayout>
-
-            <!--            <LinearLayout-->
-            <!--                android:id="@+id/verification_tab"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:orientation="vertical"-->
-            <!--                android:gravity="center_horizontal"-->
-            <!--                android:layout_marginTop="20dp">-->
-
-
-
-            <LinearLayout
-                android:id="@+id/link_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:gravity="center"
-                    android:text="Already a member?"
-                    android:textColor="#3c4b5d"
-                    android:textSize="16dip" />
-
-                <TextView
-                    android:id="@+id/textViewLogin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:gravity="center"
-                    android:text=" Login"
-                    android:onClick="loginactivity"
-                    android:textColor="#8e9cfe"
-                    android:textSize="16dip" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-        <ProgressBar
-            android:visibility="gone"
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" />
-    </RelativeLayout>
 </ScrollView>

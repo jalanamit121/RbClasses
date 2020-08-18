@@ -10,31 +10,31 @@ import com.winbee.rbclasses.LiveFragment;
 import com.winbee.rbclasses.LivePurchasedFragment;
 
 public class ViewPagerLivePurchasedAdapter extends FragmentStatePagerAdapter {
-    //    String[] tabarray = new String[]{"Home","Live Classes"};
+  //    String[] tabarray = new String[]{"Home","Live Classes"};
 //    Integer tabnumber = 2;
-    int mNumOfTabs;
+  int mNumOfTabs;
 
-    public ViewPagerLivePurchasedAdapter(FragmentManager fm, int NumOfTabs) {
-        super(fm);
-        this.mNumOfTabs=NumOfTabs;
+  public ViewPagerLivePurchasedAdapter(FragmentManager fm, int NumOfTabs) {
+    super(fm);
+    this.mNumOfTabs=NumOfTabs;
+  }
+
+  @Override
+  public Fragment getItem(int position) {
+    switch (position) {
+      case 0:
+        LivePurchasedFragment one = new LivePurchasedFragment();
+        return one;
+      case 1:
+        FragmentNotesPurchased two = new FragmentNotesPurchased();
+        return two;
+
     }
+    return null;
+  }
 
-    @Override
-    public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                LivePurchasedFragment one = new LivePurchasedFragment();
-                return one;
-            case 1:
-                FragmentNotesPurchased two = new FragmentNotesPurchased();
-                return two;
-
-        }
-        return null;
-    }
-
-    @Override
-    public int getCount() {
-        return mNumOfTabs;
-    }
+  @Override
+  public int getCount() {
+    return mNumOfTabs;
+  }
 }
