@@ -19,6 +19,7 @@ import com.squareup.picasso.Picasso;
 import com.winbee.rbclasses.LocalData;
 import com.winbee.rbclasses.R;
 import com.winbee.rbclasses.VimeoActivity;
+import com.winbee.rbclasses.YouTubeComplete;
 import com.winbee.rbclasses.YoutubeLibaray;
 import com.winbee.rbclasses.YoutubePlayer;
 import com.winbee.rbclasses.model.CourseContentModel;
@@ -44,7 +45,7 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AllLiveClassAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final AllLiveClassAdapter.ViewHolder holder, final int position) {
 
         if (list.get(position).getClass_status_dec().equalsIgnoreCase("Live")){
             holder.live_status.setText("Live");
@@ -74,7 +75,7 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
                         }
 
                     });
-                }else if (list.get(position).getType().equalsIgnoreCase("YouTube")){
+                }else if (list.get(position).getType().equals("YouTube")){
                     holder.img_lock.setVisibility(View.GONE);
                     holder.img_Unlock.setVisibility(View.VISIBLE);
                     holder.card_view.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +83,7 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
                         public void onClick(View view) {
                             LocalData.LiveId = list.get(position).getURL();
                             LocalData.DocumentId = list.get(position).getDocumentId();
-                            Intent intent = new Intent(context, YoutubeLibaray.class);
+                            Intent intent = new Intent(context, YouTubeComplete.class);
                             context.startActivity(intent);
                         }
                     });
@@ -119,13 +120,18 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
                 holder.card_view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (list.get(position).getClass_status_dec().equalsIgnoreCase("Live") ||
-                                list.get(position).getClass_status_dec().equalsIgnoreCase("Completed")) {
+                        if (list.get(position).getClass_status_dec().equalsIgnoreCase("Live")) {
                             LocalData.LiveId = list.get(position).getURL();
                             LocalData.DocumentId = list.get(position).getDocumentId();
                             Intent intent = new Intent(context, YoutubeLibaray.class);
                             context.startActivity(intent);
-                        }else if (list.get(position).getClass_status_dec().equalsIgnoreCase("Not Started Yet")) {
+                        }else if ( list.get(position).getClass_status_dec().equalsIgnoreCase("Completed")){
+                            LocalData.LiveId = list.get(position).getURL();
+                            LocalData.DocumentId = list.get(position).getDocumentId();
+                            Intent intent = new Intent(context, YouTubeComplete.class);
+                            context.startActivity(intent);
+                        }
+                        else if (list.get(position).getClass_status_dec().equalsIgnoreCase("Not Started Yet")) {
                             Toast.makeText(context, "Class Not Started", Toast.LENGTH_SHORT).show();
                         }
                     }

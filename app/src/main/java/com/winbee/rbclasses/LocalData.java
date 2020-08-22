@@ -41,4 +41,8 @@ public class LocalData {
     //payment model
     public static  String Org_id="";
     public static  String RazorpayOrderId="";
+
+
+    public static  String Otp="";
+    public static  String Mobile="";
 }

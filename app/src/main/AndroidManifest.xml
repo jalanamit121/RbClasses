@@ -1,98 +1,116 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.winbee.rbclasses">
 
-    <manifest package="com.winbee.rbclasses" xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/rblogo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".YouTubeComplete"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustUnspecified" ></activity>
+        <activity
+            android:name=".YoutubeLibaray"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustUnspecified" />
+        <activity android:name=".DiscussionActivity" />
+        <activity
+            android:name=".VimeoActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".LiveDataPurchasedActivity" />
+        <activity android:name=".PermiumSellActivity" />
+        <activity android:name=".LiveDataActivity" />
+        <activity android:name=".CurrentAffairsActivity" />
+        <activity android:name=".AboutUsActivity" />
+        <activity android:name=".McqSolutionActivity" />
+        <activity
+            android:name=".NewDoubtActivity"
+            android:label="Doubt"
+            android:parentActivityName=".DoubtActivity" />
+        <activity
+            android:name=".DoubtSolutionActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Doubt Solution"
+            android:parentActivityName=".DiscussionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DoubtActivity"
+            android:label="Doubt"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".NotificationActivity"
+            android:label="Notification"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RegisterActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".OtpVerficationActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".IntroSliderActivity" />
+        <activity android:name=".ForgetPasswordActivity" />
+        <activity android:name=".ResetPassWordActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".PdfWebActivity" />
+        <activity
+            android:name=".StudyMaterial"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".YoutubePlayer"
+            android:configChanges="orientation|screenSize"
+            android:label="RB Classes"
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="adjustUnspecified" />
+        <activity android:name=".YouTubeVideoList" />
+        <activity
+            android:name=".CourseStaggedActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".DashboardCourseActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Profile"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SplashPageActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+        <service
+            android:name=".Utils.MyMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
-
-    <application android:usesCleartextTraffic="true" android:theme="@style/AppTheme" android:supportsRtl="true" android:label="@string/app_name" android:icon="@mipmap/rblogo" android:allowBackup="true">
-
-    <activity android:name=".YoutubeLibaray" android:theme="@style/AppTheme.NoActionBar" android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboardHidden" android:windowSoftInputMode="adjustUnspecified"/>
-
-    <activity android:name=".DiscussionActivity"/>
-
-    <activity android:name=".VimeoActivity" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="landscape"/>
-
-    <activity android:name=".LiveDataPurchasedActivity"/>
-
-    <activity android:name=".PermiumSellActivity"/>
-
-    <activity android:name=".LiveDataActivity"/>
-
-    <activity android:name=".CurrentAffairsActivity"/>
-
-    <activity android:name=".AboutUsActivity"/>
-
-    <activity android:name=".McqSolutionActivity"/>
-
-    <activity android:name=".NewDoubtActivity" android:label="Doubt" android:parentActivityName=".DoubtActivity"/>
-
-    <activity android:name=".DoubtSolutionActivity" android:label="Doubt Solution" android:configChanges="orientation|keyboardHidden|screenSize" android:screenOrientation="portrait" android:parentActivityName=".DiscussionActivity"/>
-
-    <activity android:name=".DoubtActivity" android:label="Doubt" android:parentActivityName=".MainActivity"/>
-
-    <activity android:name=".NotificationActivity" android:label="Notification" android:parentActivityName=".MainActivity"/>
-
-    <activity android:name=".LoginActivity" android:theme="@style/AppTheme.NoActionBar"/>
-
-    <activity android:name=".RegisterActivity" android:theme="@style/AppTheme.NoActionBar"/>
-
-    <activity android:name=".OtpVerficationActivity" android:theme="@style/AppTheme.NoActionBar"/>
-
-    <activity android:name=".IntroSliderActivity"/>
-
-    <activity android:name=".ForgetPasswordActivity"/>
-
-    <activity android:name=".ResetPassWordActivity"/>
-
-    <activity android:name=".MainActivity"/>
-
-    <activity android:name=".PdfWebActivity"/>
-
-    <activity android:name=".StudyMaterial" android:theme="@style/AppTheme.NoActionBar"/>
-
-    <activity android:name=".YoutubePlayer" android:label="RB Classes" android:configChanges="orientation|screenSize" android:windowSoftInputMode="adjustUnspecified" android:parentActivityName=".MainActivity"/>
-
-    <activity android:name=".YouTubeVideoList"/>
-
-    <activity android:name=".CourseStaggedActivity" android:theme="@style/AppTheme.NoActionBar" android:configChanges="orientation|keyboardHidden|screenSize" android:windowSoftInputMode="adjustPan" android:screenOrientation="portrait"/>
-
-    <activity android:name=".DashboardCourseActivity" android:label="Profile" android:configChanges="orientation|keyboardHidden|screenSize" android:screenOrientation="portrait" android:parentActivityName=".MainActivity"/>
-
-
-    <activity android:name=".SplashPageActivity" android:theme="@style/AppTheme.NoActionBar" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
-
-
-    <intent-filter>
-
-    <action android:name="android.intent.action.MAIN"/>
-
-    <category android:name="android.intent.category.LAUNCHER"/>
-
-</intent-filter>
-
-</activity>
-
-
-    <service android:name=".Utils.MyMessagingService" android:exported="false">
-
-
-    <intent-filter>
-
-    <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-
-</intent-filter>
-
-</service>
-
-    <meta-data android:name="com.razorpay.ApiKey" android:value="rzp_live_Bc4ITN4OG0PCjn"/>
-
-</application>
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_live_Bc4ITN4OG0PCjn" />
+    </application>
 
 </manifest>

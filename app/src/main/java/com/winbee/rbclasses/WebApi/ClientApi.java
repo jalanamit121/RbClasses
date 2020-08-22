@@ -19,6 +19,7 @@ import com.winbee.rbclasses.model.OtpVerify;
 import com.winbee.rbclasses.model.PaymentModel;
 import com.winbee.rbclasses.model.RefCode;
 import com.winbee.rbclasses.model.RefUser;
+import com.winbee.rbclasses.model.ResendOtp;
 import com.winbee.rbclasses.model.ResetPassword;
 import com.winbee.rbclasses.model.SolutionDoubtQuestion;
 import com.winbee.rbclasses.model.SolutionQuestion;
@@ -225,6 +226,12 @@ public interface ClientApi {
     Call<ArrayList<TxnModel>> getPaymentData(
             @Query("USER_ID") String USER_ID,
             @Query("ORG_ID") String ORG_ID
+    );
+
+    @POST("send-otp.php")
+    Call<ResendOtp> getResendOtp(
+            @Query("username") String username,
+            @Query("SubURL") int SubURL
     );
 
 }

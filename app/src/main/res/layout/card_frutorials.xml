@@ -10,7 +10,17 @@
 
     <ImageView android:layout_height="70dp" android:layout_width="120dp" android:id="@+id/youtubeThubnail" android:scaleType="centerCrop" android:layout_marginBottom="5dp" android:layout_marginTop="5dp" android:padding="10dp" android:src="@drawable/frutorials"/>
 
-    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/live_status" android:layout_marginTop="5dp" android:textColor="#EB3939" android:layout_marginRight="10dp" android:layout_alignParentEnd="true" android:visibility="visible" android:textSize="14sp" android:text=""/>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/live_status"
+        android:layout_marginTop="5dp"
+        android:textColor="#EB3939"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentEnd="true"
+        android:visibility="visible"
+        android:textSize="14sp"
+        android:text=""/>
 
     <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/title" android:textColor="@color/edit_text" android:textSize="17sp" android:text="YouTube Video" android:layout_marginLeft="5dp" android:layout_below="@id/live_status" android:layout_toRightOf="@id/youtubeThubnail"/>
 

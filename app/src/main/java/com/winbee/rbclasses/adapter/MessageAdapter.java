@@ -52,51 +52,32 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageA
     @Override
     public MessageAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_message, parent, false);
-        return  new MessageAdapterViewHolder(view);
-    }
-    public void updateData(ArrayList<LiveChatModel> messagesList) {
-        if (messagesArrayList == null) {
-            return;
-        }
-        this.messagesArrayList.clear();
-        messagesArrayList.addAll(messagesList);
-        notifyDataSetChanged();
+        return new MessageAdapterViewHolder(view);
     }
 
+//    public void updateData(ArrayList<LiveChatModel> messagesList) {
+//        if (messagesArrayList == null) {
+//            return;
+//        }
+//        this.messagesArrayList.clear();
+//        messagesArrayList.addAll(messagesList);
+//        notifyDataSetChanged();
+//    }
+
     @Override
-    public void onBindViewHolder(final MessageAdapterViewHolder holder, final int position)
-    {
-        Log.d(TAG, "onBindViewHolder: "+messagesArrayList);
-//            Message message= messages.get(position);
-//        if (message.getName().equals(AllModel.name)){
-//            holder.txtView.setText("you :"+ message.getMessage());
-//            holder.txtView.setGravity(Gravity.START);
-//            holder.ll.setBackgroundColor(Color.parseColor("#BD5252"));
-//        }else{
-//            holder.txtView.setText(message.getName()+":"+ message.getMessage());
-//            holder.btn_delete.setVisibility(View.GONE);
-//        }
-//        if (messagesArrayList.get(position).getUserId().equals(ExoPlayer.userIdAuth)){
-//            String message = messagesArrayList.get(position).getMessage();
-//            Animation in = new AlphaAnimation(0.0f, 1.0f);
-//            in.setDuration(500);
-//            holder.txtView.setAnimation(in);
-//            holder.txtView.setText("you :"+ message);
-//            holder.txtView.setGravity(Gravity.START);
-//            holder.btn_delete.setVisibility(View.GONE);
-//            holder.ll.setBackgroundColor(Color.parseColor("#BD5252"));
-//        }
-//        else {
+    public void onBindViewHolder(final MessageAdapterViewHolder holder, final int position) {
+        Log.d(TAG, "onBindViewHolder: " + messagesArrayList);
+
         db.collection("Users")
                 .document(messagesArrayList.get(position).getUserId())
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 String name = (String) documentSnapshot.get("Name");
-                Animation in = new AlphaAnimation(0.0f, 1.0f);
-                in.setDuration(500);
-                holder.txtView.setAnimation(in);
-                holder.name.setAnimation(in);
+//                Animation in = new AlphaAnimation(0.0f, 1.0f);
+//                in.setDuration(500);
+//                holder.txtView.setAnimation(in);
+//                holder.name.setAnimation(in);
                 holder.txtView.setText(messagesArrayList.get(position).getMessage());
                 holder.name.setText(name);
             }
@@ -106,8 +87,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageA
 
 
     }
-
-    //   holder.txtView.setText(messagesArrayList.get(position).getMessage());
 
     //   }
 

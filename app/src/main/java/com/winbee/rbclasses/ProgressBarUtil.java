@@ -12,7 +12,8 @@ public class ProgressBarUtil {
   }
   public void showProgress(){
     if(progressBar!=null) {
-      progressBar.setCancelable(true);
+      progressBar.setCancelable(false);
+      progressBar.setCanceledOnTouchOutside(false);
       progressBar.setMessage("Please wait . . .");
       progressBar.show();
     }

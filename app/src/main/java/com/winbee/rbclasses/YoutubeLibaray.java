@@ -87,9 +87,9 @@ public class YoutubeLibaray extends AppCompatActivity {
         });
 
         retriveMessages();
-        messageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        messageAdapter = new MessageAdapter(this, messagesArrayList);
-        messageRecyclerView.setAdapter(messageAdapter);
+//        messageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        messageAdapter = new MessageAdapter(this, messagesArrayList);
+//        messageRecyclerView.setAdapter(messageAdapter);
 
         //  public static final String API_KEY = "AIzaSyBlEPocq2s2bDmWDMBRXAf8Mhf3wlFNYGI";
         //        public static final String VIDEO_ID = "j36wPW4bGIs";
@@ -164,9 +164,9 @@ public class YoutubeLibaray extends AppCompatActivity {
                                 messagesArrayList = new ArrayList<>();
                                 progressBarUtil.hideProgress();
                                 //   progressBar.setVisibility(View.GONE);
-                                Animation in = new AlphaAnimation(0.0f, 1.0f);
-                                in.setDuration(1000);
-                                textView.setAnimation(in);
+//                                Animation in = new AlphaAnimation(0.0f, 1.0f);
+//                                in.setDuration(1000);
+//                                textView.setAnimation(in);
                                 textView.setText("No Messages Yet...");
                                 addingDataToMessagedAdapter(messagesArrayList);
                                 messageAdapter.notifyDataSetChanged();
@@ -197,7 +197,11 @@ public class YoutubeLibaray extends AppCompatActivity {
     }
 
     private void addingDataToMessagedAdapter(ArrayList<LiveChatModel> messagesArrayList) {
-        messageAdapter.updateData(messagesArrayList);
+        //messageAdapter.updateData(messagesArrayList);
+        messageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        messageAdapter = new MessageAdapter(this, messagesArrayList);
+        messageRecyclerView.setAdapter(messageAdapter);
+
 
 
     }

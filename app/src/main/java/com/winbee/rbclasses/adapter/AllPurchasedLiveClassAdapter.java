@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import com.winbee.rbclasses.LocalData;
 import com.winbee.rbclasses.R;
 import com.winbee.rbclasses.VimeoActivity;
+import com.winbee.rbclasses.YouTubeComplete;
 import com.winbee.rbclasses.YoutubeLibaray;
 import com.winbee.rbclasses.YoutubePlayer;
 import com.winbee.rbclasses.model.CourseContentModel;
@@ -60,7 +61,7 @@ public class AllPurchasedLiveClassAdapter extends RecyclerView.Adapter<AllPurcha
                 public void onClick(View view) {
                     LocalData.LiveId = list.get(position).getURL();
                     LocalData.DocumentId = list.get(position).getDocumentId();
-                    Intent intent = new Intent(context, YoutubeLibaray.class);
+                    Intent intent = new Intent(context, YouTubeComplete.class);
                     context.startActivity(intent);
                 }
             });
@@ -76,14 +77,14 @@ public class AllPurchasedLiveClassAdapter extends RecyclerView.Adapter<AllPurcha
                         context.startActivity(intent);
                     }
                 });
-            }else if (list.get(position).getType().equalsIgnoreCase("YouTube")){
+            }else if (list.get(position).getType().equals("YouTube")){
                 holder.live_status.setText("");
                 holder.card_view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         LocalData.LiveId = list.get(position).getURL();
                         LocalData.DocumentId = list.get(position).getDocumentId();
-                        Intent intent = new Intent(context, YoutubeLibaray.class);
+                        Intent intent = new Intent(context, YouTubeComplete.class);
                         context.startActivity(intent);
                     }
                 });

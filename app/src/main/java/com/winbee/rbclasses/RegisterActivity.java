@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -61,8 +62,9 @@ public class RegisterActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    requestWindowFeature(Window.FEATURE_NO_TITLE);
+    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     setContentView(R.layout.activity_register);
-    // getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
     try {
       initView();
     } catch (Exception e) {
@@ -101,68 +103,8 @@ public class RegisterActivity extends AppCompatActivity {
     });
 
 
-    mcallback = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-      @Override
-      public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-
-        //  signInWithPhoneAuthCredential(phoneAuthCredential);
-      }
-
-      @Override
-      public void onVerificationFailed(FirebaseException e) {
-        Toast.makeText(RegisterActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-
-        Log.d("TAGGG", "onVerificationFailed: " + e.getMessage());
-
-      }
-
-      @Override
-      public void onCodeSent(final String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-        super.onCodeSent(s, forceResendingToken);
-//                progressBarUsernameandPassword.setVisibility(View.GONE);
-//                cardUserNameAndPassword.setEnabled(true);
-//    /            textViewUandP.setVisibility(View.VISIBLE);
-
-
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                  @Override
-                  public void run() {
-                    progressBarUtil.hideProgress();
-                    Intent intent = new Intent(RegisterActivity.this, OtpVerficationActivity.class);
-                    intent.putExtra("otp", s);
-                    intent.putExtra("phone", phone);
-                    intent.putExtra("email", email);
-                    intent.putExtra("password", password);
-                    intent.putExtra("ref", referal_code);
-                    intent.putExtra("username", username);
-                    Toast.makeText(RegisterActivity.this, "otp sent successfully", Toast.LENGTH_SHORT).show();
-                    startActivity(intent);
-                  }
-                }, 5000
-        );
-
-
-      }
-    };
-
   }
 
-  private void signInWithPhoneAuthCredential(PhoneAuthCredential phoneAuthCredential) {
-
-    FireBaseValidation();
-    RefUser refUser = new RefUser();
-    refUser.setName(username);
-    refUser.setPassword(password);
-    refUser.setEmail(email);
-    refUser.setMobile(phone);
-    refUser.setRefcode(referal_code);
-
-    CallSignupApi(refUser);
-    // TODO: 7/9/20 add php sign up code here
-
-
-  }
 
   private void userValidation() {
     username = editTextname.getText().toString().trim();
@@ -211,54 +153,27 @@ public class RegisterActivity extends AppCompatActivity {
     refUser.setRefcode(referal_code);
 
 
-    //  CallSignupApi(refUser);
-    verificationThroughFirebase(phone, username, password, email, referal_code);
+     CallSignupApi(refUser);
 
 
   }
-
-  private void verificationThroughFirebase(String phone, String username, String password, String email, String referal_code) {
-
-
-    if (phone.length() == 10) {
-      String phoneNumber = "+91" + " " + phone;
-      //Todo add progress bar here
-      progressBarUtil.showProgress();
-      PhoneAuthProvider.getInstance().verifyPhoneNumber(
-              phoneNumber,
-              60,
-              TimeUnit.SECONDS,
-              RegisterActivity.this,
-              mcallback
-      );
-
-
-    } else {
-      //todo add warnign here
-      Toast.makeText(RegisterActivity.this, "Enter 10 digit mobile number", Toast.LENGTH_SHORT).show();
-    }
-  }
-
-
   private void CallSignupApi(final RefUser refUser) {
     progressBarUtil.showProgress();
     ClientApi mService = ApiClient.getClient().create(ClientApi.class);
     Call<RefUser> call = mService.refUserSignIn(2, refUser.getName(), refUser.getEmail(), refUser.getMobile(), refUser.getRefcode(), refUser.getPassword());
+    Log.i("tag", "CallSignupApi: "+refUser.getName()+ refUser.getEmail()+ refUser.getMobile()+refUser.getRefcode()+refUser.getPassword());
     call.enqueue(new Callback<RefUser>() {
       @Override
       public void onResponse(Call<RefUser> call, Response<RefUser> response) {
         int statusCode = response.code();
         //List<RefUser> list ;
-        if (statusCode == 200 && response.body().getRegistration_id() != null) {
-          progressBarUtil.hideProgress();
-          Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-          intent.putExtra("message", refUser.getMobile());
-          intent.putExtra("email", refUser.getEmail());
-          intent.putExtra("name", refUser.getName());
-          intent.putExtra("password", refUser.getPassword());
+        if (statusCode == 200 && response.body().getSuccess() == true) {
+          Log.i("tag", "onResponse: "+response.body().getSuccess());
           LocalData.UserName = refUser.getEmail();
+          LocalData.Mobile=refUser.getMobile();
           LocalData.Password = refUser.getPassword();
-          startActivity(intent);
+          FireBaseValidation();
+
         } else {
           progressBarUtil.hideProgress();
           Toast.makeText(RegisterActivity.this, "User Already exist", Toast.LENGTH_LONG).show();
@@ -292,7 +207,7 @@ public class RegisterActivity extends AppCompatActivity {
                     userInfo.put("Password", password);
                     userInfo.put("FireBaseMobile", phone);
                     userInfo.put("userId", userId);
-
+                    Log.i("tag", "onComplete: "+email+username+password+phone);
 
                     db.collection("Users")
                             .document(userId)
@@ -301,6 +216,10 @@ public class RegisterActivity extends AppCompatActivity {
                               @Override
                               public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
+                                  progressBarUtil.hideProgress();
+                                  Intent intent = new Intent(RegisterActivity.this,OtpVerficationActivity.class);
+                                  startActivity(intent);
+                                  finish();
 //
                                   Log.d("TAG", "onComplete: Login successfully and data uploaded");
 
