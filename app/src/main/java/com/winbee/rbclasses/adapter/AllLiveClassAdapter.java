@@ -17,22 +17,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.winbee.rbclasses.LocalData;
+import com.winbee.rbclasses.NewModels.VideoContentArray;
 import com.winbee.rbclasses.R;
-import com.winbee.rbclasses.VimeoActivity;
 import com.winbee.rbclasses.YouTubeComplete;
 import com.winbee.rbclasses.YoutubeLibaray;
-import com.winbee.rbclasses.YoutubePlayer;
 import com.winbee.rbclasses.model.CourseContentModel;
-import com.winbee.rbclasses.model.LiveClass;
-
 
 import java.util.ArrayList;
 
+import pl.droidsonroids.gif.GifImageView;
+
 public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<CourseContentModel> list;
+    private ArrayList<VideoContentArray> list;
 
-    public AllLiveClassAdapter(Context context, ArrayList<CourseContentModel> list){
+    public AllLiveClassAdapter(Context context, ArrayList<VideoContentArray> list){
         this.context = context;
         this.list = list;
     }
@@ -49,35 +48,32 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
 
         if (list.get(position).getClass_status_dec().equalsIgnoreCase("Live")){
             holder.live_status.setText("Live");
+            holder.live_status.setVisibility(View.GONE);
+            holder.image_gif.setVisibility(View.VISIBLE);
+            holder.date.setVisibility(View.GONE);
         }else if (list.get(position).getClass_status_dec().equalsIgnoreCase("Completed")){
             holder.live_status.setText("");
+            holder.live_status.setVisibility(View.GONE);
+            holder.image_gif.setVisibility(View.GONE);
+            holder.date.setVisibility(View.VISIBLE);
         }else if (list.get(position).getClass_status_dec().equalsIgnoreCase("Not Started Yet")){
             holder.live_status.setText("Scheduled");
+            holder.live_status.setVisibility(View.VISIBLE);
+            holder.image_gif.setVisibility(View.GONE);
 
         }
 
         holder.title.setText(list.get(position).getTopic());
+        holder.date.setText(list.get(position).getPublished());
         Picasso.get().load(list.get(position).getThumbnail()).fit().into(holder.youtubeThubnail);
-        holder.teacher.setText("By "+list.get(position).getFaculty());
+        holder.teacher.setText(list.get(position).getFaculty());
         if (list.get(position).getClassType().equals(2)) { //classtype 2 means- recoded video
             holder.live_status.setVisibility(View.GONE);
             if (list.get(position).getAccessType().equals(1) ) {//access type 1 means - recroded free video
-                if (list.get(position).getType().equalsIgnoreCase("Vimeo")){
                     holder.img_lock.setVisibility(View.GONE);
                     holder.img_Unlock.setVisibility(View.VISIBLE);
-                    holder.card_view.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            LocalData.LiveId = list.get(position).getURL();
-                            LocalData.DocumentId = list.get(position).getDocumentId();
-                            Intent intent = new Intent(context, VimeoActivity.class);
-                            context.startActivity(intent);
-                        }
-
-                    });
-                }else if (list.get(position).getType().equals("YouTube")){
-                    holder.img_lock.setVisibility(View.GONE);
-                    holder.img_Unlock.setVisibility(View.VISIBLE);
+                    holder.image_gif.setVisibility(View.GONE);
+                    holder.date.setVisibility(View.VISIBLE);
                     holder.card_view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -87,9 +83,12 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
                             context.startActivity(intent);
                         }
                     });
-                }
+
             } else if (list.get(position).getAccessType().equals(2)) { // access type 2 means- paid video
                 holder.img_lock.setVisibility(View.VISIBLE);
+                holder.img_Unlock.setVisibility(View.GONE);
+                holder.image_gif.setVisibility(View.GONE);
+                holder.date.setVisibility(View.GONE);
                 holder.card_view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -117,6 +116,8 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
             if (list.get(position).getAccessType().equals(1)) { //access type 1 means- free live class
                 holder.img_lock.setVisibility(View.GONE);
                 holder.img_Unlock.setVisibility(View.VISIBLE);
+                holder.image_gif.setVisibility(View.VISIBLE);
+                holder.date.setVisibility(View.GONE);
                 holder.card_view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -140,6 +141,8 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
                 holder.live_status.setVisibility(View.VISIBLE);
                 holder.img_lock.setVisibility(View.VISIBLE);
                 holder.img_Unlock.setVisibility(View.GONE);
+                holder.image_gif.setVisibility(View.VISIBLE);
+                holder.date.setVisibility(View.GONE);
             }
 
         }
@@ -154,18 +157,20 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView title,teacher,live_status,time,status;
+        private TextView title,teacher,live_status,date,status;
         private CardView card_view;
+        private GifImageView image_gif;
         private ImageView img_lock,img_Unlock,youtubeThubnail;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             youtubeThubnail= itemView.findViewById(R.id.youtubeThubnail);
+            image_gif= itemView.findViewById(R.id.image_gif);
             img_lock= itemView.findViewById(R.id.img_lock);
             img_Unlock= itemView.findViewById(R.id.img_Unlock);
             title = itemView.findViewById(R.id.title);
             teacher = itemView.findViewById(R.id.teacher);
             live_status = itemView.findViewById(R.id.live_status);
-            time = itemView.findViewById(R.id.time);
+            date = itemView.findViewById(R.id.date);
             //status = itemView.findViewById(R.id.status);
             card_view = itemView.findViewById(R.id.card_view);
         }

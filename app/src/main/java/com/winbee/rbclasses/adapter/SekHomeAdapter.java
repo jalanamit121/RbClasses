@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
+import com.winbee.rbclasses.NewModels.DailyUpdateArray;
 import com.winbee.rbclasses.R;
 import com.winbee.rbclasses.model.UpdateModel;
 
@@ -23,9 +24,9 @@ import java.util.List;
 
 public class SekHomeAdapter extends RecyclerView.Adapter<SekHomeAdapter.ViewHolder> {
   private Context context;
-  private List<UpdateModel> courseDatumList;
+  private List<DailyUpdateArray> courseDatumList;
 
-  public SekHomeAdapter(Context context, List<UpdateModel> courseDatumList){
+  public SekHomeAdapter(Context context, List<DailyUpdateArray> courseDatumList){
     this.context = context;
     this.courseDatumList = courseDatumList;
   }

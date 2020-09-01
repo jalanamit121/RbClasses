@@ -1,15 +1,15 @@
 package com.winbee.rbclasses;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.widget.Button;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -17,88 +17,70 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerFullScreenListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
-import com.winbee.rbclasses.adapter.MessageAdapter;
+import com.winbee.rbclasses.NewModels.LiveMessage;
+import com.winbee.rbclasses.NewModels.LiveMessageArray;
+import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
+import com.winbee.rbclasses.WebApi.ClientApi;
+import com.winbee.rbclasses.adapter.ServerMessageAdapter;
+import com.winbee.rbclasses.model.LiveChatMessage;
+import com.winbee.rbclasses.model.LiveChatMessageFetch;
 import com.winbee.rbclasses.model.LiveChatModel;
+import com.winbee.rbclasses.model.Message;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.balsikandar.crashreporter.CrashReporter.getContext;
 
 
 public class YoutubeLibaray extends AppCompatActivity {
-    public static String userIdAuth;
-    MessageAdapter adapter;
-    FirebaseAuth auth = FirebaseAuth.getInstance();
-    EditText textMessage;
+    EditText editTextMessageLive;
     ImageView sendButton;
     RecyclerView messageRecyclerView;
-    RelativeLayout relativeLayoutLive;
-    MessageAdapter messageAdapter;
-    ArrayList<LiveChatModel> messagesArrayList;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private ImageView img_share, WebsiteHome;
-    private TextView textView;
+    RelativeLayout relativeLayoutLive,message_layout;
+    private TextView textView,txt_message_not;
     private ProgressBarUtil progressBarUtil;
     private YouTubePlayerView youTubePlayerView;
-
+    String UserId,Username,android_id;
+    private ArrayList<LiveMessageArray> list;
+    private ServerMessageAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_youtube_libaray);
-        textMessage = findViewById(R.id.editTextMessageLive);
+        editTextMessageLive = findViewById(R.id.editTextMessageLive);
         sendButton = findViewById(R.id.sendMessageLive);
+        message_layout = findViewById(R.id.message_layout);
+        txt_message_not = findViewById(R.id.txt_message_not);
+        UserId = SharedPrefManager.getInstance(this).refCode().getUserId();
+        Username=SharedPrefManager.getInstance(this).refCode().getName();
+        android_id = Settings.Secure.getString(getContext().getContentResolver(),Settings.Secure.ANDROID_ID);
         messageRecyclerView = findViewById(R.id.liveMessageRecyclerViewLive);
-        textView = findViewById(R.id.textNoMessageLive);
         progressBarUtil = new ProgressBarUtil(this);
         relativeLayoutLive = findViewById(R.id.relative_layout_live);
-        messagesArrayList = new ArrayList<>();
+        callAllMessageFetch();
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage();
-            }
-        });
-
-        retriveMessages();
-//        messageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        messageAdapter = new MessageAdapter(this, messagesArrayList);
-//        messageRecyclerView.setAdapter(messageAdapter);
-
-        //  public static final String API_KEY = "AIzaSyBlEPocq2s2bDmWDMBRXAf8Mhf3wlFNYGI";
-        //        public static final String VIDEO_ID = "j36wPW4bGIs";
-        Button btn_study_material = findViewById(R.id.btn_study_material);
-        btn_study_material.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(YoutubeLibaray.this, StudyMaterial.class);
-                startActivity(intent);
+                messageSend();
             }
         });
         this.youTubePlayerView = findViewById(R.id.youtube_player);
@@ -107,9 +89,9 @@ public class YoutubeLibaray extends AppCompatActivity {
             @Override
             public void onYouTubePlayerEnterFullScreen() {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
-                textMessage.setVisibility(View.GONE);
-                textView.setVisibility(View.GONE);
+                editTextMessageLive.setVisibility(View.GONE);
                 sendButton.setVisibility(View.GONE);
+                message_layout.setVisibility(View.GONE);
                 // hide softkeys if it is already open
 
             }
@@ -117,9 +99,9 @@ public class YoutubeLibaray extends AppCompatActivity {
             @Override
             public void onYouTubePlayerExitFullScreen() {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
-                textMessage.setVisibility(View.VISIBLE);
-                textView.setVisibility(View.VISIBLE);
+                editTextMessageLive.setVisibility(View.VISIBLE);
                 sendButton.setVisibility(View.VISIBLE);
+                message_layout.setVisibility(View.VISIBLE);
 
             }
         });
@@ -141,134 +123,128 @@ public class YoutubeLibaray extends AppCompatActivity {
                 });
 
     }
-
-    private void retriveMessages() {
-        progressBarUtil.showProgress();
-
-
-        if (LocalData.DocumentId != null) {
-            db.collection(LocalData.DocumentId)
-                    .orderBy("time", Query.Direction.DESCENDING)
-
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                            messagesArrayList = new ArrayList<>();
-                            if (e != null) {
-                                progressBarUtil.hideProgress();
-                                Log.w("YourTag", "Listen failed.", e);
-                                return;
-                            }
-
-                            if (queryDocumentSnapshots != null && queryDocumentSnapshots.size() == 0) {
-                                messagesArrayList = new ArrayList<>();
-                                progressBarUtil.hideProgress();
-                                //   progressBar.setVisibility(View.GONE);
-//                                Animation in = new AlphaAnimation(0.0f, 1.0f);
-//                                in.setDuration(1000);
-//                                textView.setAnimation(in);
-                                textView.setText("No Messages Yet...");
-                                addingDataToMessagedAdapter(messagesArrayList);
-                                messageAdapter.notifyDataSetChanged();
-
-                            } else {
-                                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                                    if (doc.exists()) {
-                                        // messagesArrayList = new ArrayList<>();
-                                        progressBarUtil.hideProgress();
-                                        LiveChatModel message = doc.toObject(LiveChatModel.class);
-                                        messagesArrayList.add(message);
-                                        textView.setText("");
-                                        for (int i = 0; i < messagesArrayList.size(); i++) {
-                                            Log.d(TAG, "onEvent: " + messagesArrayList.get(i).getDocId());
-                                        }
-
-                                        addingDataToMessagedAdapter(messagesArrayList);
-                                    }
-                                }
-                            }
-                        }
-                    });
+    private void messageSend() {
+        final String message = editTextMessageLive.getText().toString();
+        LocalData.Message=message;
+        if (TextUtils.isEmpty(message)) {
+            editTextMessageLive.setError("enter some message");
+            editTextMessageLive.requestFocus();
+            return;
+        }
 
 
-        } else
-            Log.d(TAG, "retriveMessages: error");
+        callMessageSendApi();
 
     }
-
-    private void addingDataToMessagedAdapter(ArrayList<LiveChatModel> messagesArrayList) {
-        //messageAdapter.updateData(messagesArrayList);
-        messageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        messageAdapter = new MessageAdapter(this, messagesArrayList);
-        messageRecyclerView.setAdapter(messageAdapter);
-
-
-
-    }
-
-    private void sendMessage() {
-        FirebaseUser user = auth.getCurrentUser();
-        if (user != null) {
-            if (auth != null) {
-                userIdAuth = auth.getCurrentUser().getUid();
-                final String Message = textMessage.getText().toString();
-                if (Message.isEmpty()) {
-                    Toast.makeText(this, "Please enter something", Toast.LENGTH_SHORT).show();
-
-
-                } else {
-                    final Date currentTime = Calendar.getInstance().getTime();
-                    progressBarUtil.hideProgress();
-                    final Map<String, String> messageInfo = new HashMap<>();
-                    messageInfo.put("userId", userIdAuth);
-                    messageInfo.put("message", Message);
-                    messageInfo.put("time", String.valueOf(currentTime));
-                    textMessage.setText("");
-                    if (LocalData.DocumentId != null) {
-                        db.collection(LocalData.DocumentId)
-                                .add(messageInfo)
-                                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                                        if (task.isSuccessful()) {
-                                            String docId = Objects.requireNonNull(task.getResult()).getId();
-
-                                            Log.d(TAG, "onComplete: message sent" + Message);
-                                            final Map<String, String> updatedMessageInfo = new HashMap<>();
-                                            updatedMessageInfo.put("docId", docId);
-                                            updatedMessageInfo.put("userId", userIdAuth);
-                                            updatedMessageInfo.put("message", Message);
-                                            updatedMessageInfo.put("time", String.valueOf(currentTime));
-
-
-                                            db.collection(LocalData.DocumentId)
-                                                    .document(docId)
-                                                    .set(updatedMessageInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        Log.d(TAG, "onComplete: done");
-                                                        Log.d(TAG, "onComplete: " + updatedMessageInfo);
-                                                    } else {
-                                                        Log.d(TAG, "onComplete: error");
-                                                    }
-                                                }
-                                            });
-                                            progressBarUtil.hideProgress();
-                                        } else {
-                                            Toast.makeText(YoutubeLibaray.this, "Something is wrong", Toast.LENGTH_SHORT).show();
-                                            Log.d(TAG, "onComplete: failed");
-                                            progressBarUtil.hideProgress();
-                                        }
+    private void callMessageSendApi() {
+        ClientApi apiCall = ApiClient.getClient().create(ClientApi.class);
+        Call<LiveChatMessage> call = apiCall.getLiveMessage(1,UserId,Username,LocalData.DocumentId,LocalData.Message,android_id);
+        Log.i("tag", "callMessageSendApi: " +UserId+Username+LocalData.LiveId+LocalData.Message);
+        call.enqueue(new Callback<LiveChatMessage>() {
+            @Override
+            public void onResponse(Call<LiveChatMessage> call, Response<LiveChatMessage> response) {
+                int statusCode = response.code();
+                if (statusCode == 200 && response.body().getResponse()==true) {
+                    if (response.body().getError() == false){
+                        editTextMessageLive.getText().clear();
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus()).getWindowToken(), 0);
+                        callAllMessageFetch();
+                    }else{
+                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(
+                                YoutubeLibaray.this);
+                        alertDialogBuilder.setTitle("Alert");
+                        alertDialogBuilder
+                                .setMessage(response.body().getError_Message())
+                                .setCancelable(false)
+                                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        forceLogout();
                                     }
                                 });
 
-
+                        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
                     }
+
+                } else {
+                    System.out.println("Sur: response code" + response.message());
+                    Toast.makeText(getApplicationContext(), "Ërror due to" + response.message(), Toast.LENGTH_SHORT).show();
                 }
+
             }
-        } else Toast.makeText(this, "something is wrong", Toast.LENGTH_SHORT).show();
+
+            @Override
+            public void onFailure(Call<LiveChatMessage> call, Throwable t) {
+                System.out.println("Suree: " + t.getMessage());
+                progressBarUtil.hideProgress();
+                Toast.makeText(getApplicationContext(), "Failed" + t.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
     }
+
+
+
+    private void callAllMessageFetch(){
+        ClientApi apiCall = ApiClient.getClient().create(ClientApi.class);
+        Call<LiveMessage> call = apiCall.getLiveMessageFetch(2,UserId,android_id,LocalData.DocumentId);
+        call.enqueue(new Callback<LiveMessage>() {
+            @Override
+            public void onResponse(Call<LiveMessage> call, Response<LiveMessage> response) {
+                LiveMessage liveMessage =response.body();
+                int statusCode = response.code();
+                list = new ArrayList();
+                if(statusCode==200){
+                    if (response.body().getResponse()==true) {
+                        if (response.body().getError()==false){
+                            txt_message_not.setVisibility(View.GONE);
+                            list =new ArrayList<>(Arrays.asList(Objects.requireNonNull(liveMessage).getData()));
+                            System.out.println("Suree body: " + list);
+                            adapter = new ServerMessageAdapter(YoutubeLibaray.this, list);
+                            messageRecyclerView.setAdapter(adapter);
+                        }else{
+                            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(
+                                    YoutubeLibaray.this);
+                            alertDialogBuilder.setTitle("Alert");
+                            alertDialogBuilder
+                                    .setMessage(response.body().getError_Message())
+                                    .setCancelable(false)
+                                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog,int id) {
+                                            forceLogout();
+                                        }
+                                    });
+
+                            android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                            alertDialog.show();
+                        }
+                    }else{
+                        txt_message_not.setVisibility(View.VISIBLE);
+                    }
+
+
+                }
+                else{
+                    System.out.println("Suree: response code"+response.message());
+                    Toast.makeText(getApplicationContext(),"Ërror due to" + response.message(),Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<LiveMessage> call, Throwable t) {
+                System.out.println("Suree: "+t.getMessage());
+                progressBarUtil.hideProgress();
+                Toast.makeText(getApplicationContext(),"Failed" ,Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+
+
 
     @Override
     public void onBackPressed() {
@@ -277,5 +253,9 @@ public class YoutubeLibaray extends AppCompatActivity {
         } else
             super.onBackPressed();
     }
-
+    private void forceLogout() {
+        SharedPrefManager.getInstance(this).logout();
+        startActivity(new Intent(this, LoginActivity.class));
+        Objects.requireNonNull(this).finish();
+    }
 }

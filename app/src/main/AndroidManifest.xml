@@ -24,10 +24,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustUnspecified" />
         <activity android:name=".DiscussionActivity" />
-        <activity
-            android:name=".VimeoActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LiveDataPurchasedActivity" />
         <activity android:name=".PermiumSellActivity" />
         <activity android:name=".LiveDataActivity" />
@@ -35,23 +31,11 @@
         <activity android:name=".AboutUsActivity" />
         <activity android:name=".McqSolutionActivity" />
         <activity
-            android:name=".NewDoubtActivity"
-            android:label="Doubt"
-            android:parentActivityName=".DoubtActivity" />
-        <activity
             android:name=".DoubtSolutionActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Doubt Solution"
             android:parentActivityName=".DiscussionActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".DoubtActivity"
-            android:label="Doubt"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".NotificationActivity"
-            android:label="Notification"
-            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -76,12 +60,6 @@
             android:parentActivityName=".MainActivity"
             android:windowSoftInputMode="adjustUnspecified" />
         <activity android:name=".YouTubeVideoList" />
-        <activity
-            android:name=".CourseStaggedActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".DashboardCourseActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

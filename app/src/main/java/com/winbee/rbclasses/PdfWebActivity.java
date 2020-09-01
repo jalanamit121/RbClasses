@@ -2,6 +2,7 @@ package com.winbee.rbclasses;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -33,6 +35,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.winbee.rbclasses.NewModels.LogOut;
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.WebApi.ClientApi;
 import com.winbee.rbclasses.model.NotesModel;
@@ -65,16 +68,28 @@ public class PdfWebActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_pdf_web);
         android_id = Settings.Secure.getString(getContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
+
         UserMobile=SharedPrefManager.getInstance(this).refCode().getUsername();
         UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
-//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-//        if (ActivityCompat.checkSelfPermission(PdfWebActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(PdfWebActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
-//            return;
-//        }
-//        IMEINumber = telephonyManager.getDeviceId();
 
         webView=findViewById(R.id.myWebView);
+        progressBarUtil   =  new ProgressBarUtil(this);
+       // progressBarUtil.showProgress();
+        webView.setWebChromeClient(new WebChromeClient() {
+            public void onProgressChanged(WebView view, int progress)
+            {
+                //Make the bar disappear after URL is loaded, and changes string to Loading...
+                setTitle("Loading...");
+                setProgress(progress * 100); //Make the bar disappear after URL is loaded
+                //progressBarUtil.hideProgress();
+                // Return the app name after finish loading
+                if(progress == 100)
+                    setTitle(R.string.app_name);
+            }
+        });
+        webView.setWebViewClient(new HelloWebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl(LocalData.NotesData);
         layout_home = findViewById(R.id.layout_home);
         layout_home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,8 +112,6 @@ public class PdfWebActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 Toast.makeText(PdfWebActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-//                Intent doubt = new Intent(MainActivity.this,DoubtActivity.class);
-//                startActivity(doubt);
             }
         });
         layout_current = findViewById(R.id.layout_current);
@@ -118,11 +131,20 @@ public class PdfWebActivity extends AppCompatActivity  {
             }
         });
 
-        progressBarUtil   =  new ProgressBarUtil(this);
-        progressBarUtil.showProgress();
+     //   progressBarUtil   =  new ProgressBarUtil(this);
+    //    progressBarUtil.showProgress();
 
-        displayWebView();
+       // displayWebView();
     }
+
+    private class HelloWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(LocalData.NotesData);
+            return true;
+        }
+    }
+
     private void displayWebView() {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient(){
@@ -134,6 +156,7 @@ public class PdfWebActivity extends AppCompatActivity  {
             }
         });
         webView.loadUrl(LocalData.NotesData);
+       // progressBarUtil.hideProgress();
         Log.d("tag", "shouldOverrideUrlLoading: "+LocalData.NotesData);
 
     }
@@ -145,18 +168,35 @@ public class PdfWebActivity extends AppCompatActivity  {
 
         progressBarUtil.showProgress();
         ClientApi mService = ApiClient.getClient().create(ClientApi.class);
-        Call<RefCode> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
-        Log.i("tag", "callRefCodeSignInApi: "+IMEINumber+UserMobile+UserPassword);
-        call.enqueue(new Callback<RefCode>() {
+        Call<LogOut> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
+        call.enqueue(new Callback<LogOut>() {
             @Override
-            public void onResponse(Call<RefCode> call, Response<RefCode> response) {
+            public void onResponse(Call<LogOut> call, Response<LogOut> response) {
                 int statusCode = response.code();
                 if (statusCode == 200 && response.body().getLoginStatus()!=false) {
-                    progressBarUtil.hideProgress();
-                    SharedPrefManager.getInstance(PdfWebActivity.this).logout();
-                    startActivity(new Intent(PdfWebActivity.this, LoginActivity.class));
-                    //Objects.requireNonNull(this).finish();
-                    finish();
+                    if (response.body().getError()==false){
+                        progressBarUtil.hideProgress();
+                        SharedPrefManager.getInstance(PdfWebActivity.this).logout();
+                        startActivity(new Intent(PdfWebActivity.this, LoginActivity.class));
+                        finish();
+                    }else{
+                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(
+                                PdfWebActivity.this);
+                        alertDialogBuilder.setTitle("Alert");
+                        alertDialogBuilder
+                                .setMessage(response.body().getError_Message())
+                                .setCancelable(false)
+                                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        forceLogout();
+                                    }
+                                });
+
+                        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+
+                    }
+
 
                 } else {
                     progressBarUtil.hideProgress();
@@ -166,24 +206,18 @@ public class PdfWebActivity extends AppCompatActivity  {
             }
 
             @Override
-            public void onFailure(Call<RefCode> call, Throwable t) {
+            public void onFailure(Call<LogOut> call, Throwable t) {
                 Toast.makeText(PdfWebActivity.this, "Failed" + t.getMessage(), Toast.LENGTH_LONG).show();
                 System.out.println(t.getLocalizedMessage());
             }
         });
     }
-    //    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-//        switch (requestCode) {
-//            case REQUEST_CODE: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    //Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    //Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        }
-//    }
+
+    private void forceLogout() {
+        SharedPrefManager.getInstance(this).logout();
+        startActivity(new Intent(this, LoginActivity.class));
+        Objects.requireNonNull(this).finish();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);

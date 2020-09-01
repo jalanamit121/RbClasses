@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
+    android:background="#F8F5F5"
     android:focusable="true"
     tools:context=".YoutubeLibaray">
 
@@ -17,70 +18,67 @@
         app:showFullScreenButton="true"
         app:showSeekBar="true"
         app:showYouTubeButton="false"/>
-
-    <Button
+    <TextView
+        android:id="@+id/txt_message_not"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_study_material"
-        android:layout_below="@id/youtube_player"
         android:layout_centerInParent="true"
-        android:layout_margin="10dp"
-        android:background="#909FF1"
-        android:padding="16dp"
-        android:text="View Study Material"
-        android:textColor="#ffffff"
-        android:visibility="gone"/>
-
+        android:visibility="visible"
+        android:text="No Message Yet..."/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/relative_layout_live"
-        android:layout_below="@id/btn_study_material"
-        android:layout_above="@+id/editTextMessageLive">
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/youtube_player">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/liveMessageRecyclerViewLive"
-        android:background="@android:color/white"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textNoMessageLive"
-        android:layout_centerInParent="true"
-        android:textSize="18sp"/>
-
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBarLive"
-        android:layout_centerInParent="true"
-        android:visibility="gone"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="65dp"
+            android:id="@+id/liveMessageRecyclerViewLive"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:nestedScrollingEnabled="false"/>
 
 </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/message_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:layout_marginTop="5dp"
+        android:visibility="visible"
+        android:layout_alignParentBottom="true">
+
+
+
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editTextMessageLive"
         android:textColor="#000"
-        android:layout_alignParentBottom="true"
+        android:background="@null"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="5dp"
+        android:maxLines="10"
+        android:fontFamily="@font/proximanovaregular"
+        android:inputType="text|textMultiLine"
         android:hint="Enter your Message ..."
         android:textColorHint="#000"/>
 
     <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="25dp"
+        android:layout_height="30dp"
         android:id="@+id/sendMessageLive"
-        android:layout_alignParentBottom="true"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:layout_alignParentEnd="true"
         android:src="@drawable/ic_send_black_24dp"/>
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.winbee.rbclasses.NewModels.CourseContent;
+import com.winbee.rbclasses.NewModels.CourseContentArray;
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.WebApi.ClientApi;
 import com.winbee.rbclasses.adapter.AllCourseAdapter;
@@ -36,12 +39,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CourseFragment extends Fragment {
-  private ArrayList<CourseModel> courseModels;
+  private ArrayList<CourseContentArray> courseModels;
   private RecyclerView course_recycle;
   private ProgressBarUtil progressBarUtil;
   private AllCourseAdapter adapter;
   private SwipeRefreshLayout refresh_course;
-  String UserID;
+  String UserID,android_id;
 
   public CourseFragment() {
 
@@ -70,7 +73,9 @@ public class CourseFragment extends Fragment {
         },4000);
       }
     });
-    UserID=SharedPrefManager.getInstance(getContext()).refCode().getUserId();
+    UserID = SharedPrefManager.getInstance(getActivity()).refCode().getUserId();
+    android_id = Settings.Secure.getString(getContext().getContentResolver(),
+            Settings.Secure.ANDROID_ID);
     callCourseApiService();
     // runLayoutAnimation(course_recycle);
 
@@ -80,14 +85,15 @@ public class CourseFragment extends Fragment {
   private void callCourseApiService() {
     progressBarUtil.showProgress();
     ClientApi apiCAll = ApiClient.getClient().create(ClientApi.class);
-    Call<ArrayList<CourseModel>> call = apiCAll.getPurchasedCourse(1,UserID,"WB_009","WB_009");
-    call.enqueue(new Callback<ArrayList<CourseModel>>() {
+    Call<CourseContent> call = apiCAll.getPurchasedCourse(1,UserID,"WB_009","WB_009",android_id);
+    call.enqueue(new Callback<CourseContent>() {
       @Override
-      public void onResponse(Call<ArrayList<CourseModel>> call, Response<ArrayList<CourseModel>> response) {
+      public void onResponse(Call<CourseContent> call, Response<CourseContent> response) {
+        CourseContent courseContent=response.body();
         int statusCode = response.code();
         courseModels = new ArrayList();
         if(statusCode==200) {
-          courseModels=response.body();
+          courseModels=new ArrayList<>(Arrays.asList(Objects.requireNonNull(courseContent).getData()));
           System.out.println("Suree body: " + response.body());
           adapter = new AllCourseAdapter(getActivity(), courseModels);
           course_recycle.setAdapter(adapter);
@@ -101,7 +107,7 @@ public class CourseFragment extends Fragment {
       }
 
       @Override
-      public void onFailure(Call<ArrayList<CourseModel>> call, Throwable t) {
+      public void onFailure(Call<CourseContent> call, Throwable t) {
         Toast.makeText(getContext(),"Failed" + t.getMessage(),Toast.LENGTH_SHORT).show();
 
         System.out.println("Suree: Error "+t.getMessage());

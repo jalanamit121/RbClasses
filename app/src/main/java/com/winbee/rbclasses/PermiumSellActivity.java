@@ -2,7 +2,9 @@ package com.winbee.rbclasses;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Paint;
@@ -15,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +33,7 @@ import com.razorpay.Checkout;
 import com.razorpay.PaymentData;
 import com.razorpay.PaymentResultWithDataListener;
 import com.squareup.picasso.Picasso;
+import com.winbee.rbclasses.NewModels.LogOut;
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.WebApi.ClientApi;
 import com.winbee.rbclasses.model.CourseModel;
@@ -73,14 +77,6 @@ public class PermiumSellActivity extends AppCompatActivity implements PaymentRes
                 Settings.Secure.ANDROID_ID);
         UserMobile=SharedPrefManager.getInstance(this).refCode().getUsername();
         UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
-//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-//        if (ActivityCompat.checkSelfPermission(PermiumSellActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(PermiumSellActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
-//            return;
-//        }
-//        IMEINumber = telephonyManager.getDeviceId();
-
-
         UserId = SharedPrefManager.getInstance(this).refCode().getUserId();
         UserName = SharedPrefManager.getInstance(this).refCode().getUsername();
         someTextView = (TextView) findViewById(R.id.txt_discount);
@@ -135,9 +131,9 @@ public class PermiumSellActivity extends AppCompatActivity implements PaymentRes
         view_demo=findViewById(R.id.view_demo);
         payment_image=findViewById(R.id.payment_image);
         Picasso.get().load(LocalData.PayImage).into(payment_image);
-       // txt_total_video=findViewById(R.id.txt_total_video);
+        txt_total_video=findViewById(R.id.txt_total_video);
         txt_total_video.setText("Total Videos("+ LocalData.TotalVideo+")");
-      //  txt_total_document=findViewById(R.id.txt_total_document);
+        txt_total_document=findViewById(R.id.txt_total_document);
         txt_total_document.setText("Total Documents("+LocalData.TotalDocument+")");
         txt_actual_price=findViewById(R.id.txt_actual_price);
         txt_actual_price.setPaintFlags(txt_actual_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -150,7 +146,34 @@ public class PermiumSellActivity extends AppCompatActivity implements PaymentRes
         pay_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userValidation();
+
+                final Dialog dialog = new Dialog(PermiumSellActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.custom_payment_alert);
+                TextView txt_cancel=dialog.findViewById(R.id.txt_cancel);
+                TextView txt_course=dialog.findViewById(R.id.txt_course);
+                TextView txt_discount=dialog.findViewById(R.id.txt_discount);
+                TextView txt_actual_price=dialog.findViewById(R.id.txt_actual_price);
+                txt_actual_price.setText(LocalData.DiscountPrice);
+                txt_discount.setPaintFlags(txt_actual_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                txt_discount.setText(LocalData.ActualPrice);
+
+                txt_course.setText(LocalData.Discription);
+                TextView txt_pervious_attempt=dialog.findViewById(R.id.txt_pervious_attempt);
+                txt_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                txt_pervious_attempt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        userValidation();
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
             }
         });
         user_id.setText(UserId);
@@ -257,18 +280,35 @@ public class PermiumSellActivity extends AppCompatActivity implements PaymentRes
 
         progressBarUtil.showProgress();
         ClientApi mService = ApiClient.getClient().create(ClientApi.class);
-        Call<RefCode> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
-        Log.i("tag", "callRefCodeSignInApi: "+IMEINumber+UserMobile+UserPassword);
-        call.enqueue(new Callback<RefCode>() {
+        Call<LogOut> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
+        call.enqueue(new Callback<LogOut>() {
             @Override
-            public void onResponse(Call<RefCode> call, Response<RefCode> response) {
+            public void onResponse(Call<LogOut> call, Response<LogOut> response) {
                 int statusCode = response.code();
                 if (statusCode == 200 && response.body().getLoginStatus()!=false) {
-                    progressBarUtil.hideProgress();
-                    SharedPrefManager.getInstance(PermiumSellActivity.this).logout();
-                    startActivity(new Intent(PermiumSellActivity.this, LoginActivity.class));
-                    //Objects.requireNonNull(this).finish();
-                    finish();
+                    if (response.body().getError()==false){
+                        progressBarUtil.hideProgress();
+                        SharedPrefManager.getInstance(PermiumSellActivity.this).logout();
+                        startActivity(new Intent(PermiumSellActivity.this, LoginActivity.class));
+                        finish();
+                    }else{
+                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(
+                                PermiumSellActivity.this);
+                        alertDialogBuilder.setTitle("Alert");
+                        alertDialogBuilder
+                                .setMessage(response.body().getError_Message())
+                                .setCancelable(false)
+                                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        forceLogout();
+                                    }
+                                });
+
+                        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+
+                    }
+
 
                 } else {
                     progressBarUtil.hideProgress();
@@ -278,24 +318,18 @@ public class PermiumSellActivity extends AppCompatActivity implements PaymentRes
             }
 
             @Override
-            public void onFailure(Call<RefCode> call, Throwable t) {
+            public void onFailure(Call<LogOut> call, Throwable t) {
                 Toast.makeText(PermiumSellActivity.this, "Failed" + t.getMessage(), Toast.LENGTH_LONG).show();
                 System.out.println(t.getLocalizedMessage());
             }
         });
     }
-    //    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-//        switch (requestCode) {
-//            case REQUEST_CODE: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    //Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    //Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        }
-//    }
+
+    private void forceLogout() {
+        SharedPrefManager.getInstance(this).logout();
+        startActivity(new Intent(this, LoginActivity.class));
+        Objects.requireNonNull(this).finish();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);

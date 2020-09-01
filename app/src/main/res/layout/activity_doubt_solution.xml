@@ -21,12 +21,29 @@
 
 </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_marginBottom="115dp" android:id="@+id/gec_asked_solution_recycle" android:layout_below="@id/branch_live" app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" android:nestedScrollingEnabled="false"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="115dp"
+        android:id="@+id/gec_asked_solution_recycle"
+        android:layout_below="@id/branch_live"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:nestedScrollingEnabled="false"/>
 
 
     <LinearLayout android:background="@color/white" android:layout_height="60dp" android:layout_width="match_parent" android:orientation="horizontal" android:layout_above="@id/footer" android:padding="14dp">
 
-    <EditText android:background="@null" android:layout_height="wrap_content" android:layout_width="250dp" android:id="@+id/editTextGiveSolution" android:fontFamily="@font/proximanovaregular" android:textColor="@color/edit_text" android:textSize="14sp" android:textColorHint="@color/edit_text" android:maxLines="10" android:inputType="text|textMultiLine" android:hint="Want to give Solution"/>
+    <EditText android:background="@null"
+        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:id="@+id/editTextGiveSolution"
+        android:fontFamily="@font/proximanovaregular"
+        android:textColor="@color/edit_text"
+        android:textSize="14sp"
+        android:textColorHint="@color/edit_text"
+        android:maxLines="10"
+        android:inputType="text|textMultiLine"
+        android:hint="Want to give Solution"/>
 
     <EditText android:background="@null" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/editTextQuestionid" android:fontFamily="@font/proximanovaregular" android:textSize="14sp" android:textColorHint="@color/edit_text" android:inputType="text" android:hint="Want to give Solution" android:layout_weight="5" android:visibility="gone"/>
 

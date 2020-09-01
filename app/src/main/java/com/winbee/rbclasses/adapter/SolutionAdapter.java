@@ -15,6 +15,7 @@ import com.winbee.rbclasses.R;
 import com.winbee.rbclasses.model.SolutionQuestion;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SolutionAdapter extends RecyclerView.Adapter<SolutionAdapter.ViewHolder> {
     private Context context;
@@ -24,6 +25,12 @@ public class SolutionAdapter extends RecyclerView.Adapter<SolutionAdapter.ViewHo
         this.context = context;
         this.list = list;
     }
+    public void setData(List<String> list) {
+        this.list.clear();
+        list.addAll(list);
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override

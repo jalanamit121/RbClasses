@@ -9,9 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class SplashPageActivity extends AppCompatActivity {
-
   PrefManager prefManager;
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -34,10 +32,7 @@ public class SplashPageActivity extends AppCompatActivity {
           } else {
             launchHomeScreen();
             finish();
-
           }
-
-
         }
       }
     };

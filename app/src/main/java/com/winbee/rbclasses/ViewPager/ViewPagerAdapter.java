@@ -6,11 +6,8 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.winbee.rbclasses.CourseFragment;
 import com.winbee.rbclasses.HomeFragment;
-import com.winbee.rbclasses.LiveFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
-  //    String[] tabarray = new String[]{"Home","Live Classes"};
-//    Integer tabnumber = 2;
   int mNumOfTabs;
 
   public ViewPagerAdapter(FragmentManager fm, int NumOfTabs) {

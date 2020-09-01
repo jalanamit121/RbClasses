@@ -14,7 +14,11 @@
 
   <RelativeLayout android:layout_height="wrap_content" android:layout_width="match_parent">
 
-  <include android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_alignParentBottom="true" layout="@layout/footer_buy"/>
+  <include
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      android:layout_alignParentBottom="true"
+      layout="@layout/footer_buy"/>
 
 </RelativeLayout>
 

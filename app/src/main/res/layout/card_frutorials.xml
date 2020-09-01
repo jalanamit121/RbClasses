@@ -3,12 +3,28 @@
     <LinearLayout xmlns:app="http://schemas.android.com/tools" android:layout_height="wrap_content" android:layout_width="match_parent" xmlns:card_view="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <androidx.cardview.widget.CardView android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_margin="@dimen/card_margin" card_view:cardElevation="2dp" android:id="@+id/card_view">
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/card_margin"
+        card_view:cardElevation="1dp"
+        android:id="@+id/card_view">
 
 
-    <RelativeLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="vertical">
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
 
-    <ImageView android:layout_height="70dp" android:layout_width="120dp" android:id="@+id/youtubeThubnail" android:scaleType="centerCrop" android:layout_marginBottom="5dp" android:layout_marginTop="5dp" android:padding="10dp" android:src="@drawable/frutorials"/>
+    <ImageView
+        android:layout_height="70dp"
+        android:layout_width="120dp"
+        android:id="@+id/youtubeThubnail"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:padding="10dp" />
+
 
     <TextView
         android:layout_height="wrap_content"
@@ -22,17 +38,80 @@
         android:textSize="14sp"
         android:text=""/>
 
-    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/title" android:textColor="@color/edit_text" android:textSize="17sp" android:text="YouTube Video" android:layout_marginLeft="5dp" android:layout_below="@id/live_status" android:layout_toRightOf="@id/youtubeThubnail"/>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/title"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:textColor="@color/edit_text"
+        android:textSize="17sp"
+        android:layout_marginTop="5dp"
+        android:text="YouTube Video"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/youtubeThubnail"/>
 
-    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/teacher" android:layout_marginTop="7dp" android:textColor="@color/edit_text" android:textSize="15sp" android:text="YouTube Video" android:layout_marginLeft="5dp" android:layout_below="@id/title" android:layout_toRightOf="@id/youtubeThubnail"/>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/teacher"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/edit_text"
+        android:textSize="15sp"
+        android:text="YouTube Video"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@id/title"
+        android:layout_toRightOf="@id/youtubeThubnail"/>
 
-    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/date" android:layout_marginTop="7dp" android:textColor="@color/edit_text" android:visibility="gone" android:textSize="15sp" android:text="YouTube Video" android:layout_marginLeft="5dp" android:layout_below="@id/teacher" android:layout_toRightOf="@id/youtubeThubnail" android:textStyle="italic"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/date"
+            android:textColor="@color/edit_text"
+            android:textSize="15sp"
+            android:text="date"
+            android:layout_marginRight="5dp"
+            android:visibility="visible"
+            android:layout_marginLeft="5dp"
+            android:layout_below="@id/teacher"
+            android:layout_alignParentEnd="true" />
 
-    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/time" android:layout_marginTop="7dp" android:textColor="@color/edit_text" android:visibility="gone" android:textSize="15sp" android:text="YouTube Video" android:layout_marginLeft="5dp" android:layout_below="@id/teacher" android:layout_toRightOf="@id/date" android:textStyle="italic"/>
 
-    <ImageView android:layout_height="25dp" android:layout_width="25dp" android:id="@+id/img_lock" android:layout_marginBottom="5dp" android:src="@drawable/ic_lock" android:layout_marginRight="5dp" android:layout_alignParentEnd="true" android:visibility="visible" android:layout_marginLeft="5dp" android:layout_below="@id/date"/>
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/image_gif"
+            android:layout_width="50dp"
+            android:visibility="visible"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/teacher"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/rblive"/>
 
-    <ImageView android:layout_height="25dp" android:layout_width="25dp" android:id="@+id/img_Unlock" android:layout_marginBottom="5dp" android:src="@drawable/ic_unlock" android:layout_marginRight="5dp" android:layout_alignParentEnd="true" android:visibility="gone" android:layout_marginLeft="5dp" android:layout_below="@id/date"/>
+
+
+    <ImageView
+        android:layout_height="20dp"
+        android:layout_width="25dp"
+        android:id="@+id/img_lock"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/ic_lock"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentEnd="true"
+        android:visibility="visible"
+        android:layout_marginLeft="5dp" />
+        <ImageView
+            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:id="@+id/img_Unlock"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/ic_unlock"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentEnd="true"
+            android:visibility="visible"
+            android:layout_marginLeft="5dp" />
+
+
 
     <ImageView android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_marginTop="-40dp" android:src="@android:drawable/ic_media_play" android:layout_marginLeft="10dp" android:layout_below="@id/youtubeThubnail" android:layout_alignParentLeft="true"/>
 

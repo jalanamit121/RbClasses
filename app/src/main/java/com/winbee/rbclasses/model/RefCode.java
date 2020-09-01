@@ -31,9 +31,6 @@ public class RefCode implements Serializable {
     @SerializedName("MessageFailure")
     @Expose
     private String messageFailure;
-    @SerializedName("CurrentLoginStatus")
-    @Expose
-    private String currentLoginStatus;
     @SerializedName("Org_Code")
     @Expose
     private String org_Code;
@@ -43,10 +40,9 @@ public class RefCode implements Serializable {
     @SerializedName("ref_code")
     @Expose
     private String ref_code;
-    @SerializedName("Cred")
+    @SerializedName("error_code")
     @Expose
-    private String cred;
-
+    private Integer error_code;
 
 
     public RefCode(String username, String name, String email, String role_Encode, String userId, String ref_code, String password) {
@@ -127,14 +123,6 @@ public class RefCode implements Serializable {
         this.messageFailure = messageFailure;
     }
 
-    public String getCurrentLoginStatus() {
-        return currentLoginStatus;
-    }
-
-    public void setCurrentLoginStatus(String currentLoginStatus) {
-        this.currentLoginStatus = currentLoginStatus;
-    }
-
     public String getOrg_Code() {
         return org_Code;
     }
@@ -159,12 +147,12 @@ public class RefCode implements Serializable {
         this.ref_code = ref_code;
     }
 
-    public String getCred() {
-        return cred;
+    public Integer getError_code() {
+        return error_code;
     }
 
-    public void setCred(String cred) {
-        this.cred = cred;
+    public void setError_code(Integer error_code) {
+        this.error_code = error_code;
     }
 
 }

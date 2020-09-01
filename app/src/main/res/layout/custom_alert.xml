@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        >
+        <ImageView
+            android:id="@+id/alert_image"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:visibility="gone"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/rb_trans"/>
+        <TextView
+            android:id="@+id/txt_choose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choose Action"
+            android:layout_below="@id/alert_image"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
+            android:textSize="15sp"
+            android:fontFamily="@font/proximanovaregular"/>
+        <TextView
+            android:id="@+id/txt_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel "
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="20dp"
+            android:textColor="#FF1744"
+            android:textSize="16sp"
+            android:visibility="visible"
+            android:fontFamily="@font/proximanovaregular"
+            android:padding="14dp"
+            android:layout_below="@id/txt_choose"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/txt_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Force Login"
+            android:layout_marginStart="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:visibility="visible"
+            android:layout_toRightOf="@id/txt_cancel"
+            android:textColor="#2979FF"
+            android:textSize="16sp"
+            android:fontFamily="@font/proximanovaregular"
+            android:padding="14dp"
+            android:layout_below="@id/txt_choose"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/txt_login_verify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Verify Account"
+            android:textSize="16sp"
+
+            android:layout_marginStart="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:visibility="visible"
+            android:layout_toRightOf="@id/txt_cancel"
+            android:textColor="#2979FF"
+            android:fontFamily="@font/proximanovaregular"
+            android:padding="14dp"
+            android:layout_below="@id/txt_choose"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+</RelativeLayout>

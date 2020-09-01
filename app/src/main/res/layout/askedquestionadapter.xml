@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-    <RelativeLayout android:layout_marginRight="15dp" android:background="@drawable/shadow" android:clickable="true" android:layout_marginEnd="5dp" android:layout_marginStart="5dp" android:elevation="4dp" android:padding="6dp" android:id="@+id/branch_live1" android:layout_marginBottom="5dp" android:layout_marginTop="5dp" android:layout_height="wrap_content" android:layout_width="match_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+    android:layout_marginRight="15dp"
+    android:background="@drawable/shadow"
+    android:clickable="true"
+    android:layout_marginEnd="5dp"
+    android:layout_marginStart="5dp"
+    android:elevation="4dp"
+    android:padding="6dp"
+    android:id="@+id/branch_live1"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <RelativeLayout android:background="@drawable/bottom_layout" android:layout_marginEnd="5dp" android:layout_marginStart="5dp" android:id="@+id/branch_live" android:layout_marginBottom="10dp" android:layout_marginTop="5dp" android:layout_height="wrap_content" android:layout_width="match_parent">
+    <RelativeLayout
+        android:background="@drawable/bottom_layout" android:layout_marginEnd="5dp" android:layout_marginStart="5dp" android:id="@+id/branch_live" android:layout_marginBottom="10dp" android:layout_marginTop="5dp" android:layout_height="wrap_content" android:layout_width="match_parent">
 
     <de.hdodenhof.circleimageview.CircleImageView android:layout_marginStart="15dp" android:id="@+id/question_image" android:layout_marginTop="10dp" android:layout_height="40dp" android:layout_width="40dp" android:src="@drawable/ic_businessman" android:layout_marginLeft="20dp"/>
 

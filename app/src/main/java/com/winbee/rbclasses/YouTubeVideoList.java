@@ -2,6 +2,7 @@ package com.winbee.rbclasses;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -22,6 +23,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.winbee.rbclasses.NewModels.CourseContent;
+import com.winbee.rbclasses.NewModels.CourseContentArray;
+import com.winbee.rbclasses.NewModels.LogOut;
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.WebApi.ClientApi;
 import com.winbee.rbclasses.adapter.AllPurchasedCourseAdapter;
@@ -29,6 +34,7 @@ import com.winbee.rbclasses.model.CourseModel;
 import com.winbee.rbclasses.model.RefCode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -38,7 +44,7 @@ import retrofit2.Response;
 import static com.balsikandar.crashreporter.CrashReporter.getContext;
 
 public class YouTubeVideoList extends AppCompatActivity {
-    private ArrayList<CourseModel> courseModels;
+    private ArrayList<CourseContentArray> courseModels;
     private RecyclerView course_recycle;
     private ProgressBarUtil progressBarUtil;
     private AllPurchasedCourseAdapter adapter;
@@ -57,16 +63,10 @@ public class YouTubeVideoList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_you_tube_video_list);
         progressBarUtil   =  new ProgressBarUtil(this);
-        android_id = Settings.Secure.getString(getContext().getContentResolver(),
-                Settings.Secure.ANDROID_ID);
+        android_id = Settings.Secure.getString(getContext().getContentResolver(),Settings.Secure.ANDROID_ID);
         UserMobile=SharedPrefManager.getInstance(this).refCode().getUsername();
         UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
-//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-//        if (ActivityCompat.checkSelfPermission(YouTubeVideoList.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(YouTubeVideoList.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
-//            return;
-//        }
-//        IMEINumber = telephonyManager.getDeviceId();
+
 
         course_recycle = findViewById(R.id.all_course);
         today_classes=findViewById(R.id.today_classes);
@@ -81,20 +81,11 @@ public class YouTubeVideoList extends AppCompatActivity {
         });
 
         layout_course = findViewById(R.id.layout_course);
-        layout_course.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent live = new Intent(YouTubeVideoList.this, YouTubeVideoList.class);
-                startActivity(live);
-            }
-        });
         layout_test = findViewById(R.id.layout_test);
         layout_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(YouTubeVideoList.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-//                Intent doubt = new Intent(MainActivity.this,DoubtActivity.class);
-//                startActivity(doubt);
             }
         });
         layout_current = findViewById(R.id.layout_current);
@@ -115,10 +106,6 @@ public class YouTubeVideoList extends AppCompatActivity {
         });
 
         callCourseApiService();
-    }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 
     @Override
@@ -168,23 +155,35 @@ public class YouTubeVideoList extends AppCompatActivity {
     private void callCourseApiService() {
         progressBarUtil.showProgress();
         ClientApi apiCAll = ApiClient.getClient().create(ClientApi.class);
-        Call<ArrayList<CourseModel>> call = apiCAll.getPurchasedCourse(1,UserID,"WB_009","WB_009");
-        call.enqueue(new Callback<ArrayList<CourseModel>>() {
+        Call<CourseContent> call = apiCAll.getPurchasedCourse(1,UserID,"WB_009","WB_009",android_id);
+        call.enqueue(new Callback<CourseContent>() {
             @Override
-            public void onResponse(Call<ArrayList<CourseModel>> call, Response<ArrayList<CourseModel>> response) {
+            public void onResponse(Call<CourseContent> call, Response<CourseContent> response) {
+                CourseContent courseContent = response.body();
                 int statusCode = response.code();
                 courseModels = new ArrayList();
                 if(statusCode==200) {
-                    if (response.body().size()!=0) {
+                    if (response.body().getError()==false) {
                         today_classes.setVisibility(View.GONE);
-                        courseModels = response.body();
+                        courseModels = new ArrayList<>(Arrays.asList(Objects.requireNonNull(courseContent).getData()));
                         System.out.println("Suree body: " + response.body());
                         adapter = new AllPurchasedCourseAdapter(YouTubeVideoList.this, courseModels);
                         course_recycle.setAdapter(adapter);
                         progressBarUtil.hideProgress();
                     }else {
-                        today_classes.setVisibility(View.VISIBLE);
-                        progressBarUtil.hideProgress();
+                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getContext());
+                        alertDialogBuilder.setTitle("Alert");
+                        alertDialogBuilder
+                                .setMessage(response.body().getError_Message())
+                                .setCancelable(false)
+                                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        forceLogout();
+                                    }
+                                });
+
+                        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
                     }
 
                 }
@@ -195,7 +194,7 @@ public class YouTubeVideoList extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<CourseModel>> call, Throwable t) {
+            public void onFailure(Call<CourseContent> call, Throwable t) {
                 Toast.makeText(getApplicationContext(),"Failed" + t.getMessage(),Toast.LENGTH_SHORT).show();
 
                 System.out.println("Suree: Error "+t.getMessage());
@@ -208,18 +207,35 @@ public class YouTubeVideoList extends AppCompatActivity {
 
         progressBarUtil.showProgress();
         ClientApi mService = ApiClient.getClient().create(ClientApi.class);
-        Call<RefCode> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
-        Log.i("tag", "callRefCodeSignInApi: "+IMEINumber+UserMobile+UserPassword);
-        call.enqueue(new Callback<RefCode>() {
+        Call<LogOut> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
+        call.enqueue(new Callback<LogOut>() {
             @Override
-            public void onResponse(Call<RefCode> call, Response<RefCode> response) {
+            public void onResponse(Call<LogOut> call, Response<LogOut> response) {
                 int statusCode = response.code();
                 if (statusCode == 200 && response.body().getLoginStatus()!=false) {
-                    progressBarUtil.hideProgress();
-                    SharedPrefManager.getInstance(YouTubeVideoList.this).logout();
-                    startActivity(new Intent(YouTubeVideoList.this, LoginActivity.class));
-                    //Objects.requireNonNull(this).finish();
-                    finish();
+                    if (response.body().getError()==false){
+                        progressBarUtil.hideProgress();
+                        SharedPrefManager.getInstance(YouTubeVideoList.this).logout();
+                        startActivity(new Intent(YouTubeVideoList.this, LoginActivity.class));
+                        finish();
+                    }else{
+                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(
+                                YouTubeVideoList.this);
+                        alertDialogBuilder.setTitle("Alert");
+                        alertDialogBuilder
+                                .setMessage(response.body().getError_Message())
+                                .setCancelable(false)
+                                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        forceLogout();
+                                    }
+                                });
+
+                        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+
+                    }
+
 
                 } else {
                     progressBarUtil.hideProgress();
@@ -229,22 +245,31 @@ public class YouTubeVideoList extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<RefCode> call, Throwable t) {
+            public void onFailure(Call<LogOut> call, Throwable t) {
                 Toast.makeText(YouTubeVideoList.this, "Failed" + t.getMessage(), Toast.LENGTH_LONG).show();
                 System.out.println(t.getLocalizedMessage());
             }
         });
     }
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-//        switch (requestCode) {
-//            case REQUEST_CODE: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    //Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    //Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        }
-//    }
+
+
+
+    @Override
+    public void onBackPressed () {
+//        finish();
+//        super.onBackPressed();
+        Intent intent = new Intent(this,MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+       // finish();
+    }
+
+
+    private void forceLogout() {
+        SharedPrefManager.getInstance(getContext()).logout();
+        startActivity(new Intent(getContext(), LoginActivity.class));
+        Objects.requireNonNull(this).finish();
+    }
+
 }

@@ -2,7 +2,9 @@ package com.winbee.rbclasses;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +20,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.auth.User;
+import com.winbee.rbclasses.NewModels.AskDoubt;
+import com.winbee.rbclasses.NewModels.AskDoubtArray;
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.WebApi.ClientApi;
 import com.winbee.rbclasses.adapter.AskDoubtAdapter;
@@ -25,10 +30,14 @@ import com.winbee.rbclasses.model.AskDoubtQuestion;
 import com.winbee.rbclasses.model.NewDoubtQuestion;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.balsikandar.crashreporter.CrashReporter.getContext;
 
 
 /**
@@ -39,10 +48,10 @@ public class AskFragment extends Fragment {
     private ProgressBarUtil progressBarUtil;
     Button submit;
     private ImageView WebsiteHome,img_share;
-    private Button btn_asked;
     private AskDoubtAdapter adapter;
-    private ArrayList<AskDoubtQuestion> list;
+    private ArrayList<AskDoubtArray> list;
     private RecyclerView askedQuestion;
+    String User_id,android_id;
 
 
     public AskFragment() {
@@ -61,9 +70,11 @@ public class AskFragment extends Fragment {
         editTextQuestionTitle=view.findViewById(R.id.editTextQuestionTitleFragment);
         editTextQuestionDescription=view.findViewById(R.id.editTextQuestionDescriptionFragment);
         progressBarUtil   =  new ProgressBarUtil(getContext());
+        User_id = SharedPrefManager.getInstance(getContext()).refCode().getUserId();
+        android_id = Settings.Secure.getString(getContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
         WebsiteHome=view.findViewById(R.id.WebsiteHome);
         img_share=view.findViewById(R.id.img_share);
-        btn_asked=view.findViewById(R.id.btn_asked);
         askedQuestion = view.findViewById(R.id.gec_asked_question_recycle);
         submit=view.findViewById(R.id.buttonSubmit);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -124,9 +135,6 @@ public class AskFragment extends Fragment {
                         Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();}
                     editTextQuestionTitle.getText().clear();
                     editTextQuestionDescription.getText().clear();
-//                    startActivity(new Intent(NewDoubtActivity.this, NewDoubtActivity.class));
-//
-//                    finish();
                 }
                 else{
                     System.out.println("Sur: response code"+response.message());
@@ -168,19 +176,38 @@ public class AskFragment extends Fragment {
     private void callAskedQuestionApiService(){
         progressBarUtil.showProgress();
         ClientApi apiCall = ApiClient.getClient().create(ClientApi.class);
-        Call<ArrayList<AskDoubtQuestion>> call =apiCall.getQuestion();
-        call.enqueue(new Callback<ArrayList<AskDoubtQuestion>>() {
+        Call<AskDoubt> call =apiCall.getQuestion(User_id,android_id);
+        call.enqueue(new Callback<AskDoubt>() {
             @Override
-            public void onResponse(Call<ArrayList<AskDoubtQuestion>> call, Response<ArrayList<AskDoubtQuestion>> response) {
+            public void onResponse(Call<AskDoubt> call, Response<AskDoubt> response) {
+                AskDoubt askDoubt=response.body();
 
                 int statusCode = response.code();
                 list = new ArrayList();
                 if(statusCode==200){
-                    System.out.println("Suree body: "+response.body());
-                    list = response.body();
-                    adapter = new AskDoubtAdapter(getActivity(),list);
-                    askedQuestion.setAdapter(adapter);
-                    progressBarUtil.hideProgress();
+
+                    if (response.body().getError()==false){
+                        System.out.println("Suree body: "+response.body());
+                        list = new ArrayList<>(Arrays.asList(Objects.requireNonNull(askDoubt).getData()));
+                        adapter = new AskDoubtAdapter(getActivity(),list);
+                        askedQuestion.setAdapter(adapter);
+                        progressBarUtil.hideProgress();
+                    }else{
+                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getContext());
+                        alertDialogBuilder.setTitle("Alert");
+                        alertDialogBuilder
+                                .setMessage(response.body().getError_Message())
+                                .setCancelable(false)
+                                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        forceLogout();
+                                    }
+                                });
+
+                        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                    }
+
                 }
                 else{
                     System.out.println("Suree: response code"+response.message());
@@ -190,7 +217,7 @@ public class AskFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<AskDoubtQuestion>> call, Throwable t) {
+            public void onFailure(Call<AskDoubt> call, Throwable t) {
                 System.out.println("Suree: "+t.getMessage());
                 progressBarUtil.hideProgress();
                 Toast.makeText(getContext(),"Failed"+t.getMessage() ,Toast.LENGTH_SHORT).show();
@@ -198,6 +225,10 @@ public class AskFragment extends Fragment {
             }
         });
     }
-
+    private void forceLogout() {
+        SharedPrefManager.getInstance(getContext()).logout();
+        startActivity(new Intent(getContext(), LoginActivity.class));
+        Objects.requireNonNull(this).getActivity().finish();
+    }
 
 }

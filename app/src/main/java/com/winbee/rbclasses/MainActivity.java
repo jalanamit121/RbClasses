@@ -36,6 +36,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.winbee.rbclasses.NewModels.LogOut;
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.ViewPager.ViewPagerAdapter;
 import com.winbee.rbclasses.WebApi.ClientApi;
@@ -44,6 +45,8 @@ import com.winbee.rbclasses.model.RefCode;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
     boolean version = false;
     String sCurrentVersion,sLastestVersion;
     private ProgressBarUtil progressBarUtil;
-    private static final int REQUEST_CODE = 101;
-    String IMEINumber;
     String UserMobile,UserPassword;
     String android_id;
 
@@ -95,13 +96,8 @@ public class MainActivity extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             msg = "failed";
                         }
-//
-                        //Toast.makeText(GecHomeActivity.this, msg, Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
-        Uservalidation();
         layout_home = findViewById(R.id.layout_home);
         layout_course = findViewById(R.id.layout_course);
         layout_course.setOnClickListener(new View.OnClickListener() {
@@ -206,27 +202,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
-    public void Uservalidation() {
-
-        String Email = LocalData.Email;
-        String Password=LocalData.Password;
-        Log.d("TAG", "Uservalidation: "+Email+" "+Password);
-        if (!Email.isEmpty()&& !Password.isEmpty()){
-            auth.signInWithEmailAndPassword(Email,Password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                //  Toast.makeText(MainActivity.this, "welcome", Toast.LENGTH_SHORT).show();
-
-                            }else{
-                                Toast.makeText(MainActivity.this, "NetWork Issue Please Check Internet Connection", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-        }
-
-    }
     @Override
     public void onBackPressed () {
         finish();
@@ -234,98 +209,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    private void logout() {
-//        SharedPrefManager.getInstance(this).logout();
-//        startActivity(new Intent(this, LoginActivity.class));
-//        Objects.requireNonNull(this).finish();
-//    }
-
-//    // showing the update pop up to user
-//    private class GetLastesVersion extends AsyncTask<String,Void,String> {
-//        @Override
-//        protected String doInBackground(String... strings) {
-//            try {
-//                sLastestVersion = Jsoup
-//                        .connect("https://play.google.com/store/apps/details?id="+getPackageName())
-//                        .timeout(3000)
-//                        .get()
-//                        .select("div.hAyfc:nth-child(4)>"+"span:nth-child(2)> div:nth-child(1)"+"> span:nth-child(1)")
-//                        .first()
-//                        .ownText();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            return sLastestVersion;
-//        }
-//        @Override
-//        protected void onPostExecute(String s) {
-//            sCurrentVersion = BuildConfig.VERSION_NAME;
-//            if (sLastestVersion !=null){
-//                String[] ver1 =sCurrentVersion.split("\\.");//"1.3.1" 1.3
-//                String[] ver2 =sLastestVersion.split("\\.");//"1.3.2" 1.2
-//                Log.i("tag", "sLastestVersion: "+sLastestVersion);
-//                int len1= ver1.length;
-//                int len2= ver2.length;
-//
-//
-//                for(int i = 0; i < len1 ; i++)
-//                {
-//                    if(!ver1[i].equals(ver2[i]))
-//                    {
-//                        Log.i("log", "onPostExecute: "+ver1[i]+" "+ver2[i]);
-//                        version = true;
-//                        updateAlertDialog();
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
-//    private void updateAlertDialog() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//
-//        //Set title
-//        builder.setTitle(getResources().getString(R.string.app_name));
-//        builder.setMessage("update available");
-//        builder.setCancelable(false);
-//        builder.setPositiveButton("update", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                startActivity(new Intent(Intent.ACTION_VIEW,
-//                        Uri.parse("market://details?id="+getPackageName())));
-//
-//                //dismiss dialog
-//                dialogInterface.dismiss();
-//            }
-//        });
-//        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                dialogInterface.cancel();
-//
-//            }
-//        });
-//
-//        builder.show();
-//    }
 
     private void logout() {
 
         progressBarUtil.showProgress();
         ClientApi mService = ApiClient.getClient().create(ClientApi.class);
-        Call<RefCode> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001","0");
-        Log.i("tag", "callRefCodeSignInApi: "+android_id+UserMobile+UserPassword);
-        call.enqueue(new Callback<RefCode>() {
+        Call<LogOut> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
+        call.enqueue(new Callback<LogOut>() {
             @Override
-            public void onResponse(Call<RefCode> call, Response<RefCode> response) {
+            public void onResponse(Call<LogOut> call, Response<LogOut> response) {
                 int statusCode = response.code();
                 if (statusCode == 200 && response.body().getLoginStatus()!=false) {
-                    progressBarUtil.hideProgress();
-                    SharedPrefManager.getInstance(MainActivity.this).logout();
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    //Objects.requireNonNull(this).finish();
-                    finish();
+                    if (response.body().getError()==false){
+                        progressBarUtil.hideProgress();
+                        SharedPrefManager.getInstance(MainActivity.this).logout();
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        finish();
+                    }else{
+                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(
+                                MainActivity.this);
+                        alertDialogBuilder.setTitle("Alert");
+                        alertDialogBuilder
+                                .setMessage(response.body().getError_Message())
+                                .setCancelable(false)
+                                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        forceLogout();
+                                    }
+                                });
+
+                        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+
+                    }
+
 
                 } else {
                     progressBarUtil.hideProgress();
@@ -335,23 +252,19 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<RefCode> call, Throwable t) {
+            public void onFailure(Call<LogOut> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Failed" + t.getMessage(), Toast.LENGTH_LONG).show();
                 System.out.println(t.getLocalizedMessage());
             }
         });
     }
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-//        switch (requestCode) {
-//            case REQUEST_CODE: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    //Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    //Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        }
-//    }
+
+    private void forceLogout() {
+        SharedPrefManager.getInstance(this).logout();
+        startActivity(new Intent(this, LoginActivity.class));
+        Objects.requireNonNull(this).finish();
+    }
+
+
 }
 

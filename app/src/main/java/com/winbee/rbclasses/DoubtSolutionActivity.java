@@ -2,6 +2,7 @@ package com.winbee.rbclasses;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -22,8 +23,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.winbee.rbclasses.NewModels.LogOut;
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.WebApi.ClientApi;
 import com.winbee.rbclasses.adapter.SolutionAdapter;
@@ -61,12 +64,6 @@ public class DoubtSolutionActivity extends AppCompatActivity {
                 Settings.Secure.ANDROID_ID);
         UserMobile=SharedPrefManager.getInstance(this).refCode().getUsername();
         UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
-//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-//        if (ActivityCompat.checkSelfPermission(DoubtSolutionActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(DoubtSolutionActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
-//            return;
-//        }
-//        IMEINumber = telephonyManager.getDeviceId();
 
         askedSolution = findViewById(R.id.gec_asked_solution_recycle);
         editTextGiveSolution=findViewById(R.id.editTextGiveSolution);
@@ -103,8 +100,6 @@ public class DoubtSolutionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(DoubtSolutionActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-//                Intent doubt = new Intent(MainActivity.this,DoubtActivity.class);
-//                startActivity(doubt);
             }
         });
         layout_current = findViewById(R.id.layout_current);
@@ -124,7 +119,13 @@ public class DoubtSolutionActivity extends AppCompatActivity {
             }
         });
 
-
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        askedSolution.setLayoutManager(layoutManager);
+        list = new ArrayList<>();
+        adapter = new SolutionAdapter(this, list);
+        askedSolution.setAdapter(adapter);
+       // list.add(items);
+        adapter.notifyDataSetChanged();
 
         submit_solution.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,12 +135,13 @@ public class DoubtSolutionActivity extends AppCompatActivity {
         });
         progressBarUtil   =  new ProgressBarUtil(this);
         callAskedSolutionApiService();
+
+
     }
     private void callAskedSolutionApiService(){
         progressBarUtil.showProgress();
         ClientApi apiCall = ApiClient.getClient().create(ClientApi.class);
         Call<ArrayList<SolutionQuestion>> call = apiCall.getSolution(LocalData.FileName);
-        // Call<ArrayList<UrlQuestion>> call = mService.getQuestion(urlName.getDocumentId());
 
         call.enqueue(new Callback<ArrayList<SolutionQuestion>>() {
             @Override
@@ -269,18 +271,35 @@ public class DoubtSolutionActivity extends AppCompatActivity {
 
         progressBarUtil.showProgress();
         ClientApi mService = ApiClient.getClient().create(ClientApi.class);
-        Call<RefCode> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
-        Log.i("tag", "callRefCodeSignInApi: "+IMEINumber+UserMobile+UserPassword);
-        call.enqueue(new Callback<RefCode>() {
+        Call<LogOut> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
+        call.enqueue(new Callback<LogOut>() {
             @Override
-            public void onResponse(Call<RefCode> call, Response<RefCode> response) {
+            public void onResponse(Call<LogOut> call, Response<LogOut> response) {
                 int statusCode = response.code();
                 if (statusCode == 200 && response.body().getLoginStatus()!=false) {
-                    progressBarUtil.hideProgress();
-                    SharedPrefManager.getInstance(DoubtSolutionActivity.this).logout();
-                    startActivity(new Intent(DoubtSolutionActivity.this, LoginActivity.class));
-                    //Objects.requireNonNull(this).finish();
-                    finish();
+                    if (response.body().getError()==false){
+                        progressBarUtil.hideProgress();
+                        SharedPrefManager.getInstance(DoubtSolutionActivity.this).logout();
+                        startActivity(new Intent(DoubtSolutionActivity.this, LoginActivity.class));
+                        finish();
+                    }else{
+                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(
+                                DoubtSolutionActivity.this);
+                        alertDialogBuilder.setTitle("Alert");
+                        alertDialogBuilder
+                                .setMessage(response.body().getError_Message())
+                                .setCancelable(false)
+                                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        forceLogout();
+                                    }
+                                });
+
+                        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+
+                    }
+
 
                 } else {
                     progressBarUtil.hideProgress();
@@ -290,23 +309,16 @@ public class DoubtSolutionActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<RefCode> call, Throwable t) {
+            public void onFailure(Call<LogOut> call, Throwable t) {
                 Toast.makeText(DoubtSolutionActivity.this, "Failed" + t.getMessage(), Toast.LENGTH_LONG).show();
                 System.out.println(t.getLocalizedMessage());
             }
         });
     }
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-//        switch (requestCode) {
-//            case REQUEST_CODE: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    //Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    //Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        }
-//    }
 
+    private void forceLogout() {
+        SharedPrefManager.getInstance(this).logout();
+        startActivity(new Intent(this, LoginActivity.class));
+        Objects.requireNonNull(this).finish();
+    }
 }

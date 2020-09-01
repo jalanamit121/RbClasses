@@ -2,6 +2,7 @@ package com.winbee.rbclasses;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.winbee.rbclasses.NewModels.LogOut;
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.WebApi.ClientApi;
 import com.winbee.rbclasses.model.RefCode;
@@ -41,6 +44,7 @@ public class DiscussionActivity extends AppCompatActivity {
     private ImageView WebsiteHome,img_share;
     private static final int REQUEST_CODE = 101;
     String IMEINumber;
+    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
     String UserMobile,UserPassword,android_id;
     private  ProgressBarUtil progressBarUtil;
 
@@ -55,12 +59,41 @@ public class DiscussionActivity extends AppCompatActivity {
                 Settings.Secure.ANDROID_ID);
         UserMobile=SharedPrefManager.getInstance(this).refCode().getUsername();
         UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
-//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-//        if (ActivityCompat.checkSelfPermission(DiscussionActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(DiscussionActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
-//            return;
-//        }
-//        IMEINumber = telephonyManager.getDeviceId();
+        layout_home = findViewById(R.id.layout_home);
+        layout_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent home = new Intent(DiscussionActivity.this,MainActivity.class);
+                startActivity(home);
+            }
+        });
+
+        layout_course = findViewById(R.id.layout_course);
+        layout_course.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent live = new Intent(DiscussionActivity.this, YouTubeVideoList.class);
+                startActivity(live);
+            }
+        });
+        layout_test = findViewById(R.id.layout_test);
+        layout_test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(DiscussionActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+//                Intent doubt = new Intent(MainActivity.this,DoubtActivity.class);
+//                startActivity(doubt);
+            }
+        });
+        layout_current = findViewById(R.id.layout_current);
+        layout_current.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DiscussionActivity.this, CurrentAffairsActivity.class);
+                startActivity(intent);
+            }
+        });
+        layout_doubt = findViewById(R.id.layout_doubt);
 
 
 
@@ -165,18 +198,35 @@ public class DiscussionActivity extends AppCompatActivity {
 
         progressBarUtil.showProgress();
         ClientApi mService = ApiClient.getClient().create(ClientApi.class);
-        Call<RefCode> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
-        Log.i("tag", "callRefCodeSignInApi: "+IMEINumber+UserMobile+UserPassword);
-        call.enqueue(new Callback<RefCode>() {
+        Call<LogOut> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
+        call.enqueue(new Callback<LogOut>() {
             @Override
-            public void onResponse(Call<RefCode> call, Response<RefCode> response) {
+            public void onResponse(Call<LogOut> call, Response<LogOut> response) {
                 int statusCode = response.code();
                 if (statusCode == 200 && response.body().getLoginStatus()!=false) {
-                    progressBarUtil.hideProgress();
-                    SharedPrefManager.getInstance(DiscussionActivity.this).logout();
-                    startActivity(new Intent(DiscussionActivity.this, LoginActivity.class));
-                    //Objects.requireNonNull(this).finish();
-                    finish();
+                    if (response.body().getError()==false){
+                        progressBarUtil.hideProgress();
+                        SharedPrefManager.getInstance(DiscussionActivity.this).logout();
+                        startActivity(new Intent(DiscussionActivity.this, LoginActivity.class));
+                        finish();
+                    }else{
+                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(
+                                DiscussionActivity.this);
+                        alertDialogBuilder.setTitle("Alert");
+                        alertDialogBuilder
+                                .setMessage(response.body().getError_Message())
+                                .setCancelable(false)
+                                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        forceLogout();
+                                    }
+                                });
+
+                        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+
+                    }
+
 
                 } else {
                     progressBarUtil.hideProgress();
@@ -186,23 +236,27 @@ public class DiscussionActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<RefCode> call, Throwable t) {
+            public void onFailure(Call<LogOut> call, Throwable t) {
                 Toast.makeText(DiscussionActivity.this, "Failed" + t.getMessage(), Toast.LENGTH_LONG).show();
                 System.out.println(t.getLocalizedMessage());
             }
         });
     }
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-//        switch (requestCode) {
-//            case REQUEST_CODE: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    //Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    //Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        }
-//    }
+
+    private void forceLogout() {
+        SharedPrefManager.getInstance(this).logout();
+        startActivity(new Intent(this, LoginActivity.class));
+        Objects.requireNonNull(this).finish();
+    }
+    @Override
+    public void onBackPressed () {
+//        finish();
+//        super.onBackPressed();
+        Intent intent = new Intent(this,MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+       // finish();
+    }
 
 }

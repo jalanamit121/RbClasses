@@ -44,6 +44,7 @@ public class AllPurchasedNotesAdapter extends RecyclerView.Adapter<AllPurchasedN
 
 
     holder.gec_branchname.setText(list.get(position).getTopic());
+    holder.date_pdf.setText(list.get(position).getPublished());
     holder.img_lock.setVisibility(View.GONE);
     holder.card_view.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -61,12 +62,13 @@ public class AllPurchasedNotesAdapter extends RecyclerView.Adapter<AllPurchasedN
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
-    private TextView gec_branchname;
+    private TextView gec_branchname,date_pdf;
     ImageView img_lock;
     private CardView card_view;
     public ViewHolder(@NonNull View itemView) {
       super(itemView);
       gec_branchname = itemView.findViewById(R.id.gec_branchname);
+      date_pdf = itemView.findViewById(R.id.date_pdf);
       img_lock = itemView.findViewById(R.id.img_lock);
       card_view = itemView.findViewById(R.id.card_view);
     }

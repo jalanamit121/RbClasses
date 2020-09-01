@@ -14,6 +14,8 @@ public class LocalData {
     public static String Title="";
     public static String Duration="";
     public static String Commnts="";
+    public static String Message="";
+    public static String CourseName="";
 
 
 

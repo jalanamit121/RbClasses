@@ -83,7 +83,6 @@ public class OtpVerficationActivity extends AppCompatActivity {
         Log.i("tag", "onOtpCompleted: "+otp);
         LocalData.Otp=otp;
         chechOtpIsCorrect(otp);
-//        FireBaseValidation();
       }
     });
     progressBarUtil = new ProgressBarUtil(this);
@@ -129,7 +128,7 @@ public class OtpVerficationActivity extends AppCompatActivity {
           finish();
         } else {
           progressBarUtil.hideProgress();
-          Toast.makeText(OtpVerficationActivity.this, "Invalid UserName Password ", Toast.LENGTH_LONG).show();
+          Toast.makeText(OtpVerficationActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
         }
 
 
@@ -153,7 +152,7 @@ public class OtpVerficationActivity extends AppCompatActivity {
         if (statusCode == 200 && response.body().getSuccess() == true) {
           Toast.makeText(OtpVerficationActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
         } else {
-          Toast.makeText(OtpVerficationActivity.this, "Invalid UserName Password ", Toast.LENGTH_LONG).show();
+          Toast.makeText(OtpVerficationActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
         }
 
 

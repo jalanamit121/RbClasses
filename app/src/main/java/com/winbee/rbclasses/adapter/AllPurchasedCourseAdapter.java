@@ -21,8 +21,10 @@ import com.squareup.picasso.Picasso;
 import com.winbee.rbclasses.LiveDataActivity;
 import com.winbee.rbclasses.LiveDataPurchasedActivity;
 import com.winbee.rbclasses.LocalData;
+import com.winbee.rbclasses.NewModels.CourseContentArray;
 import com.winbee.rbclasses.R;
 import com.winbee.rbclasses.model.BranchName;
+import com.winbee.rbclasses.model.CourseContentModel;
 import com.winbee.rbclasses.model.CourseDatum;
 import com.winbee.rbclasses.model.CourseModel;
 
@@ -31,9 +33,9 @@ import java.util.List;
 
 public class AllPurchasedCourseAdapter extends RecyclerView.Adapter<AllPurchasedCourseAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<CourseModel> list1;
+    private ArrayList<CourseContentArray> list1;
 
-    public AllPurchasedCourseAdapter(Context context,ArrayList<CourseModel> horizontalList){
+    public AllPurchasedCourseAdapter(Context context,ArrayList<CourseContentArray> horizontalList){
         this.context = context;
         this.list1 = horizontalList;
     }

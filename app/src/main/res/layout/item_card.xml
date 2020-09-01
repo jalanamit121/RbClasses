@@ -6,7 +6,11 @@
 
   <LinearLayout android:layout_height="match_parent" android:layout_width="match_parent" android:orientation="vertical">
 
-  <ImageView android:layout_height="@dimen/img_card_height" android:layout_width="match_parent" android:id="@+id/card_view_image" android:src="@drawable/course_design_thinking" android:scaleType="centerCrop"/>
+  <ImageView
+      android:layout_height="@dimen/img_card_height"
+      android:layout_width="match_parent"
+      android:id="@+id/card_view_image"
+      android:scaleType="centerCrop"/>
 
   <TextView android:layout_marginRight="@dimen/normalPadding" android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/stag_item_course" android:textSize="15sp" android:textColor="@color/darkTextColor" android:text="Design Thinking" android:fontFamily="@font/bariol_bold" android:layout_marginTop="@dimen/top_text_card" android:layout_marginLeft="@dimen/normalPadding"/>
 

@@ -108,15 +108,6 @@
       android:hint="Email"/>
 
 </LinearLayout>
-
-
-  <LinearLayout android:background="@drawable/circularbordersolid" android:layout_height="wrap_content" android:layout_width="match_parent" android:gravity="center" android:id="@+id/referal_code" android:layout_marginTop="20dp" android:padding="18dp" android:visibility="gone">
-
-  <TextView android:background="@null" android:layout_height="wrap_content" android:layout_width="match_parent" android:textSize="14sp" android:textColor="@color/edit_text" android:text="RBC001" android:fontFamily="@font/proximanovaregular" android:id="@+id/editTextreferal_code"/>
-
-</LinearLayout>
-
-
   <LinearLayout
       android:layout_height="wrap_content"
       android:layout_width="match_parent"

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.winbee.rbclasses.DoubtSolutionActivity;
 import com.winbee.rbclasses.LocalData;
+import com.winbee.rbclasses.NewModels.AskDoubtArray;
 import com.winbee.rbclasses.R;
 import com.winbee.rbclasses.model.AskDoubtQuestion;
 
@@ -21,9 +22,9 @@ import java.util.ArrayList;
 
 public class AskDoubtAdapter extends RecyclerView.Adapter<AskDoubtAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<AskDoubtQuestion> list;
+    private ArrayList<AskDoubtArray> list;
 
-    public AskDoubtAdapter(Context context, ArrayList<AskDoubtQuestion> list){
+    public AskDoubtAdapter(Context context, ArrayList<AskDoubtArray> list){
         this.context = context;
         this.list = list;
     }

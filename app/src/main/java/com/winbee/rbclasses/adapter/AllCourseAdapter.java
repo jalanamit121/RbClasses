@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 import com.winbee.rbclasses.LiveDataActivity;
 import com.winbee.rbclasses.LiveDataPurchasedActivity;
 import com.winbee.rbclasses.LocalData;
+import com.winbee.rbclasses.NewModels.CourseContentArray;
 import com.winbee.rbclasses.R;
 import com.winbee.rbclasses.model.BranchName;
 import com.winbee.rbclasses.model.CourseDatum;
@@ -28,11 +29,13 @@ import com.winbee.rbclasses.model.CourseModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.droidsonroids.gif.GifImageView;
+
 public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<CourseModel> list1;
+    private ArrayList<CourseContentArray> list1;
 
-    public AllCourseAdapter(Context context,ArrayList<CourseModel> horizontalList){
+    public AllCourseAdapter(Context context,ArrayList<CourseContentArray> horizontalList){
         this.context = context;
         this.list1 = horizontalList;
     }
@@ -46,6 +49,26 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+
+        if(list1.get(position).getIs_New_Batch().equals(1)&& list1.get(position).getIs_Any_Class_live()){
+            holder.new_batch.setVisibility(View.VISIBLE);
+            holder.live_class.setVisibility(View.VISIBLE);
+        }else if (list1.get(position).getIs_New_Batch().equals(1)&& !list1.get(position).getIs_Any_Class_live()){
+            holder.new_batch.setVisibility(View.VISIBLE);
+            holder.live_class.setVisibility(View.GONE);
+        }else if (list1.get(position).getIs_New_Batch().equals(0)&& list1.get(position).getIs_Any_Class_live()){
+            holder.new_batch.setVisibility(View.GONE);
+            holder.live_class.setVisibility(View.VISIBLE);
+        }else if (list1.get(position).getIs_New_Batch().equals(0)&& !list1.get(position).getIs_Any_Class_live()){
+            holder.new_batch.setVisibility(View.GONE);
+            holder.live_class.setVisibility(View.GONE);
+        }
+
+
+
+
+
+
         if (list1.get(position).getPaid().equals(0)) {
             holder.layout1.setVisibility(View.VISIBLE);
             holder.txt_course.setText(list1.get(position).getBucket_Name());
@@ -74,8 +97,9 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
         if (list1.get(position).getDiscount_price().equalsIgnoreCase("0.00")){
             holder.img_rupee.setVisibility(View.GONE);
             holder.img_rupee1.setVisibility(View.GONE);
-            holder.txt_actual_price.setVisibility(View.VISIBLE);
-            holder.txt_actual_price.setText("Free");
+            holder.txt_actual_price.setVisibility(View.GONE);
+            holder.txt_free.setVisibility(View.VISIBLE);
+            holder.txt_free.setText("Free");
             holder.txt_discount.setVisibility(View.GONE);
             holder.layout1.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -104,8 +128,9 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView txt_course,txt_discount,txt_actual_price;
+        private TextView txt_course,txt_discount,txt_actual_price,txt_free;
         private ImageView course_image,img_rupee,img_rupee1;
+        private GifImageView new_batch,live_class;
 
         private RelativeLayout layout1;
         private Button purchase_btn,free_btn,purchased_btn;
@@ -114,6 +139,9 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txt_course = itemView.findViewById(R.id.txt_course);
+            txt_free = itemView.findViewById(R.id.txt_free);
+            new_batch = itemView.findViewById(R.id.new_batch);
+            live_class = itemView.findViewById(R.id.live_class);
             cardView = itemView.findViewById(R.id.branch_sem);
             course_image=itemView.findViewById(R.id.course_image);
             txt_discount=itemView.findViewById(R.id.txt_discount);

@@ -44,9 +44,7 @@ public class StudyMaterial extends AppCompatActivity implements NavigationView.O
   private AllNotesAdapter adapter;
   SwipeRefreshLayout refresh_study;
   private ImageView img_share,WebsiteHome;
-  private LinearLayout layout_home,layout_live_classes,layout_test,layout_current,layout_profile;
-
-
+  private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -90,7 +88,7 @@ public class StudyMaterial extends AppCompatActivity implements NavigationView.O
       }
     });
 
-    layout_home=findViewById(R.id.layout_home);
+    layout_home = findViewById(R.id.layout_home);
     layout_home.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -98,36 +96,35 @@ public class StudyMaterial extends AppCompatActivity implements NavigationView.O
         startActivity(home);
       }
     });
-    layout_live_classes=findViewById(R.id.layout_live_classes);
-    layout_live_classes.setOnClickListener(new View.OnClickListener() {
+
+    layout_course = findViewById(R.id.layout_course);
+    layout_course.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Intent live = new Intent(StudyMaterial.this,YouTubeVideoList.class);
+        Intent live = new Intent(StudyMaterial.this, YouTubeVideoList.class);
         startActivity(live);
       }
     });
-    layout_test=findViewById(R.id.layout_test);
+    layout_test = findViewById(R.id.layout_test);
     layout_test.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        // Toast.makeText(StudyMaterial.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-        Intent doubt = new Intent(StudyMaterial.this,DoubtActivity.class);
-        startActivity(doubt);
+        Toast.makeText(StudyMaterial.this, "Coming Soon", Toast.LENGTH_SHORT).show();
       }
     });
-    layout_current=findViewById(R.id.layout_current);
+    layout_current = findViewById(R.id.layout_current);
     layout_current.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Intent intent  = new Intent(StudyMaterial.this,CurrentAffairsActivity.class);
+        Intent intent = new Intent(StudyMaterial.this, CurrentAffairsActivity.class);
         startActivity(intent);
       }
     });
-    layout_profile=findViewById(R.id.layout_profile);
-    layout_profile.setOnClickListener(new View.OnClickListener() {
+    layout_doubt = findViewById(R.id.layout_doubt);
+    layout_doubt.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Intent intent = new Intent(StudyMaterial.this,DashboardCourseActivity.class);
+        Intent intent = new Intent(StudyMaterial.this, DiscussionActivity.class);
         startActivity(intent);
       }
     });

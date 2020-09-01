@@ -2,17 +2,26 @@ package com.winbee.rbclasses.WebApi;
 
 
 
+import com.winbee.rbclasses.NewModels.AskDoubt;
+import com.winbee.rbclasses.NewModels.CourseContent;
+import com.winbee.rbclasses.NewModels.DailyUpdate;
+import com.winbee.rbclasses.NewModels.LiveMessage;
+import com.winbee.rbclasses.NewModels.LogOut;
+import com.winbee.rbclasses.NewModels.VideoContent;
 import com.winbee.rbclasses.model.AskDoubtQuestion;
 import com.winbee.rbclasses.model.CourseContentModel;
 import com.winbee.rbclasses.model.CourseContentPdfModel;
 import com.winbee.rbclasses.model.CourseModel;
 import com.winbee.rbclasses.model.CurrentAffairsModel;
 import com.winbee.rbclasses.model.ForgetMobile;
+import com.winbee.rbclasses.model.LiveChatMessage;
+import com.winbee.rbclasses.model.LiveChatMessageFetch;
 import com.winbee.rbclasses.model.LiveClass;
 import com.winbee.rbclasses.model.McqAskedQuestionModel;
 import com.winbee.rbclasses.model.McqQuestionModel;
 import com.winbee.rbclasses.model.McqQuestionSolutionModel;
 import com.winbee.rbclasses.model.McqSolutionModel;
+import com.winbee.rbclasses.model.Message;
 import com.winbee.rbclasses.model.NewDoubtQuestion;
 import com.winbee.rbclasses.model.NotesModel;
 import com.winbee.rbclasses.model.OtpVerify;
@@ -26,6 +35,9 @@ import com.winbee.rbclasses.model.SolutionQuestion;
 import com.winbee.rbclasses.model.TxnModel;
 import com.winbee.rbclasses.model.UpdateModel;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -35,6 +47,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ClientApi {
+
     //login
     @POST("fetch_user_cover_information.php")
     Call<RefCode> refCodeSignIn(
@@ -47,8 +60,18 @@ public interface ClientApi {
 
     //logout
     @POST("fetch_user_cover_information.php")
-    Call<RefCode> refCodeLogout(
+    Call<LogOut> refCodeLogout(
             @Query("SubURL") int SubURL,//3
+            @Query("username") String username,
+            @Query("password") String password,
+            @Query("refcode") String refcode,
+            @Query("IMEI") String IMEI
+    );
+
+    //force logout
+    @POST("fetch_user_cover_information.php")
+    Call<RefCode> refCodeForceLogout(
+            @Query("SubURL") int SubURL,//4
             @Query("username") String username,
             @Query("password") String password,
             @Query("refcode") String refcode,
@@ -102,8 +125,12 @@ public interface ClientApi {
     );
 
     // daily updates
+    @FormUrlEncoded
     @POST("fetch-daily-update.php")
-    Call<ArrayList<UpdateModel>> getDailyupdate();
+    Call<DailyUpdate> getDailyupdate(
+            @Field("user_id") String user_id,
+            @Field("device_id") String device_id
+    );
 
 
 
@@ -119,7 +146,10 @@ public interface ClientApi {
 
     // get all doubt
     @POST("beta-doubt-storage.php")
-    Call<ArrayList<AskDoubtQuestion>> getQuestion();
+    Call<AskDoubt> getQuestion(
+            @Query("user_id") String user_id,
+            @Query("device_id") String device_id
+    );
 
     @FormUrlEncoded
     @POST("ask-doubt.php")
@@ -186,22 +216,26 @@ public interface ClientApi {
     );
 
     @POST("fetch-current-affair.php")
-    Call<ArrayList<CurrentAffairsModel>> getCurrentAffairs();
+    Call<ArrayList<CurrentAffairsModel>> getCurrentAffairs(
 
-    @POST("fetch_bucket_cover_information.php")
-    Call<ArrayList<CourseModel>> getPurchasedCourse(
-            @Query("SubURL") int SubURL,
-            @Query("USER_ID") String USER_ID,
-            @Query("ORG_ID") String ORG_ID,
-            @Query("PARENT_ID") String PARENT_ID
     );
 
     @POST("fetch_bucket_cover_information.php")
-    Call<ArrayList<CourseContentModel>> getPurchasedCourseContent(
+    Call<CourseContent> getPurchasedCourse(
             @Query("SubURL") int SubURL,
             @Query("USER_ID") String USER_ID,
             @Query("ORG_ID") String ORG_ID,
-            @Query("PARENT_ID") String PARENT_ID
+            @Query("PARENT_ID") String PARENT_ID,
+            @Query("DEVICE_ID") String DEVICE_ID
+    );
+
+    @POST("fetch_bucket_cover_information.php")
+    Call<VideoContent> getPurchasedCourseContent(
+            @Query("SubURL") int SubURL,
+            @Query("USER_ID") String USER_ID,
+            @Query("ORG_ID") String ORG_ID,
+            @Query("PARENT_ID") String PARENT_ID,
+            @Query("DEVICE_ID") String DEVICE_ID
     );
 
     @POST("fetch_bucket_cover_information.php")
@@ -232,6 +266,23 @@ public interface ClientApi {
     Call<ResendOtp> getResendOtp(
             @Query("username") String username,
             @Query("SubURL") int SubURL
+    );
+
+    @POST("insert_liveClass_chat.php")
+    Call<LiveChatMessage> getLiveMessage(
+            @Query("SubURL") int SubURL,
+            @Query("UserId") String UserId,
+            @Query("UserName") String UserName,
+            @Query("LiveClassId") String LiveClassId,
+            @Query("Message") String Message,
+            @Query("DeviceId") String DeviceId
+    );
+    @POST("insert_liveClass_chat.php")
+    Call<LiveMessage> getLiveMessageFetch(
+            @Query("SubURL") int SubURL,
+            @Query("UserId") String UserId,
+            @Query("DeviceId") String DeviceId,
+            @Query("LiveClassId") String LiveClassId
     );
 
 }

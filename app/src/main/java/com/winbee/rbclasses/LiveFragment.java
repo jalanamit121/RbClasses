@@ -1,8 +1,11 @@
 package com.winbee.rbclasses;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.winbee.rbclasses.NewModels.VideoContent;
+import com.winbee.rbclasses.NewModels.VideoContentArray;
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.WebApi.ClientApi;
 import com.winbee.rbclasses.adapter.AllLiveClassAdapter;
@@ -21,20 +26,22 @@ import com.winbee.rbclasses.model.CourseContentModel;
 import com.winbee.rbclasses.model.LiveClass;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LiveFragment extends Fragment {
-  private ArrayList<CourseContentModel> liveList;
+  private ArrayList<VideoContentArray> liveList;
   private RecyclerView video_list_recycler;
   private ProgressBarUtil progressBarUtil;
   private AllLiveClassAdapter adapter;
   RelativeLayout today_classes;
   SwipeRefreshLayout refresh_list;
   private ImageView img_share,WebsiteHome;
-  String UserID;
+  String UserID,android_id;
 
 
 
@@ -55,27 +62,41 @@ public class LiveFragment extends Fragment {
     video_list_recycler =view.findViewById(R.id.all_liveClasses);
     today_classes =view.findViewById(R.id.today_classes);
     UserID=SharedPrefManager.getInstance(getContext()).refCode().getUserId();
+    android_id = Settings.Secure.getString(getContext().getContentResolver(),
+            Settings.Secure.ANDROID_ID);
     callLiveApiService();
   }
   private void callLiveApiService() {
     progressBarUtil.showProgress();
     ClientApi apiCAll = ApiClient.getClient().create(ClientApi.class);
-    Call<ArrayList<CourseContentModel>> call = apiCAll.getPurchasedCourseContent(3,UserID,"WB_009",LocalData.ChildId);
-    call.enqueue(new Callback<ArrayList<CourseContentModel>>() {
+    Call<VideoContent> call = apiCAll.getPurchasedCourseContent(3,UserID,"WB_009",LocalData.ChildId,android_id);
+    call.enqueue(new Callback<VideoContent>() {
       @Override
-      public void onResponse(Call<ArrayList<CourseContentModel>> call, Response<ArrayList<CourseContentModel>> response) {
+      public void onResponse(Call<VideoContent> call, Response<VideoContent> response) {
+        VideoContent videoContent=response.body();
         int statusCode = response.code();
         liveList = new ArrayList();
         if(statusCode==200) {
-          if (response.body().size() != 0) {
+          if (response.body().getError() == false) {
             System.out.println("Suree body: " + response.body());
-            liveList = response.body();
+            liveList = new ArrayList<>(Arrays.asList(Objects.requireNonNull(videoContent).getData()));
             adapter = new AllLiveClassAdapter(getActivity(), liveList);
             video_list_recycler.setAdapter(adapter);
             progressBarUtil.hideProgress();
           }else{
-            today_classes.setVisibility(View.VISIBLE);
-            progressBarUtil.hideProgress();
+            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getContext());
+            alertDialogBuilder.setTitle("Alert");
+            alertDialogBuilder
+                    .setMessage(response.body().getError_Message())
+                    .setCancelable(false)
+                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                      public void onClick(DialogInterface dialog,int id) {
+                        forceLogout();
+                      }
+                    });
+
+            android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
           }
         }
         else{
@@ -85,7 +106,7 @@ public class LiveFragment extends Fragment {
       }
 
       @Override
-      public void onFailure(Call<ArrayList<CourseContentModel>> call, Throwable t) {
+      public void onFailure(Call<VideoContent> call, Throwable t) {
         Toast.makeText(getContext(),"Failed" + t.getMessage(),Toast.LENGTH_SHORT).show();
 
         System.out.println("Suree: Error "+t.getMessage());
@@ -93,5 +114,9 @@ public class LiveFragment extends Fragment {
     });
   }
 
-
+  private void forceLogout() {
+    SharedPrefManager.getInstance(getContext()).logout();
+    startActivity(new Intent(getContext(), LoginActivity.class));
+    Objects.requireNonNull(this).getActivity().finish();
+  }
 }

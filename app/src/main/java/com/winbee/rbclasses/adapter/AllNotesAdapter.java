@@ -48,6 +48,7 @@ public class AllNotesAdapter extends RecyclerView.Adapter<AllNotesAdapter.ViewHo
 
         if (list.get(position).getClassType().equals(2)){
             holder.gec_branchname.setText(list.get(position).getTopic());
+            holder.date.setText(list.get(position).getPublished());
             if (list.get(position).getAccessType().equals(1)) {
                 holder.img_lock.setVisibility(View.GONE);
                 holder.card_view.setOnClickListener(new View.OnClickListener() {
@@ -94,13 +95,14 @@ public class AllNotesAdapter extends RecyclerView.Adapter<AllNotesAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView gec_branchname;
+        private TextView gec_branchname,date;
         ImageView img_lock;
         private RelativeLayout branch_sem;
         CardView card_view;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             gec_branchname = itemView.findViewById(R.id.gec_branchname);
+            date = itemView.findViewById(R.id.date);
             img_lock = itemView.findViewById(R.id.img_lock);
             card_view = itemView.findViewById(R.id.card_view);
         }

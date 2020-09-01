@@ -24,7 +24,6 @@ public class ResetPassWordActivity extends AppCompatActivity {
 
   EditText editTextOtp,editTextNewPassword,editTextRePassword;
   Button resetPassword;
-  TextView username,otpCode;
   private ProgressBarUtil progressBarUtil;
 
 
@@ -37,11 +36,6 @@ public class ResetPassWordActivity extends AppCompatActivity {
     editTextNewPassword=findViewById(R.id.editTextNewPassword);
     editTextRePassword=findViewById(R.id.editTextRePassword);
     progressBarUtil = new ProgressBarUtil(this);
-    username=findViewById(R.id.text_username);
-    otpCode=findViewById(R.id.text_otp);
-    Bundle bundle = getIntent().getExtras();
-    String message = bundle.getString("message");
-    username.setText(message);
     resetPassword=findViewById(R.id.buttonReset);
     resetPassword.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -56,7 +50,7 @@ public class ResetPassWordActivity extends AppCompatActivity {
     final String otp = editTextOtp.getText().toString();
     final String password = editTextNewPassword.getText().toString();
     final String repassword = editTextRePassword.getText().toString();
-    final String usernameVerify = username.getText().toString();
+    final String usernameVerify = SharedPrefManager.getInstance(this).refCode().getUsername();
     if (TextUtils.isEmpty(otp)) {
       editTextOtp.setError("Please enter otp");
       editTextOtp.requestFocus();
@@ -99,7 +93,6 @@ public class ResetPassWordActivity extends AppCompatActivity {
         if(statusCode==200 && response.body().getSuccess()==true ) {
           progressBarUtil.hideProgress();
           Toast.makeText(getApplicationContext(),"Password Updated Successfully" , Toast.LENGTH_SHORT).show();
-
           Intent intent = new Intent(ResetPassWordActivity.this, LoginActivity.class);
           startActivity(intent);
 

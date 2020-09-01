@@ -6,9 +6,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -17,15 +21,24 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+import com.razorpay.Checkout;
+import com.razorpay.PaymentData;
+import com.razorpay.PaymentResultWithDataListener;
+import com.winbee.rbclasses.NewModels.LogOut;
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.ViewPager.ViewPagerLiveAdapter;
 import com.winbee.rbclasses.WebApi.ClientApi;
+import com.winbee.rbclasses.model.PaymentModel;
 import com.winbee.rbclasses.model.RefCode;
+
+import org.json.JSONObject;
 
 import java.util.Objects;
 
@@ -34,15 +47,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.balsikandar.crashreporter.CrashReporter.getContext;
+import static com.winbee.rbclasses.LocalData.UserName;
 
-public class LiveDataActivity extends AppCompatActivity {
+public class LiveDataActivity extends AppCompatActivity implements PaymentResultWithDataListener {
     private Button buy_course;
     private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
     private static final int REQUEST_CODE = 101;
     String IMEINumber;
     private ProgressBarUtil progressBarUtil;
     String UserMobile,UserPassword,android_id;
-
+    String TAG="payment activity";
 
 
     @Override
@@ -51,16 +65,9 @@ public class LiveDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_live_data);
         progressBarUtil   =  new ProgressBarUtil(this);
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs);
-        android_id = Settings.Secure.getString(getContext().getContentResolver(),
-                Settings.Secure.ANDROID_ID);
+        android_id = Settings.Secure.getString(getContext().getContentResolver(),Settings.Secure.ANDROID_ID);
         UserMobile=SharedPrefManager.getInstance(this).refCode().getUsername();
         UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
-//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-//        if (ActivityCompat.checkSelfPermission(LiveDataActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(LiveDataActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
-//            return;
-//        }
-//        IMEINumber = telephonyManager.getDeviceId();
 
         buy_course =findViewById(R.id.buy_course);
         layout_home = findViewById(R.id.layout_home);
@@ -109,8 +116,38 @@ public class LiveDataActivity extends AppCompatActivity {
         buy_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =new Intent(LiveDataActivity.this,PermiumSellActivity.class);
-                startActivity(intent);
+
+                //todo
+//                Intent intent =new Intent(LiveDataActivity.this,PermiumSellActivity.class);
+//                startActivity(intent);
+                final Dialog dialog = new Dialog(LiveDataActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.custom_payment_alert);
+                TextView txt_cancel=dialog.findViewById(R.id.txt_cancel);
+                TextView txt_course=dialog.findViewById(R.id.txt_course);
+                TextView txt_discount=dialog.findViewById(R.id.txt_discount);
+                TextView txt_actual_price=dialog.findViewById(R.id.txt_actual_price);
+                txt_actual_price.setText(LocalData.DiscountPrice);
+                txt_discount.setPaintFlags(txt_actual_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                txt_discount.setText(LocalData.ActualPrice);
+
+                txt_course.setText(LocalData.Discription);
+                TextView txt_pervious_attempt=dialog.findViewById(R.id.txt_pervious_attempt);
+                txt_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                txt_pervious_attempt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        userValidation();
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+                dialog.setCancelable(false);
             }
         });
         tabLayout.addTab(tabLayout.newTab().setText("Live Class"));
@@ -137,6 +174,48 @@ public class LiveDataActivity extends AppCompatActivity {
 
             }
         });
+        Checkout.preload(getApplicationContext());
+    }
+    public void startPayment() {
+        Checkout checkout = new Checkout();
+
+        String str = LocalData.DiscountPrice;
+        Double inum = Double.parseDouble(str);
+        Double sum = inum*100;
+        String str1 = Double.toString(sum);
+        final Activity activity = this;
+
+        try {
+            JSONObject options = new JSONObject();
+
+            options.put("name", UserName);
+
+
+
+
+            options.put("description", "Purchase Course");
+            options.put("order_id",LocalData.RazorpayOrderId);
+            // options.put("image", "http://edu.rbclasses.com/api/images/RBClasses-logo.jpeg");
+            options.put("currency", "INR");
+            options.put("amount",str1);
+
+            checkout.open(activity, options);
+        } catch(Exception e) {
+            Log.e(TAG, "Error in starting Razorpay Checkout", e);
+        }
+    }
+
+    @Override
+    public void onPaymentSuccess(String razorpayPaymentID, PaymentData data) {
+        String paymentId = data.getPaymentId();
+        String signature = data.getSignature();
+        String orderId = data.getOrderId();
+        Toast.makeText(getApplicationContext(),"We have received your payment,Please for Confirmation " , Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(LiveDataActivity.this,MainActivity.class);
+        startActivity(intent);
+    }
+    @Override
+    public void onPaymentError(int i, String s, PaymentData paymentData) {
 
     }
     @Override
@@ -182,22 +261,98 @@ public class LiveDataActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
+
+
+    private void userValidation() {
+        final String Course_id = LocalData.CourseId;
+        final String User_id = SharedPrefManager.getInstance(this).refCode().getUserId();
+        final String Amount_org_id =LocalData.DiscountPrice;
+        final String Org_id = "WB_009";
+
+
+
+        PaymentModel paymentModel = new PaymentModel();
+        paymentModel.setCourse_id(Course_id);
+        paymentModel.setUser_id(User_id);
+        paymentModel.setAmount_org_id(Amount_org_id);
+        paymentModel.setOrg_id(Org_id);
+
+
+
+
+        callPayment(paymentModel);
+
+    }
+    private void callPayment(final PaymentModel paymentModel){
+        ClientApi apiCall = ApiClient.getClient().create(ClientApi.class);
+        Call<PaymentModel> call =apiCall.fetchPaymentData(paymentModel.getCourse_id(),paymentModel.getUser_id(),paymentModel.getAmount_org_id(),paymentModel.getOrg_id());
+        call.enqueue(new Callback<PaymentModel>() {
+            @Override
+            public void onResponse(Call<PaymentModel> call, Response<PaymentModel> response) {
+                int statusCode = response.code();
+                if(statusCode==200 && response.body()!=null){
+                    LocalData.Org_id=response.body().getOrgOrderId();
+                    LocalData.RazorpayOrderId=response.body().getRazorpayOrderId();
+                    Toast.makeText(getApplicationContext(),"Payment started" , Toast.LENGTH_SHORT).show();
+                    startPayment();
+                }
+                else{
+                    System.out.println("Sur: response code"+response.message());
+                    Toast.makeText(getApplicationContext(),"NetWork Issue,Please Check Network Connection" , Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<PaymentModel> call, Throwable t) {
+                System.out.println("Suree: "+t.getMessage());
+
+                Toast.makeText(getApplicationContext(),"Failed"+t.getMessage() , Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+
+
+
+
+
+
+
     private void logout() {
 
         progressBarUtil.showProgress();
         ClientApi mService = ApiClient.getClient().create(ClientApi.class);
-        Call<RefCode> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
-        Log.i("tag", "callRefCodeSignInApi: "+IMEINumber+UserMobile+UserPassword);
-        call.enqueue(new Callback<RefCode>() {
+        Call<LogOut> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
+        call.enqueue(new Callback<LogOut>() {
             @Override
-            public void onResponse(Call<RefCode> call, Response<RefCode> response) {
+            public void onResponse(Call<LogOut> call, Response<LogOut> response) {
                 int statusCode = response.code();
                 if (statusCode == 200 && response.body().getLoginStatus()!=false) {
-                    progressBarUtil.hideProgress();
-                    SharedPrefManager.getInstance(LiveDataActivity.this).logout();
-                    startActivity(new Intent(LiveDataActivity.this, LoginActivity.class));
-                    //Objects.requireNonNull(this).finish();
-                    finish();
+                    if (response.body().getError()==false){
+                        progressBarUtil.hideProgress();
+                        SharedPrefManager.getInstance(LiveDataActivity.this).logout();
+                        startActivity(new Intent(LiveDataActivity.this, LoginActivity.class));
+                        finish();
+                    }else{
+                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(
+                                LiveDataActivity.this);
+                        alertDialogBuilder.setTitle("Alert");
+                        alertDialogBuilder
+                                .setMessage(response.body().getError_Message())
+                                .setCancelable(false)
+                                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        forceLogout();
+                                    }
+                                });
+
+                        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+
+                    }
+
 
                 } else {
                     progressBarUtil.hideProgress();
@@ -207,22 +362,20 @@ public class LiveDataActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<RefCode> call, Throwable t) {
+            public void onFailure(Call<LogOut> call, Throwable t) {
                 Toast.makeText(LiveDataActivity.this, "Failed" + t.getMessage(), Toast.LENGTH_LONG).show();
                 System.out.println(t.getLocalizedMessage());
             }
         });
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
-                } else {
-                    //Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
+
+    private void forceLogout() {
+        SharedPrefManager.getInstance(this).logout();
+        startActivity(new Intent(this, LoginActivity.class));
+        Objects.requireNonNull(this).finish();
     }
+
+
+
+
 }

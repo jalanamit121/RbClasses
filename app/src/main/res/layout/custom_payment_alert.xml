@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        >
+
+       <TextView
+           android:id="@+id/txt_cancel"
+           android:layout_width="30dp"
+           android:layout_height="30dp"
+           android:textSize="30sp"
+           android:drawableStart="@drawable/ic_baseline_close_24"
+           android:layout_alignParentEnd="true"
+           android:layout_marginRight="10dp"/>
+        <TextView
+            android:id="@+id/txt_course"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Course Name"
+            android:gravity="center"
+            android:textColor="@color/edit_text"
+            android:layout_marginTop="40dp"
+            android:textSize="28sp"
+            android:fontFamily="@font/proximanovaregular"/>
+
+        <TextView
+            android:id="@+id/txt_duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Batch Duration : Till Exam"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/edit_text"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/txt_course"/>
+        <TextView
+            android:id="@+id/txt_fee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Course Fee"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/edit_text"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/txt_duration"/>
+
+        <ImageView
+            android:id="@+id/img_rupee"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
+            android:layout_marginTop="15dp"
+            android:visibility="visible"
+            android:layout_marginStart="80dp"
+            android:src="@drawable/ic_rupee"
+            android:layout_marginLeft="15dp"
+            android:layout_below="@id/txt_fee" />
+
+        <TextView
+            android:id="@+id/txt_discount"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:visibility="visible"
+            android:textSize="16dp"
+            android:textColor="#A59D9D"
+            android:layout_marginTop="13dp"
+            android:text="1500"
+            android:layout_below="@id/txt_fee"
+            android:layout_toRightOf="@id/img_rupee"
+            android:layout_marginRight="5dp"/>
+
+        <ImageView
+            android:id="@+id/img_rupee1"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
+            android:layout_marginTop="15dp"
+            android:visibility="visible"
+            android:src="@drawable/ic_rupee"
+            android:layout_marginStart="20dp"
+            android:layout_below="@id/txt_fee"
+            android:layout_toRightOf="@id/txt_discount"/>
+
+        <TextView
+            android:id="@+id/txt_actual_price"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:visibility="visible"
+            android:layout_marginTop="13dp"
+            android:textSize="16dp"
+            android:textColor="#111"
+            android:text="1500"
+            android:layout_toRightOf="@id/img_rupee1"
+            android:layout_below="@id/txt_fee"
+            android:layout_marginRight="10dp"/>
+        <TextView
+            android:id="@+id/txt_pervious_attempt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MAKE PAYMENT"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/white"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/proximanovaregular"
+            android:background="#70A1F4"
+            android:padding="14dp"
+            android:textSize="14sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/txt_actual_price" />
+    </RelativeLayout>
+
+</RelativeLayout>

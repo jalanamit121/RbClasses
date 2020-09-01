@@ -24,9 +24,21 @@
 
   <RelativeLayout android:layout_height="match_parent" android:layout_width="match_parent" android:layout_marginBottom="65dp">
 
-  <ImageView android:layout_height="200dp" android:layout_width="match_parent" android:id="@+id/payment_image" android:src="@drawable/frutorials" android:padding="16dp" android:elevation="2dp" android:layout_margin="16dp"/>
+  <ImageView
+      android:layout_height="200dp"
+      android:layout_width="match_parent"
+      android:id="@+id/payment_image"
+      android:padding="16dp"
+      android:elevation="2dp"
+      android:layout_margin="16dp"/>
 
-  <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/bucket_id" android:layout_marginBottom="10dp" android:layout_below="@id/payment_image" android:textColor="@color/edit_text" android:layout_centerHorizontal="true" android:gravity="center" android:textSize="15sp"/>
+  <TextView
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      android:id="@+id/bucket_id"
+      android:layout_marginBottom="10dp"
+      android:layout_below="@id/payment_image"
+      android:textColor="@color/edit_text" android:layout_centerHorizontal="true" android:gravity="center" android:textSize="15sp"/>
 
 
   <RelativeLayout android:background="@drawable/shadow" android:layout_height="wrap_content" android:layout_width="380dp" android:id="@+id/branch_video" android:padding="10dp" android:elevation="2dp" android:layout_below="@id/bucket_id" android:layout_marginRight="5dp" android:layout_marginTop="10dp" android:layout_marginLeft="5dp" android:layout_marginStart="5dp">

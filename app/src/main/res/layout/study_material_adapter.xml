@@ -8,11 +8,45 @@
 
   <RelativeLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="vertical">
 
-  <ImageView android:layout_height="60dp" android:layout_width="100dp" android:id="@+id/live_image" android:layout_marginLeft="10dp" android:src="@drawable/course_coding" android:layout_marginBottom="10dp" android:layout_marginStart="10dp"/>
+  <ImageView
+      android:layout_height="40dp"
+      android:layout_width="50dp"
+      android:id="@+id/live_image"
+      android:src="@drawable/ic_pdf_file_icon"
+      android:layout_marginBottom="5dp"
+      android:layout_marginTop="5dp" />
 
-  <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/gec_branchname" android:layout_marginStart="20dp" android:textSize="18sp" android:textColor="#8EC3CF" android:layout_marginTop="25dp" android:text="Pdf" android:layout_toRightOf="@id/live_image"/>
+  <TextView
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:id="@+id/gec_branchname"
+      android:layout_marginStart="10dp"
+      android:textSize="16sp"
+      android:textColor="#8EC3CF"
+      android:layout_marginTop="5dp"
+      android:text="Pdf"
+      android:layout_toRightOf="@id/live_image"/>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/date"
+        android:textSize="14sp"
+        android:textColor="@color/edit_text"
+        android:layout_marginTop="10dp"
+        android:text="date"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:layout_below="@id/gec_branchname"/>
 
-  <ImageView android:layout_height="25dp" android:layout_width="25dp" android:id="@+id/img_lock" android:layout_marginLeft="5dp" android:src="@drawable/ic_lock" android:layout_marginTop="5dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:layout_marginRight="5dp"/>
+  <ImageView
+      android:layout_height="20dp"
+      android:layout_width="25dp"
+      android:id="@+id/img_lock"
+      android:layout_marginLeft="5dp"
+      android:src="@drawable/ic_lock"
+      android:layout_marginTop="5dp"
+      android:layout_alignParentEnd="true"
+      android:layout_marginRight="5dp"/>
 
 </RelativeLayout>
 

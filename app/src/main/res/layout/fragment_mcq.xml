@@ -128,7 +128,14 @@
 
 </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/gec_asked_question_recycle" android:layout_marginBottom="105dp" android:layout_below="@id/layout_question" app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" android:nestedScrollingEnabled="false"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/gec_asked_question_recycle"
+        android:layout_marginBottom="65dp"
+        android:layout_below="@id/layout_question"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:nestedScrollingEnabled="false"/>
 
 </RelativeLayout>
 

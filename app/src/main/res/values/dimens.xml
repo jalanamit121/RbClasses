@@ -24,11 +24,11 @@
 
     <dimen name="frutorial_title">15sp</dimen>
 
-    <dimen name="card_maincourse_elevation">2dp</dimen>
+    <dimen name="card_maincourse_elevation">1dp</dimen>
 
     <dimen name="card_image_elevation">4dp</dimen>
 
-    <dimen name="card_itemcourse_elevation">2dp</dimen>
+    <dimen name="card_itemcourse_elevation">1dp</dimen>
 
     <dimen name="card_item_tutorial_elevation">5dp</dimen>
 
