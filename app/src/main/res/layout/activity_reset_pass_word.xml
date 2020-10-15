@@ -46,6 +46,7 @@
       android:textSize="22sp"
       android:textColor="#3c4b5d"
       android:text="Reset Password"
+      android:textStyle="bold"
       android:gravity="center"
       android:fontFamily="@font/proximanovaregular"/>
 

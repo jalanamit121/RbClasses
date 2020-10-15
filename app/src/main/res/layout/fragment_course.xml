@@ -1,11 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-    <FrameLayout tools:context=".CourseFragment" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_height="match_parent" android:layout_width="match_parent" xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout
+
+    tools:context=".CourseFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout android:layout_height="match_parent" android:layout_width="match_parent" android:layout_marginBottom="65dp" android:id="@+id/refresh_course">
+  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+      android:layout_height="match_parent"
+      android:layout_width="match_parent"
+      android:layout_marginBottom="65dp"
+      android:id="@+id/refresh_course">
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
 
-  <androidx.recyclerview.widget.RecyclerView android:layout_height="match_parent" android:layout_width="match_parent" android:layout_marginBottom="65dp" android:id="@+id/all_course" app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" android:nestedScrollingEnabled="false" android:layoutAnimation="@anim/layout_animation_fall_down" android:layout_marginTop="10dp" android:layout_marginRight="5dp" android:layout_marginLeft="5dp"/>
+
+      <RelativeLayout
+          android:id="@+id/layout_mycourse"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="5dp"
+          android:background="@drawable/circularbordersolid"
+          >
+          <de.hdodenhof.circleimageview.CircleImageView
+              android:id="@+id/course_image"
+              android:layout_marginTop="5dp"
+              android:layout_height="40dp"
+              android:layout_width="40dp"
+              android:layout_marginBottom="5dp"
+              android:elevation="1dp"
+              app:civ_border_color="@color/edit_text"
+              app:civ_border_width="0.5dp"
+              android:layout_marginStart="20dp"
+              android:src="@drawable/rblogo"
+              android:layout_marginLeft="20dp"/>
+
+          <TextView
+              android:id="@+id/txt_mycourses"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="My Courses"
+              android:layout_toRightOf="@id/course_image"
+              android:textColor="@color/header"
+              android:layout_marginStart="10dp"
+              android:textStyle="bold"
+              android:textSize="19sp"/>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Tap here to view purchased courses"
+              android:layout_below="@id/txt_mycourses"
+              android:layout_toRightOf="@id/course_image"
+              android:layout_marginStart="10dp"
+              android:layout_marginBottom="5dp"/>
+      </RelativeLayout>
+ <TextView
+     android:id="@+id/txt_allcourses"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:text="All Courses"
+     android:textSize="19sp"
+     android:textStyle="bold"
+     android:textColor="@color/edit_text"
+     android:layout_below="@id/layout_mycourse"
+     android:layout_marginTop="10dp"
+     android:layout_marginStart="10dp"/>
+  <androidx.recyclerview.widget.RecyclerView
+      android:layout_height="match_parent"
+      android:layout_width="match_parent"
+      android:layout_marginBottom="5dp"
+      android:layout_below="@id/txt_allcourses"
+      android:id="@+id/all_course"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      android:nestedScrollingEnabled="false"
+      android:layoutAnimation="@anim/layout_animation_fall_down"
+      android:layout_marginTop="10dp"
+      android:layout_marginRight="5dp"
+      android:layout_marginLeft="5dp"/>
+      </RelativeLayout>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

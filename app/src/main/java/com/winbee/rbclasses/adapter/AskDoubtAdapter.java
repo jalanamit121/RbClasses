@@ -3,6 +3,7 @@ package com.winbee.rbclasses.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,11 +40,11 @@ public class AskDoubtAdapter extends RecyclerView.Adapter<AskDoubtAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull AskDoubtAdapter.ViewHolder holder, final int position) {
         //setting data toAd apter List
-        holder.txt_ask_title.setText(list.get(position).getFile_name_to_show());
-        holder.txt_ask_question.setText(list.get(position).getFile_description());
-        holder.txt_user.setText(list.get(position).getFile_create_name());
-        holder.txt_time.setText(list.get(position).getFile_duration_time());
-        holder.txt_commments.setText(list.get(position).getFile_comments());
+        holder.txt_ask_title.setText(Html.fromHtml(list.get(position).getFile_name_to_show()));
+        holder.txt_ask_question.setText(Html.fromHtml(list.get(position).getFile_description()));
+        holder.txt_user.setText(Html.fromHtml(list.get(position).getFile_create_name()));
+        holder.txt_time.setText(Html.fromHtml(list.get(position).getFile_duration_time()));
+        holder.txt_commments.setText(Html.fromHtml(list.get(position).getFile_comments()));
         holder.branch_live.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

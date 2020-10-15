@@ -9,7 +9,9 @@
     <ScrollView android:layout_height="match_parent" android:layout_width="match_parent">
 
 
-    <RelativeLayout android:layout_height="match_parent" android:layout_width="match_parent">
+    <RelativeLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
 
 
     <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="vertical">
@@ -34,7 +36,16 @@
 
 </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView android:layout_height="match_parent" android:layout_width="wrap_content" android:id="@+id/all_liveClasses" android:layout_marginLeft="5dp" android:layout_marginBottom="65dp" android:layout_marginTop="4dp" android:layout_marginRight="5dp" app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" android:nestedScrollingEnabled="false"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:id="@+id/all_liveClasses"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="65dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="5dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:nestedScrollingEnabled="false"/>
 
 </LinearLayout>
 

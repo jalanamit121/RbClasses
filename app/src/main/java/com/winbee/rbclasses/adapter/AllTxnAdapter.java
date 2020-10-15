@@ -3,6 +3,7 @@ package com.winbee.rbclasses.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,8 +44,8 @@ public class AllTxnAdapter  extends RecyclerView.Adapter<AllTxnAdapter.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull AllTxnAdapter.ViewHolder holder, final int position) {
         holder.text_course_name.setText(list1.get(position).getBucketName());
-        holder.text_amount.setText(list1.get(position).getAmount_order_org());
-        holder.text_txnid.setText("Txn_id - "+list1.get(position).getOrder_id());
+        holder.text_amount.setText(Html.fromHtml(list1.get(position).getAmount_order_org()));
+        holder.text_txnid.setText("Txn_id - "+Html.fromHtml(list1.get(position).getOrder_id()));
         if (list1.get(position).getPaid().equalsIgnoreCase("1")) {
             holder.text_status.setText("Success");
             holder.text_date.setText(list1.get(position).getSuccessDate());

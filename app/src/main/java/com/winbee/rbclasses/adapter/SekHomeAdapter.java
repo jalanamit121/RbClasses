@@ -42,9 +42,21 @@ public class SekHomeAdapter extends RecyclerView.Adapter<SekHomeAdapter.ViewHold
   public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
     //setting data toAd apter List
 
+    if (courseDatumList.get(position).getItemAttachmentType().equalsIgnoreCase("1"))
+    {
+      holder.branch_image.setVisibility(View.GONE);
+      holder.branchname.setVisibility(View.VISIBLE);
+    }else if (courseDatumList.get(position).getItemAttachmentType().equalsIgnoreCase("2")){
+      holder.branch_image.setVisibility(View.VISIBLE);
+      holder.branchname.setVisibility(View.GONE);
+    } else if (courseDatumList.get(position).getItemAttachmentType().equalsIgnoreCase("3")){
+      holder.branch_image.setVisibility(View.VISIBLE);
+      holder.branchname.setVisibility(View.VISIBLE);
+    }
+
     holder.branchname.setText(Html.fromHtml(courseDatumList.get(position).getItemDescription()));
-    holder.txt_date.setText(courseDatumList.get(position).getDisplayDate());
-    Picasso.get().load(courseDatumList.get(position).getItemAttachment()).into(holder.branch_image);
+    holder.txt_date.setText(Html.fromHtml(courseDatumList.get(position).getDisplayDate()));
+    Picasso.get().load(courseDatumList.get(position).getItemAttachment()).placeholder(R.drawable.water_mark_update_image).into(holder.branch_image);
     holder.btn_share.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {

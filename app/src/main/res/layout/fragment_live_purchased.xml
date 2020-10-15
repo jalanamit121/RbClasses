@@ -9,6 +9,15 @@
 
 </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView android:layout_height="match_parent" android:layout_width="match_parent" android:layout_marginTop="10dp" android:layout_marginBottom="55dp" android:id="@+id/all_liveClasses" app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" android:nestedScrollingEnabled="false" android:layout_marginRight="5dp" android:layout_marginLeft="5dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="55dp"
+        android:id="@+id/all_liveClasses"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:nestedScrollingEnabled="false"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"/>
 
 </FrameLayout>

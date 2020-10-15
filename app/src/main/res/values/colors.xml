@@ -2,7 +2,7 @@
 <resources>
 
     <color name="colorPrimary">#FCFCFC</color>
-    <color name="colorPrimaryDark">#2A2E43</color>
+    <color name="colorPrimaryDark">#092873</color>
     <color name="colorAccent">#FF402D</color>
     <color name="bottomNavigationTextColor">#B2B2B2</color>
     <color name="bottomNavigationTintColor">#B2B2B2</color>
@@ -15,7 +15,7 @@
     <color name="frutorial_title">#4c4c4c</color>
     <color name="dashboard_subtitle">#B7B7CC</color>
     <color name="home_header">#9CBBF0</color>
-    <color name="header">#71A3F5</color>
+    <color name="header">#092873</color>//#71A3F5
     <!--colors for light mode-->
 
 

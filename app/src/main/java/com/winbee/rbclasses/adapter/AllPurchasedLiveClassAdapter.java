@@ -2,6 +2,7 @@ package com.winbee.rbclasses.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,10 +93,10 @@ public class AllPurchasedLiveClassAdapter extends RecyclerView.Adapter<AllPurcha
             holder.image_gif.setVisibility(View.GONE);
 
         }
-        holder.title.setText(list.get(position).getTopic());
-        holder.date.setText(list.get(position).getPublished());
-        Picasso.get().load(list.get(position).getThumbnail()).fit().into(holder.youtubeThubnail);
-        holder.teacher.setText(list.get(position).getFaculty());
+        holder.title.setText(Html.fromHtml(list.get(position).getTopic()));
+        holder.date.setText(Html.fromHtml(list.get(position).getPublished()));
+        Picasso.get().load(list.get(position).getThumbnail()).placeholder(R.drawable.wateer_mark_image).fit().into(holder.youtubeThubnail);
+        holder.teacher.setText(Html.fromHtml(list.get(position).getFaculty()));
     }
 
     @Override

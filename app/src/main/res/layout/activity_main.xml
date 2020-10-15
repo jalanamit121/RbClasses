@@ -5,7 +5,12 @@
 
     <com.google.android.material.appbar.AppBarLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
 
-    <com.google.android.material.tabs.TabLayout android:layout_height="wrap_content" android:layout_width="match_parent" app:tabTextAppearance="@style/MyTabLayoutTextAppearance" android:background="@color/header" android:id="@+id/tabs"> </com.google.android.material.tabs.TabLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+        android:background="@color/header"
+        android:id="@+id/tabs"> </com.google.android.material.tabs.TabLayout>
 
 </com.google.android.material.appbar.AppBarLayout>
 

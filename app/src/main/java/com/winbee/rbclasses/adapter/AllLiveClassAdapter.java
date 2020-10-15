@@ -3,6 +3,7 @@ package com.winbee.rbclasses.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,10 +64,10 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
 
         }
 
-        holder.title.setText(list.get(position).getTopic());
-        holder.date.setText(list.get(position).getPublished());
-        Picasso.get().load(list.get(position).getThumbnail()).fit().into(holder.youtubeThubnail);
-        holder.teacher.setText(list.get(position).getFaculty());
+        holder.title.setText(Html.fromHtml(list.get(position).getTopic()));
+        holder.date.setText(Html.fromHtml(list.get(position).getPublished()));
+        Picasso.get().load(list.get(position).getThumbnail()).placeholder(R.drawable.wateer_mark_image).fit().into(holder.youtubeThubnail);
+        holder.teacher.setText(Html.fromHtml(list.get(position).getFaculty()));
         if (list.get(position).getClassType().equals(2)) { //classtype 2 means- recoded video
             holder.live_status.setVisibility(View.GONE);
             if (list.get(position).getAccessType().equals(1) ) {//access type 1 means - recroded free video

@@ -144,8 +144,8 @@ public class YoutubeLibaray extends AppCompatActivity {
             @Override
             public void onResponse(Call<LiveChatMessage> call, Response<LiveChatMessage> response) {
                 int statusCode = response.code();
-                if (statusCode == 200 && response.body().getResponse()==true) {
-                    if (response.body().getError() == false){
+                if (statusCode == 200 && response.body().getResponse()) {
+                    if (!response.body().getError()){
                         editTextMessageLive.getText().clear();
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus()).getWindowToken(), 0);

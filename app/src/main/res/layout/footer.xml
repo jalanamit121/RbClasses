@@ -1,43 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-    <RelativeLayout android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_width="match_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <LinearLayout android:layout_height="50dp" android:layout_alignParentBottom="true" android:layout_width="match_parent" android:background="@drawable/bottom_layout" android:weightSum="5" android:visibility="visible" android:id="@+id/footer">
+    <LinearLayout
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:background="@drawable/bottom_layout"
+        android:weightSum="4"
+        android:visibility="visible"
+        android:id="@+id/footer">
 
 
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/layout_course" android:layout_weight="1" android:layout_marginTop="5dp" android:orientation="vertical">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/layout_course"
+        android:layout_weight="1"
+        android:visibility="gone"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
 
     <ImageView android:layout_height="25dp" android:layout_width="25dp" android:id="@+id/image_course" android:src="@drawable/ic_online_class" android:layout_gravity="center"/>
 
     <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/text_course" android:layout_marginTop="5dp" android:layout_gravity="center" android:textColor="#111" android:layout_below="@id/image_test" android:textSize="12sp" android:text="My Course"/>
 
 </LinearLayout>
+        <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/layout_home" android:layout_weight="1" android:layout_marginTop="5dp" android:orientation="vertical">
+
+            <ImageView android:layout_height="25dp" android:layout_width="25dp" android:id="@+id/image_home" android:src="@drawable/ic_home" android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/text_home"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:textColor="#111"
+                android:textStyle="bold"
+                android:layout_below="@id/image_home"
+                android:textSize="12sp"
+                android:text="Home"/>
+
+        </LinearLayout>
 
 
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/layout_test" android:layout_weight="1" android:layout_marginTop="5dp" android:orientation="vertical">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/layout_test"
+        android:layout_weight="1" android:layout_marginTop="5dp" android:orientation="vertical">
 
     <ImageView android:layout_height="25dp" android:layout_width="25dp" android:id="@+id/image_test" android:src="@drawable/ic_teacher" android:layout_gravity="center"/>
 
-    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/text_test" android:layout_marginTop="5dp" android:layout_gravity="center" android:textColor="#111" android:layout_below="@id/image_test" android:textSize="12sp" android:text="Test series"/>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/text_test"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center"
+        android:textColor="#111"
+        android:textStyle="bold"
+        android:layout_below="@id/image_test"
+        android:textSize="12sp"
+        android:text="Test series"/>
 
 </LinearLayout>
 
 
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/layout_home" android:layout_weight="1" android:layout_marginTop="5dp" android:orientation="vertical">
-
-    <ImageView android:layout_height="25dp" android:layout_width="25dp" android:id="@+id/image_home" android:src="@drawable/ic_home" android:layout_gravity="center"/>
-
-    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/text_home" android:layout_marginTop="5dp" android:layout_gravity="center" android:textColor="#111" android:layout_below="@id/image_home" android:textSize="12sp" android:text="Home"/>
-
-</LinearLayout>
 
 
     <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/layout_current" android:layout_weight="1" android:layout_marginTop="5dp" android:orientation="vertical">
 
     <ImageView android:layout_height="25dp" android:layout_width="25dp" android:id="@+id/image_current" android:src="@drawable/ic_current" android:layout_gravity="center"/>
 
-    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/text_current" android:layout_marginTop="5dp" android:layout_gravity="center" android:textColor="#111" android:layout_below="@id/image_current" android:textSize="12sp" android:text="Current Affairs"/>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/text_current"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center"
+        android:textColor="#111"
+        android:textStyle="bold"
+        android:layout_below="@id/image_current"
+        android:textSize="12sp"
+        android:text="Current Affairs"/>
 
 </LinearLayout>
 
@@ -46,7 +98,15 @@
 
     <ImageView android:layout_height="25dp" android:layout_width="25dp" android:id="@+id/image_doubt" android:src="@drawable/ic_exam" android:layout_gravity="center"/>
 
-    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/text_doubt" android:layout_marginTop="5dp" android:layout_gravity="center" android:textColor="#111" android:layout_below="@id/image_home" android:textSize="12sp" android:text="Ask Doubt"/>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/text_doubt"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textColor="#111"
+        android:layout_below="@id/image_home" android:textSize="12sp" android:text="Ask Doubt"/>
 
 </LinearLayout>
 

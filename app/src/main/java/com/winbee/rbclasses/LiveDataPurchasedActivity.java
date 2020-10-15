@@ -14,11 +14,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -39,8 +42,8 @@ import static com.balsikandar.crashreporter.CrashReporter.getContext;
 
 public class LiveDataPurchasedActivity extends AppCompatActivity {
     private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
-    private static final int REQUEST_CODE = 101;
-    String IMEINumber;
+    private RelativeLayout layout_notification;
+    private TextView txt_notification;
     String UserMobile,UserPassword,android_id;
     private ProgressBarUtil progressBarUtil;
 
@@ -50,10 +53,18 @@ public class LiveDataPurchasedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_data_purchased);
         progressBarUtil   =  new ProgressBarUtil(this);
-        android_id = Settings.Secure.getString(getContext().getContentResolver(),
-                Settings.Secure.ANDROID_ID);
+        android_id = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         UserMobile=SharedPrefManager.getInstance(this).refCode().getUsername();
         UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
+        txt_notification =findViewById(R.id.txt_notification);
+        txt_notification.setText(Html.fromHtml(LocalData.NotificationMessage));
+        layout_notification =findViewById(R.id.layout_notification);
+
+        if (LocalData.IsNotification){
+            layout_notification.setVisibility(View.VISIBLE);
+        }else if (!LocalData.IsNotification){
+            layout_notification.setVisibility(View.GONE);
+        }
 
 
         layout_home = findViewById(R.id.layout_home);
@@ -224,16 +235,5 @@ public class LiveDataPurchasedActivity extends AppCompatActivity {
         startActivity(new Intent(this, LoginActivity.class));
         Objects.requireNonNull(this).finish();
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
-                } else {
-                    //Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
+
 }

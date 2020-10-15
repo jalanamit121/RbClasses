@@ -22,7 +22,10 @@
 </RelativeLayout>
 
 
-  <RelativeLayout android:layout_height="match_parent" android:layout_width="match_parent" android:layout_marginBottom="65dp">
+  <RelativeLayout
+      android:layout_height="match_parent"
+      android:layout_width="match_parent"
+      android:layout_marginBottom="65dp">
 
   <ImageView
       android:layout_height="200dp"

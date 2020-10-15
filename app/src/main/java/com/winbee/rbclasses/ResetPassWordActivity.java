@@ -50,7 +50,6 @@ public class ResetPassWordActivity extends AppCompatActivity {
     final String otp = editTextOtp.getText().toString();
     final String password = editTextNewPassword.getText().toString();
     final String repassword = editTextRePassword.getText().toString();
-    final String usernameVerify = SharedPrefManager.getInstance(this).refCode().getUsername();
     if (TextUtils.isEmpty(otp)) {
       editTextOtp.setError("Please enter otp");
       editTextOtp.requestFocus();
@@ -76,7 +75,6 @@ public class ResetPassWordActivity extends AppCompatActivity {
 
 
     ResetPassword resetPassword = new ResetPassword();
-    resetPassword.setUsername(usernameVerify);
     resetPassword.setOtp(otp);
     resetPassword.setNew_password(password);
     callResetPasswordApi(resetPassword);
@@ -85,7 +83,7 @@ public class ResetPassWordActivity extends AppCompatActivity {
 
     progressBarUtil.showProgress();
     ClientApi mService = ApiClient.getClient().create(ClientApi.class);
-    Call<ResetPassword> call = mService.getResetPassword(2,resetPassword.getUsername(),resetPassword.getOtp(),resetPassword.getNew_password());
+    Call<ResetPassword> call = mService.getResetPassword(2,LocalData.MobileNumber,resetPassword.getOtp(),resetPassword.getNew_password());
     call.enqueue(new Callback<ResetPassword>() {
       @Override
       public void onResponse(Call<ResetPassword> call, Response<ResetPassword> response) {

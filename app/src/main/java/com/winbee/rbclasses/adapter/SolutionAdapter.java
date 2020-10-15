@@ -1,6 +1,7 @@
 package com.winbee.rbclasses.adapter;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +44,9 @@ public class SolutionAdapter extends RecyclerView.Adapter<SolutionAdapter.ViewHo
     public void onBindViewHolder(@NonNull SolutionAdapter.ViewHolder holder, final int position) {
         //setting data toAd apter List
 
-        holder.txt_user.setText(list.get(position).getUser());
-        holder.txt_time.setText(list.get(position).getDuration());
-        holder.txt_ask_title.setText(list.get(position).getQuestion());
+        holder.txt_user.setText(Html.fromHtml(list.get(position).getUser()));
+        holder.txt_time.setText(Html.fromHtml(list.get(position).getDuration()));
+        holder.txt_ask_title.setText(Html.fromHtml(list.get(position).getQuestion()));
 
 
 

@@ -8,20 +8,15 @@ import com.winbee.rbclasses.NewModels.DailyUpdate;
 import com.winbee.rbclasses.NewModels.LiveMessage;
 import com.winbee.rbclasses.NewModels.LogOut;
 import com.winbee.rbclasses.NewModels.VideoContent;
-import com.winbee.rbclasses.model.AskDoubtQuestion;
-import com.winbee.rbclasses.model.CourseContentModel;
 import com.winbee.rbclasses.model.CourseContentPdfModel;
-import com.winbee.rbclasses.model.CourseModel;
 import com.winbee.rbclasses.model.CurrentAffairsModel;
 import com.winbee.rbclasses.model.ForgetMobile;
 import com.winbee.rbclasses.model.LiveChatMessage;
-import com.winbee.rbclasses.model.LiveChatMessageFetch;
 import com.winbee.rbclasses.model.LiveClass;
 import com.winbee.rbclasses.model.McqAskedQuestionModel;
 import com.winbee.rbclasses.model.McqQuestionModel;
 import com.winbee.rbclasses.model.McqQuestionSolutionModel;
 import com.winbee.rbclasses.model.McqSolutionModel;
-import com.winbee.rbclasses.model.Message;
 import com.winbee.rbclasses.model.NewDoubtQuestion;
 import com.winbee.rbclasses.model.NotesModel;
 import com.winbee.rbclasses.model.OtpVerify;
@@ -33,10 +28,7 @@ import com.winbee.rbclasses.model.ResetPassword;
 import com.winbee.rbclasses.model.SolutionDoubtQuestion;
 import com.winbee.rbclasses.model.SolutionQuestion;
 import com.winbee.rbclasses.model.TxnModel;
-import com.winbee.rbclasses.model.UpdateModel;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -68,7 +60,7 @@ public interface ClientApi {
             @Query("IMEI") String IMEI
     );
 
-    //force logout
+    //force login
     @POST("fetch_user_cover_information.php")
     Call<RefCode> refCodeForceLogout(
             @Query("SubURL") int SubURL,//4
@@ -131,7 +123,6 @@ public interface ClientApi {
             @Field("user_id") String user_id,
             @Field("device_id") String device_id
     );
-
 
 
     //submit doubt

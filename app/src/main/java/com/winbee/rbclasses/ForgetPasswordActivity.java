@@ -63,8 +63,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         if(statusCode==200 && response.body().getSuccess()==true ) {
           progressBarUtil.hideProgress();
           Intent intent = new Intent(ForgetPasswordActivity.this, ResetPassWordActivity.class);
-          intent.putExtra("message",forgetMobile.getUsername());
-          intent.putExtra("otp",forgetMobile.getOtp());
+          LocalData.MobileNumber=response.body().getUsername();
           startActivity(intent);
 
         }else {

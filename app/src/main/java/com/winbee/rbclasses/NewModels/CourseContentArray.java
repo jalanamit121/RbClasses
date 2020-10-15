@@ -40,6 +40,18 @@ public class CourseContentArray implements Serializable {
     @SerializedName("Is_Any_Class_live")
     @Expose
     private Boolean is_Any_Class_live;
+    @SerializedName("Is_Course_Closed_notification")
+    @Expose
+    private Boolean is_Course_Closed_notification;
+    @SerializedName("Show_Course")
+    @Expose
+    private Boolean show_Course;
+    @SerializedName("Course_Closed_details")
+    @Expose
+    private Course_Closed_details course_Closed_details;
+    @SerializedName("Notification")
+    @Expose
+    private Notification notification;
     @SerializedName("Bucket_Image")
     @Expose
     private String bucket_Image;
@@ -136,6 +148,38 @@ public class CourseContentArray implements Serializable {
 
     public void setIs_Any_Class_live(Boolean is_Any_Class_live) {
         this.is_Any_Class_live = is_Any_Class_live;
+    }
+
+    public Boolean getIs_Course_Closed_notification() {
+        return is_Course_Closed_notification;
+    }
+
+    public void setIs_Course_Closed_notification(Boolean is_Course_Closed_notification) {
+        this.is_Course_Closed_notification = is_Course_Closed_notification;
+    }
+
+    public Boolean getShow_Course() {
+        return show_Course;
+    }
+
+    public void setShow_Course(Boolean show_Course) {
+        this.show_Course = show_Course;
+    }
+
+    public Course_Closed_details getCourse_Closed_details() {
+        return course_Closed_details;
+    }
+
+    public void setCourse_Closed_details(Course_Closed_details course_Closed_details) {
+        this.course_Closed_details = course_Closed_details;
+    }
+
+    public Notification getNotification() {
+        return notification;
+    }
+
+    public void setNotification(Notification notification) {
+        this.notification = notification;
     }
 
     public String getBucket_Image() {

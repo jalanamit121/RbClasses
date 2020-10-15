@@ -5,6 +5,7 @@ public class LocalData {
     public static String File="";
     public static String ContentLink="";
     public static String LiveId="";
+    public static String MobileNumber="";
     public static String UserName="";
     public static String Password="";
     public static String Email="";
@@ -16,6 +17,11 @@ public class LocalData {
     public static String Commnts="";
     public static String Message="";
     public static String CourseName="";
+    public static String CourseMessage="";
+    public static String NotificationMessage="";
+    public static String PaymentClosed="";
+    public static Boolean CourseClosed;
+    public static Boolean IsNotification;
 
 
 

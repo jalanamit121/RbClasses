@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
 
     <application
         android:allowBackup="true"
@@ -86,9 +89,13 @@
             </intent-filter>
         </service>
 
+<!--        <meta-data-->
+<!--            android:name="com.razorpay.ApiKey"-->
+<!--            android:value="rzp_live_Bc4ITN4OG0PCjn" />  -->
+
         <meta-data
             android:name="com.razorpay.ApiKey"
-            android:value="rzp_live_Bc4ITN4OG0PCjn" />
+            android:value="rzp_live_T1TF9yvc1fd5il" />
     </application>
 
 </manifest>

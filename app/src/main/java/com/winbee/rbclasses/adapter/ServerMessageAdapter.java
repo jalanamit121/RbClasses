@@ -1,6 +1,7 @@
 package com.winbee.rbclasses.adapter;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +39,9 @@ public class ServerMessageAdapter extends RecyclerView.Adapter<ServerMessageAdap
     public void onBindViewHolder(@NonNull ServerMessageAdapter.ViewHolder holder, final int position) {
         //setting data toAd apter List
 
-        holder.txt_user.setText(list.get(position).getUserName());
-        holder.txt_time.setText(list.get(position).getDATE());
-        holder.txt_ask_title.setText(list.get(position).getMessage());
+        holder.txt_user.setText(Html.fromHtml(list.get(position).getUserName()));
+        holder.txt_time.setText(Html.fromHtml(list.get(position).getDATE()));
+        holder.txt_ask_title.setText(Html.fromHtml(list.get(position).getMessage()));
 
 
 

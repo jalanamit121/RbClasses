@@ -41,9 +41,6 @@ public class DiscussionActivity extends AppCompatActivity {
     TextView txtAsk,txtMcq;
     private boolean onMcqFragment=false;
     private boolean onAskFragment=true;
-    private ImageView WebsiteHome,img_share;
-    private static final int REQUEST_CODE = 101;
-    String IMEINumber;
     private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
     String UserMobile,UserPassword,android_id;
     private  ProgressBarUtil progressBarUtil;

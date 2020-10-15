@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-    <RelativeLayout tools:context=".PdfWebActivity" android:layout_height="match_parent" android:layout_width="match_parent" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+    tools:context=".PdfWebActivity" android:layout_height="match_parent" android:layout_width="match_parent" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
 
   <Button android:layout_height="wrap_content" android:layout_width="match_parent" android:text="Ask Question" android:background="#03A9F4" android:visibility="gone" android:padding="14dp" android:textStyle="italic" android:textColor="#fff" android:layout_alignParentEnd="true" android:id="@+id/btm_asked_question"/>
 

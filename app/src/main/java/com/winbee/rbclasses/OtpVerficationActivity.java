@@ -123,6 +123,7 @@ public class OtpVerficationActivity extends AppCompatActivity {
       public void onResponse(Call<OtpVerify> call, Response<OtpVerify> response) {
         int statusCode = response.code();
         if (statusCode == 200 && response.body().getSuccess() == true) {
+          progressBarUtil.hideProgress();
           Intent intent =new Intent(OtpVerficationActivity.this,LoginActivity.class);
           startActivity(intent);
           finish();

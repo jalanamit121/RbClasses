@@ -1,51 +1,85 @@
-<resources>
+<?xml version="1.0"?>
+
+    <resources>
+
     <string name="app_name">RB Classes</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
+
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
     <string name="next">NEXT</string>
+
     <string name="skip">SKIP</string>
+
     <string name="start">GOT IT</string>
+
     <string name="log_in">Log In</string>
+
     <string name="nav_header_desc">Navigation header</string>
+
     <string name="test">test</string>
 
     <string name="message">This App will send you an SMS message for verification and standard rates apply.. Kindly enter your phone Number</string>
+
     <string name="sign_in">Sign In</string>
+
     <string name="verify_phone">Verify Phone Number</string>
+
     <string name="phone">Phone</string>
+
     <string name="signup_success">SignUp Successfully</string>
+
     <string name="signin_success">SignIn Successfully</string>
+
     <string name="new_account">New Account</string>
+
     <string name="menu_home">Home</string>
+
     <string name="menu_profile">My Profile</string>
+
     <string name="menu_video">Live Class</string>
+
     <string name="menu_online_test">Online Test</string>
+
     <string name="menu_chat">Chat With Support Team</string>
+
     <string name="menu_about">About Us</string>
+
     <string name="menu_founder">About Founder</string>
+
     <string name="menu_contact">Contact Us</string>
+
     <string name="menu_rate">Rate Us</string>
+
     <string name="menu_invite">Logout</string>
+
     <string name="menu_share">Share</string>
 
     <string name="signup_desc">Start by entering your name and categorie below.</string>
 
     <string name="login_desc">Enter your login details to access your account</string>
 
+
     <string-array name="option">
 
-        <item>Select Correct Option</item>
-        <item>A</item>
-        <item>B</item>
-        <item>C</item>
-        <item>D</item>
+    <item>Select Correct Option</item>
 
-    </string-array>
+    <item>A</item>
+
+    <item>B</item>
+
+    <item>C</item>
+
+    <item>D</item>
+
+</string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

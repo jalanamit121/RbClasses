@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="visible"
+        android:textStyle="bold"
         android:text="No Message Yet..."/>
 
     <RelativeLayout
@@ -65,6 +66,7 @@
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="5dp"
         android:maxLines="10"
+        android:textStyle="bold"
         android:fontFamily="@font/proximanovaregular"
         android:inputType="text|textMultiLine"
         android:hint="Enter your Message ..."

@@ -1,17 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_width="match_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Button android:layout_height="wrap_content" android:layout_width="match_parent" android:background="@drawable/buy_btn" android:textColor="@color/white" android:layout_above="@id/footer" android:text="BUY COURSE" android:id="@+id/buy_course"/>
+
+    <RelativeLayout
+        android:id="@+id/layout_course_closed"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:elevation="2dp"
+        android:background="@drawable/bottom_layout_color"
+        android:visibility="visible"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/txt_course_closed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="#0099cc"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        android:text="BUY COURSE"
+        android:visibility="gone"
+        android:id="@+id/buy_course"/>
 
 
-    <LinearLayout android:layout_height="50dp" android:layout_alignParentBottom="true" android:layout_width="match_parent" android:background="@drawable/bottom_layout" android:id="@+id/footer" android:weightSum="5">
+    <LinearLayout
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:background="@drawable/bottom_layout"
+        android:id="@+id/footer" android:weightSum="5">
 
 
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/layout_course" android:layout_weight="1" android:layout_marginTop="5dp" android:orientation="vertical">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" android:id="@+id/layout_course" android:layout_weight="1" android:layout_marginTop="5dp" android:orientation="vertical">
 
     <ImageView android:layout_height="25dp" android:layout_width="25dp" android:id="@+id/image_course" android:src="@drawable/ic_online_class" android:layout_gravity="center"/>
 
-    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textColor="#111" android:text="My Course" android:id="@+id/text_course" android:layout_marginTop="5dp" android:layout_gravity="center" android:layout_below="@id/image_test" android:textSize="12sp"/>
+    <TextView
+        android:layout_height="wrap_content" android:layout_width="wrap_content" android:textColor="#111" android:text="My Course" android:id="@+id/text_course" android:layout_marginTop="5dp" android:layout_gravity="center" android:layout_below="@id/image_test" android:textSize="12sp"/>
 
 </LinearLayout>
 

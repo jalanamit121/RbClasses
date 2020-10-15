@@ -30,6 +30,7 @@
       android:textSize="24sp"
       android:textColor="#3c4b5d"
       android:text="@string/new_account"
+      android:textStyle="bold"
       android:gravity="center"
       android:fontFamily="@font/proximanovaregular"
       android:id="@+id/titletxt"/>
@@ -108,7 +109,7 @@
       android:hint="Email"/>
 
 </LinearLayout>
-  <LinearLayout
+  <RelativeLayout
       android:layout_height="wrap_content"
       android:layout_width="match_parent"
       android:gravity="center"
@@ -125,11 +126,20 @@
       android:inputType="textPassword"
       android:textColorHint="@color/edit_text"
       android:hint="Password"/>
+    <ImageView
+        android:id="@+id/show_pass_btn"
+        android:layout_width="30dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_centerVertical="true"
+        android:onClick="ShowHidePass"
+        android:src="@drawable/ic_baseline_remove_red_eye_24" />
 
-</LinearLayout>
+</RelativeLayout>
 
 
-  <LinearLayout
+  <RelativeLayout
       android:layout_height="wrap_content"
       android:layout_width="match_parent"
       android:gravity="center"
@@ -146,8 +156,18 @@
       android:inputType="textPassword"
       android:textColorHint="@color/edit_text"
       android:hint=" Re-enter Password"/>
+    <ImageView
+        android:id="@+id/show_repass_btn"
+        android:layout_width="30dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_centerVertical="true"
+        android:onClick="ReShowHidePass"
+        android:src="@drawable/ic_baseline_remove_red_eye_24" />
 
-</LinearLayout>
+
+  </RelativeLayout>
 
 
 
@@ -170,9 +190,27 @@
 
   <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="horizontal" android:layout_marginBottom="24dp" android:gravity="center" android:id="@+id/link_login" android:padding="10dp">
 
-  <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textSize="16dip" android:textColor="#3c4b5d" android:text="Already a member?" android:gravity="center" android:fontFamily="@font/proximanovaregular"/>
+  <TextView
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:textSize="16dip"
+      android:textColor="#3c4b5d"
+      android:textStyle="bold"
+      android:text="Already a member?"
+      android:gravity="center"
+      android:fontFamily="@font/proximanovaregular"/>
 
-  <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textSize="16dip" android:textColor="#8e9cfe" android:text=" Login" android:gravity="center" android:fontFamily="@font/proximanovaregular" android:id="@+id/textViewLogin" android:onClick="loginactivity"/>
+  <TextView
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:textSize="16dip"
+      android:textColor="#8e9cfe"
+      android:text=" Login"
+      android:gravity="center"
+      android:textStyle="bold"
+      android:fontFamily="@font/proximanovaregular"
+      android:id="@+id/textViewLogin"
+      android:onClick="loginactivity"/>
 
 </LinearLayout>
 

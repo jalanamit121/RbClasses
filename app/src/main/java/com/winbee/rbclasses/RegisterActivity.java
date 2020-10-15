@@ -3,12 +3,15 @@ package com.winbee.rbclasses;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -92,6 +95,44 @@ public class RegisterActivity extends AppCompatActivity {
     });
 
 
+  }
+  public void ShowHidePass(View view){
+
+    if(view.getId()==R.id.show_pass_btn){
+
+      if(editTextPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+        ((ImageView)(view)).setImageResource(R.drawable.ic_baseline_visibility_off_24);
+
+        //Show Password
+        editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+      }
+      else{
+        ((ImageView)(view)).setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
+
+        //Hide Password
+        editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+      }
+    }
+  }
+  public void ReShowHidePass(View view){
+
+    if(view.getId()==R.id.show_repass_btn){
+
+      if(editTextRePassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+        (( ImageView)(view)).setImageResource(R.drawable.ic_baseline_visibility_off_24);
+
+        //Show Password
+        editTextRePassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+      }
+      else{
+        ((ImageView)(view)).setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
+
+        //Hide Password
+        editTextRePassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+      }
+    }
   }
 
 

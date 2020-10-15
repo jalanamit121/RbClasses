@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,8 +54,8 @@ import static com.winbee.rbclasses.LocalData.UserName;
 public class LiveDataActivity extends AppCompatActivity implements PaymentResultWithDataListener {
     private Button buy_course;
     private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
-    private static final int REQUEST_CODE = 101;
-    String IMEINumber;
+    private RelativeLayout layout_course_closed,layout_notification;
+    private TextView txt_course_closed,txt_notification;
     private ProgressBarUtil progressBarUtil;
     String UserMobile,UserPassword,android_id;
     String TAG="payment activity";
@@ -70,6 +72,12 @@ public class LiveDataActivity extends AppCompatActivity implements PaymentResult
         UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
 
         buy_course =findViewById(R.id.buy_course);
+        layout_course_closed =findViewById(R.id.layout_course_closed);
+        layout_notification =findViewById(R.id.layout_notification);
+        txt_course_closed =findViewById(R.id.txt_course_closed);
+        txt_notification =findViewById(R.id.txt_notification);
+        txt_notification.setText(Html.fromHtml(LocalData.NotificationMessage));
+        txt_course_closed.setText(Html.fromHtml(LocalData.PaymentClosed));
         layout_home = findViewById(R.id.layout_home);
         layout_home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +121,22 @@ public class LiveDataActivity extends AppCompatActivity implements PaymentResult
             }
         });
 
+        if (LocalData.CourseClosed){
+            buy_course.setVisibility(View.GONE);
+            layout_course_closed.setVisibility(View.VISIBLE);
+        }else if (!LocalData.CourseClosed){
+            buy_course.setVisibility(View.VISIBLE);
+            layout_course_closed.setVisibility(View.GONE);
+        }
+
+
+        if (LocalData.IsNotification){
+            layout_notification.setVisibility(View.VISIBLE);
+        }else if (!LocalData.IsNotification){
+            layout_notification.setVisibility(View.GONE);
+        }
+
+
         buy_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,11 +151,11 @@ public class LiveDataActivity extends AppCompatActivity implements PaymentResult
                 TextView txt_course=dialog.findViewById(R.id.txt_course);
                 TextView txt_discount=dialog.findViewById(R.id.txt_discount);
                 TextView txt_actual_price=dialog.findViewById(R.id.txt_actual_price);
-                txt_actual_price.setText(LocalData.DiscountPrice);
+                txt_actual_price.setText(Html.fromHtml(LocalData.DiscountPrice));
                 txt_discount.setPaintFlags(txt_actual_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                txt_discount.setText(LocalData.ActualPrice);
+                txt_discount.setText(Html.fromHtml(LocalData.ActualPrice));
 
-                txt_course.setText(LocalData.Discription);
+                txt_course.setText(Html.fromHtml(LocalData.Discription));
                 TextView txt_pervious_attempt=dialog.findViewById(R.id.txt_pervious_attempt);
                 txt_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -277,9 +301,6 @@ public class LiveDataActivity extends AppCompatActivity implements PaymentResult
         paymentModel.setAmount_org_id(Amount_org_id);
         paymentModel.setOrg_id(Org_id);
 
-
-
-
         callPayment(paymentModel);
 
     }
@@ -374,8 +395,5 @@ public class LiveDataActivity extends AppCompatActivity implements PaymentResult
         startActivity(new Intent(this, LoginActivity.class));
         Objects.requireNonNull(this).finish();
     }
-
-
-
 
 }

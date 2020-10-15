@@ -3,38 +3,179 @@
     <ScrollView android:layout_height="match_parent" android:layout_width="match_parent" android:layout_marginBottom="65dp">
 
 
-    <RelativeLayout android:layout_height="match_parent" android:layout_width="wrap_content" android:layout_marginTop="65dp">
+    <RelativeLayout
+        android:layout_height="match_parent" android:layout_width="wrap_content" android:layout_marginTop="65dp">
 
     <ImageView android:layout_height="150dp" android:layout_width="150dp" android:src="@drawable/rblogo" android:paddingTop="10dp" android:paddingLeft="15dp" android:paddingRight="10dp" android:id="@+id/companylogo"/>
 
-    <TextView android:layout_height="match_parent" android:layout_width="match_parent" android:paddingTop="15dp" android:paddingLeft="15dp" android:paddingRight="10dp" android:id="@+id/aboutus_textview1" android:textSize="18sp" android:text="RB Classes was established in the year 2011 with a prime motto of imparting quality education in Non-Technical examination and molding the students to crack competitive examinations. RB Classes offer a Complete preparation for SSC (CGL and 10+2), BANKING, CPO(SI), UPP(SI), RAILWAY, TET." android:textColor="#111" android:layout_below="@id/companylogo" android:lineSpacingExtra="2dp"/>
+    <TextView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:paddingTop="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:id="@+id/aboutus_textview1"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="RB Classes was established in the year 2011 with a prime motto of imparting quality education in Non-Technical examination and molding the students to crack competitive examinations. RB Classes offer a Complete preparation for SSC (CGL and 10+2), BANKING, CPO(SI), UPP(SI), RAILWAY, TET." android:textColor="#111" android:layout_below="@id/companylogo" android:lineSpacingExtra="2dp"/>
 
     <TextView android:layout_height="match_parent" android:layout_width="wrap_content" android:layout_marginTop="15dp" android:paddingLeft="15dp" android:paddingRight="10dp" android:id="@+id/aboutus_textview3" android:textSize="18sp" android:text="School’s aim is to give such an education, which develops all round personality of the child, and to meet the challenge of the world in career making. Emphasis is laid on character building of the children so that they become good citizens and leaders of tomorrow. The school authority is determined to give moral and spiritual education according to the cultural values and need of the present time." android:textColor="#111" android:layout_below="@id/aboutus_textview1" android:lineSpacingExtra="2dp" android:visibility="gone"/>
 
-    <TextView android:layout_height="match_parent" android:layout_width="wrap_content" android:layout_marginBottom="10dp" android:layout_marginTop="10dp" android:paddingTop="10dp" android:paddingLeft="15dp" android:paddingRight="10dp" android:id="@+id/aboutus_textview6" android:textSize="18sp" android:text="CONTACT US:" android:textColor="#111" android:layout_below="@id/aboutus_textview3" android:lineSpacingExtra="2dp" android:textStyle="bold"/>
+    <TextView
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:id="@+id/aboutus_textview6"
+        android:textSize="18sp"
+        android:text="CONTACT US:"
+        android:textColor="#111"
+        android:layout_below="@id/aboutus_textview3"
+        android:lineSpacingExtra="2dp"
+        android:textStyle="bold"/>
 
-    <TextView android:layout_height="match_parent" android:layout_width="wrap_content" android:layout_marginBottom="10dp" android:layout_marginTop="5dp" android:paddingLeft="15dp" android:paddingRight="10dp" android:id="@+id/aboutus_textview7" android:textSize="16sp" android:text="Rb Classes" android:textColor="#111" android:layout_below="@id/aboutus_textview6" android:lineSpacingExtra="2dp"/>
+    <TextView
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:textStyle="bold"
+        android:id="@+id/aboutus_textview7"
+        android:textSize="16sp"
+        android:text="Rb Classes"
+        android:textColor="#111"
+        android:layout_below="@id/aboutus_textview6"
+        android:lineSpacingExtra="2dp"/>
 
-    <TextView android:layout_height="match_parent" android:layout_width="wrap_content" android:layout_marginBottom="10dp" android:layout_marginTop="5dp" android:paddingLeft="15dp" android:paddingRight="10dp" android:id="@+id/aboutus_textview8" android:textSize="16sp" android:text="PWD Office Rd Near Civil Court, in front of Paarijaat Tree, Sultanpur, Uttar Pradesh 228001" android:textColor="#111" android:layout_below="@id/aboutus_textview7" android:lineSpacingExtra="2dp"/>
+    <TextView android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:id="@+id/aboutus_textview8"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="PWD Office Rd Near Civil Court, in front of Paarijaat Tree, Sultanpur, Uttar Pradesh 228001" android:textColor="#111" android:layout_below="@id/aboutus_textview7" android:lineSpacingExtra="2dp"/>
 
-    <TextView android:layout_height="match_parent" android:layout_width="wrap_content" android:layout_marginBottom="10dp" android:layout_marginTop="5dp" android:paddingLeft="15dp" android:paddingRight="10dp" android:id="@+id/aboutus_textview9" android:textSize="16sp" android:text="Write Us:" android:textColor="#111" android:layout_below="@id/aboutus_textview8" android:lineSpacingExtra="2dp"/>
+    <TextView
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:id="@+id/aboutus_textview9"
+        android:textSize="16sp"
+        android:text="Write Us:"
+        android:textStyle="bold"
+        android:textColor="#111"
+        android:layout_below="@id/aboutus_textview8"
+        android:lineSpacingExtra="2dp"/>
 
-    <TextView android:layout_height="match_parent" android:layout_width="wrap_content" android:layout_marginBottom="10dp" android:layout_marginTop="5dp" android:paddingLeft="10dp" android:paddingRight="10dp" android:id="@+id/aboutus_textview10" android:textSize="15sp" android:text="rbclassessultanpur@gmail.com" android:textColor="#03A9F4" android:layout_below="@id/aboutus_textview8" android:lineSpacingExtra="2dp" android:layout_toRightOf="@id/aboutus_textview9" android:clickable="true"/>
+    <TextView
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:id="@+id/aboutus_textview10"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:text="rbclassessultanpur@gmail.com"
+        android:textColor="#03A9F4"
+        android:layout_below="@id/aboutus_textview8" android:lineSpacingExtra="2dp" android:layout_toRightOf="@id/aboutus_textview9" android:clickable="true"/>
 
-    <TextView android:layout_height="match_parent" android:layout_width="wrap_content" android:layout_marginBottom="10dp" android:layout_marginTop="10dp" android:paddingTop="10dp" android:paddingLeft="15dp" android:paddingRight="10dp" android:id="@+id/aboutus_textview11" android:textSize="18sp" android:text="For Technical Issues:" android:textColor="#111" android:layout_below="@id/aboutus_textview10" android:lineSpacingExtra="2dp" android:textStyle="bold"/>
+    <TextView
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:id="@+id/aboutus_textview11"
+        android:textSize="18sp"
+        android:text="For Technical Issues:"
+        android:textColor="#111"
+        android:layout_below="@id/aboutus_textview10"
+        android:lineSpacingExtra="2dp"
+        android:textStyle="bold"/>
 
-    <TextView android:layout_height="match_parent" android:layout_width="wrap_content" android:layout_marginBottom="10dp" android:layout_marginTop="5dp" android:paddingLeft="15dp" android:paddingRight="10dp" android:id="@+id/aboutus_textview12" android:textSize="16sp" android:text="Winbee Solutions" android:textColor="#111" android:layout_below="@id/aboutus_textview11" android:lineSpacingExtra="2dp"/>
+    <TextView
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:id="@+id/aboutus_textview12"
+        android:textSize="16sp"
+        android:text="Winbee Solutions"
+        android:textStyle="bold"
+        android:textColor="#111"
+        android:layout_below="@id/aboutus_textview11"
+        android:lineSpacingExtra="2dp"/>
 
-    <TextView android:layout_height="match_parent" android:layout_width="wrap_content" android:layout_marginBottom="10dp" android:layout_marginTop="5dp" android:paddingLeft="15dp" android:paddingRight="10dp" android:id="@+id/aboutus_textview13" android:textSize="16sp" android:text="E-502 Sector-78 Noida Uttar Pradesh, India PIN Code: 201301" android:textColor="#111" android:layout_below="@id/aboutus_textview12" android:lineSpacingExtra="2dp"/>
+    <TextView
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:id="@+id/aboutus_textview13"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="E-502 Sector-78 Noida Uttar Pradesh, India PIN Code: 201301"
+        android:textColor="#111"
+        android:layout_below="@id/aboutus_textview12"
+        android:lineSpacingExtra="2dp"/>
 
-    <TextView android:layout_height="match_parent" android:layout_width="wrap_content" android:layout_marginBottom="10dp" android:layout_marginTop="5dp" android:paddingLeft="15dp" android:paddingRight="10dp" android:id="@+id/aboutus_textview14" android:textSize="16sp" android:text="Write Us:" android:textColor="#111" android:layout_below="@id/aboutus_textview13" android:lineSpacingExtra="2dp"/>
+    <TextView
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:textStyle="bold"
+        android:id="@+id/aboutus_textview14"
+        android:textSize="16sp"
+        android:text="Write Us:"
+        android:textColor="#111"
+        android:layout_below="@id/aboutus_textview13"
+        android:lineSpacingExtra="2dp"/>
 
-    <TextView android:layout_height="match_parent" android:layout_width="wrap_content" android:layout_marginBottom="70dp" android:layout_marginTop="5dp" android:paddingLeft="10dp" android:paddingRight="10dp" android:id="@+id/aboutus_textview15" android:textSize="15sp" android:text="info@winbee.in" android:textColor="#03A9F4" android:layout_below="@id/aboutus_textview13" android:lineSpacingExtra="2dp" android:layout_toRightOf="@id/aboutus_textview14"/>
+    <TextView
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="70dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:id="@+id/aboutus_textview15"
+        android:textSize="15sp"
+        android:text="info@winbee.in"
+        android:textStyle="bold"
+        android:textColor="#03A9F4"
+        android:layout_below="@id/aboutus_textview13"
+        android:lineSpacingExtra="2dp"
+        android:layout_toRightOf="@id/aboutus_textview14"/>
 
 </RelativeLayout>
 
 </ScrollView>
 
-    <include android:layout_height="match_parent" android:layout_width="match_parent" layout="@layout/footer"/>
+    <include
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        layout="@layout/footer"/>
 
 </RelativeLayout>

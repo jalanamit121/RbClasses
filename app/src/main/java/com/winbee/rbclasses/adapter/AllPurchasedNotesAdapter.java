@@ -3,6 +3,7 @@ package com.winbee.rbclasses.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,8 +44,8 @@ public class AllPurchasedNotesAdapter extends RecyclerView.Adapter<AllPurchasedN
 
 
 
-    holder.gec_branchname.setText(list.get(position).getTopic());
-    holder.date_pdf.setText(list.get(position).getPublished());
+    holder.gec_branchname.setText(Html.fromHtml(list.get(position).getTopic()));
+    holder.date_pdf.setText(Html.fromHtml(list.get(position).getPublished()));
     holder.img_lock.setVisibility(View.GONE);
     holder.card_view.setOnClickListener(new View.OnClickListener() {
       @Override

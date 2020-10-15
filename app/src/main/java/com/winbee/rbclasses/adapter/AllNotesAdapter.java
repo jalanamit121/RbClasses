@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,8 +48,8 @@ public class AllNotesAdapter extends RecyclerView.Adapter<AllNotesAdapter.ViewHo
 
 
         if (list.get(position).getClassType().equals(2)){
-            holder.gec_branchname.setText(list.get(position).getTopic());
-            holder.date.setText(list.get(position).getPublished());
+            holder.gec_branchname.setText(Html.fromHtml(list.get(position).getTopic()));
+            holder.date.setText(Html.fromHtml(list.get(position).getPublished()));
             if (list.get(position).getAccessType().equals(1)) {
                 holder.img_lock.setVisibility(View.GONE);
                 holder.card_view.setOnClickListener(new View.OnClickListener() {

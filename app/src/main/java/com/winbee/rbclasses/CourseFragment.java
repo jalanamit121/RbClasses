@@ -44,6 +44,7 @@ public class CourseFragment extends Fragment {
   private ProgressBarUtil progressBarUtil;
   private AllCourseAdapter adapter;
   private SwipeRefreshLayout refresh_course;
+  private RelativeLayout layout_mycourse;
   String UserID,android_id;
 
   public CourseFragment() {
@@ -60,7 +61,15 @@ public class CourseFragment extends Fragment {
   public void onViewCreated(View view, Bundle savedInstanceState) {
     progressBarUtil   =  new ProgressBarUtil(getContext());
     course_recycle =view.findViewById(R.id.all_course);
+    layout_mycourse =view.findViewById(R.id.layout_mycourse);
     refresh_course =view.findViewById(R.id.refresh_course);
+    layout_mycourse.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent intent = new Intent(getContext(),YouTubeVideoList.class);
+        startActivity(intent);
+      }
+    });
     refresh_course.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
       @Override
       public void onRefresh() {

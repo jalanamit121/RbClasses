@@ -1,12 +1,15 @@
 package com.winbee.rbclasses;
 
 import android.Manifest;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -14,6 +17,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.DownloadListener;
+import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -87,9 +93,10 @@ public class PdfWebActivity extends AppCompatActivity  {
                     setTitle(R.string.app_name);
             }
         });
-        webView.setWebViewClient(new HelloWebViewClient());
+      //  webView.setWebViewClient(new HelloWebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(LocalData.NotesData);
+        haveStoragePermission();
         layout_home = findViewById(R.id.layout_home);
         layout_home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,15 +142,59 @@ public class PdfWebActivity extends AppCompatActivity  {
     //    progressBarUtil.showProgress();
 
        // displayWebView();
-    }
 
-    private class HelloWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(LocalData.NotesData);
+        webView.setDownloadListener(new  DownloadListener() {
+            public void onDownloadStart (String url, String userAgent,
+                                         String contentDisposition, String mimetype,
+                                         long contentLength){
+                DownloadManager.Request myRequest = new DownloadManager.Request(Uri.parse(url));
+                myRequest.setMimeType(mimetype);
+                //------------------------COOKIE!!------------------------
+                String cookies = CookieManager.getInstance().getCookie(url);
+                myRequest.addRequestHeader("cookie", cookies);
+                //------------------------COOKIE!!------------------------
+                myRequest.addRequestHeader("User-Agent", userAgent);
+                myRequest.setDescription("Downloading file...");
+                myRequest.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
+                myRequest.allowScanningByMediaScanner();
+                myRequest.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                myRequest.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimetype));
+                DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+                dm.enqueue(myRequest);
+                Toast.makeText(getApplicationContext(), "Downloading File", Toast.LENGTH_LONG).show();
+
+                Toast.makeText(PdfWebActivity.this, "File is Downloading...", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+    }
+    public  boolean haveStoragePermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.e("Permission error","You have permission");
+                return true;
+            } else {
+
+                Log.e("Permission error","You have asked for permission");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        }
+        else { //you dont need to worry about these stuff below api level 23
+            Log.e("Permission error","You already have the permission");
             return true;
         }
     }
+
+//    private class HelloWebViewClient extends WebViewClient {
+//        @Override
+//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//            view.loadUrl(LocalData.NotesData);
+//            return true;
+//        }
+//    }
 
     private void displayWebView() {
         webView.getSettings().setJavaScriptEnabled(true);
