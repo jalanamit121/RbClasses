@@ -59,4 +59,8 @@
 
     <dimen name="top_text_subtitle_card">4dp</dimen>
 
+
+    <dimen name="view_width_small">1dp</dimen>
+
+
 </resources>

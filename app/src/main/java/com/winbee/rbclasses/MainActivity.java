@@ -38,6 +38,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.winbee.rbclasses.NewModels.LogOut;
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
+import com.winbee.rbclasses.Utils.AppUpdateChecker;
 import com.winbee.rbclasses.ViewPager.ViewPagerAdapter;
 import com.winbee.rbclasses.WebApi.ClientApi;
 import com.winbee.rbclasses.model.RefCode;
@@ -84,6 +85,10 @@ public class MainActivity extends AppCompatActivity {
             manager.createNotificationChannel(channel);
 
         }
+        AppUpdateChecker appUpdateChecker=new AppUpdateChecker(this);  //pass the activity in constructure
+        appUpdateChecker.checkForUpdate(false); //mannual check false here
+
+
         UserMobile=SharedPrefManager.getInstance(this).refCode().getUsername();
         UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
         android_id = Settings.Secure.getString(getContext().getContentResolver(),
@@ -111,9 +116,9 @@ public class MainActivity extends AppCompatActivity {
         layout_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-//                Intent doubt = new Intent(MainActivity.this,DoubtActivity.class);
-//                startActivity(doubt);
+               // Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                Intent doubt = new Intent(MainActivity.this,SubjectActivity.class);
+                startActivity(doubt);
             }
         });
         layout_current = findViewById(R.id.layout_current);

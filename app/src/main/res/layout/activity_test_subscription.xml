@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back_color"
+    tools:context=".MyCourseSubjectActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+    <RelativeLayout
+        android:id="@+id/image_layout"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="65dp">
+
+        <ImageView
+            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            android:id="@+id/payment_image"
+            android:elevation="1dp" />
+
+        <RelativeLayout
+            android:id="@+id/Course_layout_main"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/paymentimage"
+            android:elevation="1dp">
+            <TextView
+                android:id="@+id/course_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:text="CourseName"/>
+
+
+
+
+
+            <Button
+                android:id="@+id/btn_demo"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:text="DEMO TEST"
+                android:textSize="12sp"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/white"
+                android:layout_below="@id/course_name"
+                android:layout_marginTop="13dp"
+                android:layout_marginStart="10dp"
+                android:background="@color/header"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/white"
+                android:layout_below="@id/btn_demo"
+                android:text="Test Series is available on WEB application as well"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/description_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:elevation="1dp"
+            android:layout_below="@id/Course_layout_main">
+
+            <TextView
+                android:id="@+id/txt_discription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textSize="16sp"
+                android:layout_marginTop="7dp"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/header" />
+            <TextView
+                android:id="@+id/txt_discription_click"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textSize="16sp"
+                android:layout_marginTop="7dp"
+                android:layout_marginStart="5dp"
+                android:visibility="gone"
+                android:textStyle="bold"
+                android:textColor="#F3D268" />
+            <ImageView
+                android:id="@+id/image_expand_more"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="visible"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/ic_baseline_expand_more_24"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="5dp"
+
+                android:layout_centerHorizontal="true"/>
+            <ImageView
+                android:id="@+id/image_expand_less"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/ic_baseline_expand_less_24"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="5dp"
+                android:visibility="gone"
+
+                android:layout_centerHorizontal="true"/>
+
+            <RelativeLayout
+                android:id="@+id/layout_discription_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_below="@id/txt_discription_click">
+
+
+                <TextView
+                    android:id="@+id/txt_course_discription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="discrption is here about the course"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:visibility="visible"
+                    android:textSize="15sp"
+                    android:textColor="@color/edit_text"/>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/total_video_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:elevation="1dp"
+            android:layout_below="@id/description_layout">
+
+            <TextView
+                android:id="@+id/txt_total_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="total test"
+                android:textSize="15sp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:textColor="@color/edit_text"/>
+
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/txt_study"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Our Plan"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="#08496e"
+            android:layout_marginStart="10dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/proximanovaregular"
+            android:textSize="22sp"
+            android:layout_below="@+id/total_video_layout"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/gec_test_recycle"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="65dp"
+        android:layout_below="@id/txt_study"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+    <TextView
+        android:id="@+id/txt_no_subject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="No Plans Available"
+        android:visibility="gone"
+        android:textColor="@color/edit_text"
+        android:textSize="24sp"/>
+    <RelativeLayout
+        android:id="@+id/layout_success"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+android:visibility="gone"
+
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:id="@+id/txt_complete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Transaction Success"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textColor="@color/header"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"/>
+        <ImageView
+            android:layout_height="20dp"
+            android:layout_width="20dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="7dp"
+            android:layout_toRightOf="@id/txt_complete"/>
+        <TextView
+            android:id="@+id/txt_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your payment has been received Successfully"
+            android:textSize="15sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/txt_complete"
+            android:textColor="@color/edit_text"/>
+        <RelativeLayout
+            android:id="@+id/layout_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_success"
+            android:layout_margin="10dp">
+            <TextView
+                android:id="@+id/txt_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:textSize="15sp"
+                android:visibility="gone"
+                android:textColor="@color/edit_text"
+                android:text="amount"/>
+            <TextView
+                android:id="@+id/txt_course"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="amount"
+                android:textSize="15sp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_below="@id/txt_amount"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/edit_text"/>
+            <TextView
+                android:id="@+id/txt_txn_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_course"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone"
+                android:textSize="15sp"
+                android:textColor="@color/edit_text"
+                android:text="amount"/>
+        </RelativeLayout>
+        <Button
+            android:id="@+id/go_back"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:text="GO BACK"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@id/layout_id"
+            android:layout_toLeftOf="@id/btn_course"
+            android:layout_marginTop="7dp"
+            android:background="#F3D268"/>
+        <Button
+            android:id="@+id/btn_course"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:text="VIEW TEST SERIES"
+            android:textSize="12sp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/white"
+            android:layout_below="@id/layout_id"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="7dp"
+            android:background="@color/header"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/layout_failed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:id="@+id/txt_incomplete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Transaction Failed"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textColor="@color/header"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"/>
+        <ImageView
+            android:id="@+id/img_cancel"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="5dp"
+
+            android:layout_toRightOf="@id/txt_incomplete"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:id="@+id/txt_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/img_cancel"
+            android:textSize="15sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/edit_text"
+            android:text="If by mistake clicked on back / cancel button , Kindly try again."/>
+
+        <TextView
+            android:id="@+id/txt_failed1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_failed"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/edit_text"
+            android:text="If amount has been deducted from bank account, please contact to organization"/>
+        <Button
+            android:id="@+id/go_back_failed"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:text="GO BACK"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_below="@id/txt_failed1"
+            android:layout_marginTop="7dp"
+            android:background="#F3D268"/>
+    </RelativeLayout>
+    <include
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        layout="@layout/footer"/>
+
+</RelativeLayout>

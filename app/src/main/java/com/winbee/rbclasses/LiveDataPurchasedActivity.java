@@ -88,9 +88,8 @@ public class LiveDataPurchasedActivity extends AppCompatActivity {
         layout_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(LiveDataPurchasedActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-//                Intent doubt = new Intent(MainActivity.this,DoubtActivity.class);
-//                startActivity(doubt);
+                Intent doubt = new Intent(LiveDataPurchasedActivity.this,SubjectActivity.class);
+                startActivity(doubt);
             }
         });
         layout_current = findViewById(R.id.layout_current);

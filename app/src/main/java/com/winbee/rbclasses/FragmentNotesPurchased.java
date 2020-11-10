@@ -33,8 +33,7 @@ public class FragmentNotesPurchased extends Fragment {
   private ProgressBarUtil progressBarUtil;
   private AllPurchasedNotesAdapter adapter;
   RelativeLayout today_classes;
-  SwipeRefreshLayout refresh_list;
-  private ImageView img_share,WebsiteHome;
+  private SwipeRefreshLayout refresh_course;
   String UserID;
 
 
@@ -56,6 +55,13 @@ public class FragmentNotesPurchased extends Fragment {
     video_list_recycler =view.findViewById(R.id.all_notesClasses);
     today_classes =view.findViewById(R.id.today_classes);
     UserID=SharedPrefManager.getInstance(getContext()).refCode().getUserId();
+    refresh_course =view.findViewById(R.id.refresh_course);
+    refresh_course.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+      @Override
+      public void onRefresh() {
+        callLiveApiService();
+      }
+    });
     callLiveApiService();
   }
   private void callLiveApiService() {
@@ -74,9 +80,11 @@ public class FragmentNotesPurchased extends Fragment {
             adapter = new AllPurchasedNotesAdapter(getActivity(), liveList);
             video_list_recycler.setAdapter(adapter);
             progressBarUtil.hideProgress();
+            refresh_course.setRefreshing(false);
           }else{
             today_classes.setVisibility(View.VISIBLE);
             progressBarUtil.hideProgress();
+            refresh_course.setRefreshing(false);
           }
         }
         else{

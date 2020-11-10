@@ -196,7 +196,8 @@ public class RegisterActivity extends AppCompatActivity {
         if (statusCode == 200 && response.body().getSuccess() == true) {
           Log.i("tag", "onResponse: "+response.body().getSuccess());
           LocalData.UserName = refUser.getEmail();
-          LocalData.Mobile=refUser.getMobile();
+         // LocalData.Mobile=refUser.getMobile();
+          LocalData.Mobile=editTextPhone.getText().toString().trim();
           LocalData.Password = refUser.getPassword();
           progressBarUtil.hideProgress();
           Intent intent = new Intent(RegisterActivity.this,OtpVerficationActivity.class);

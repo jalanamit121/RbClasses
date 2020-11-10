@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -65,10 +67,10 @@ public class YoutubeLibaray extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_youtube_libaray);
         editTextMessageLive = findViewById(R.id.editTextMessageLive);
         sendButton = findViewById(R.id.sendMessageLive);
-        message_layout = findViewById(R.id.message_layout);
         txt_message_not = findViewById(R.id.txt_message_not);
         UserId = SharedPrefManager.getInstance(this).refCode().getUserId();
         Username=SharedPrefManager.getInstance(this).refCode().getName();
@@ -83,6 +85,11 @@ public class YoutubeLibaray extends AppCompatActivity {
                 messageSend();
             }
         });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary, this.getTheme()));
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+        }
         this.youTubePlayerView = findViewById(R.id.youtube_player);
         getLifecycle().addObserver(youTubePlayerView);
         youTubePlayerView.addFullScreenListener(new YouTubePlayerFullScreenListener() {
@@ -91,7 +98,7 @@ public class YoutubeLibaray extends AppCompatActivity {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
                 editTextMessageLive.setVisibility(View.GONE);
                 sendButton.setVisibility(View.GONE);
-                message_layout.setVisibility(View.GONE);
+
                 // hide softkeys if it is already open
 
             }
@@ -101,7 +108,6 @@ public class YoutubeLibaray extends AppCompatActivity {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
                 editTextMessageLive.setVisibility(View.VISIBLE);
                 sendButton.setVisibility(View.VISIBLE);
-                message_layout.setVisibility(View.VISIBLE);
 
             }
         });

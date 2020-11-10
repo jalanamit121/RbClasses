@@ -42,7 +42,9 @@ public class CurrentAdapter extends RecyclerView.Adapter<CurrentAdapter.ViewHold
 
         holder.branchname.setText(Html.fromHtml(courseDatumList.get(position).getItemDescription()));
         holder.txt_date.setText(Html.fromHtml(courseDatumList.get(position).getDisplayDate()));
-        Picasso.get().load(courseDatumList.get(position).getItemAttachment()).placeholder(R.drawable.wateer_mark_image).into(holder.branch_image);
+
+
+        Picasso.get().load(courseDatumList.get(position).getItemAttachment()).into(holder.branch_image);
 
     }
 

@@ -7,10 +7,14 @@ import com.winbee.rbclasses.NewModels.CourseContent;
 import com.winbee.rbclasses.NewModels.DailyUpdate;
 import com.winbee.rbclasses.NewModels.LiveMessage;
 import com.winbee.rbclasses.NewModels.LogOut;
+import com.winbee.rbclasses.NewModels.TestSeriesPayment;
+import com.winbee.rbclasses.NewModels.TestSubscription;
+import com.winbee.rbclasses.NewModels.TestTopRanker;
 import com.winbee.rbclasses.NewModels.VideoContent;
 import com.winbee.rbclasses.model.CourseContentPdfModel;
 import com.winbee.rbclasses.model.CurrentAffairsModel;
 import com.winbee.rbclasses.model.ForgetMobile;
+import com.winbee.rbclasses.model.InstructionsModel;
 import com.winbee.rbclasses.model.LiveChatMessage;
 import com.winbee.rbclasses.model.LiveClass;
 import com.winbee.rbclasses.model.McqAskedQuestionModel;
@@ -25,10 +29,19 @@ import com.winbee.rbclasses.model.RefCode;
 import com.winbee.rbclasses.model.RefUser;
 import com.winbee.rbclasses.model.ResendOtp;
 import com.winbee.rbclasses.model.ResetPassword;
+import com.winbee.rbclasses.model.ResultModel;
+import com.winbee.rbclasses.model.SIACDetailsMainModel;
+import com.winbee.rbclasses.model.SIADMainModel;
+import com.winbee.rbclasses.model.SIADSolutionMainModel;
+import com.winbee.rbclasses.model.SectionDetailsMainModel;
 import com.winbee.rbclasses.model.SolutionDoubtQuestion;
 import com.winbee.rbclasses.model.SolutionQuestion;
+import com.winbee.rbclasses.model.StartTestModel;
 import com.winbee.rbclasses.model.TxnModel;
+import com.winbee.rbclasses.model.ViewResult;
 
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 
@@ -276,4 +289,93 @@ public interface ClientApi {
             @Query("LiveClassId") String LiveClassId
     );
 
+    @POST("fetch-section-details.php")
+    Call<SectionDetailsMainModel> fetchSectionDetails(
+            @Query("org_code") String org_code,
+            @Query("auth_code") String auth_code,
+            @Query("userId") String userId
+    );
+
+    @POST("fetch-section-individual-assessment-cover-details.php")
+    @FormUrlEncoded
+    Call<SIACDetailsMainModel> fetchSIACDetails(
+            @Field("org_code") String org_code,
+            @Field("auth_code") String auth_code,
+            @Field("bucket_code") String bucket_code,
+            @Field("user_code") String user_code
+    );
+    @POST("Start-Exam-Paper.php")
+    @FormUrlEncoded
+    Call<StartTestModel> getStartTest(
+            @Field("OrgID") String OrgID,
+            @Field("UserID") String UserID,
+            @Field("PaperID") String PaperID,
+            @Field("ExamStatus") String ExamStatus,
+            @Field("Read_Instruction") String Read_Instruction
+    );
+
+    @POST("fetch-exam-instruction.php")
+    @FormUrlEncoded
+    Call<InstructionsModel> getInstruction(
+            @Field("PaperID") String PaperID
+    );
+
+    @POST("view-result.php")
+    @FormUrlEncoded
+    Call<ViewResult> viewResult(
+            @Field("OrgID") String OrgID,
+            @Field("PaperID") String PaperID,
+            @Field("UserID") String UserID
+    );
+
+    @POST("view-solutions.php")
+    @FormUrlEncoded
+    Call<SIADSolutionMainModel> getTestSolution(
+            @Field("OrgID") String OrgID,
+            @Field("paper_code") String paper_code,
+            @Field("UserID") String UserID
+    );
+
+    @POST("fetch-section-individual-assessment-data.php")
+    @FormUrlEncoded
+    Call<SIADMainModel> fetchSIADDATA(
+            @Field("org_code") String org_code,
+            @Field("auth_code") String auth_code,
+            @Field("bucket_code") String bucket_code,
+            @Field("paper_code") String paper_code
+    );
+
+    @POST("Submit-Exam-Paper.php")
+    @FormUrlEncoded
+    Call<ResultModel> submitResponse(
+            @Field("CoachingID") String CoachingID,
+            @Field("PaperID") String PaperID,
+            @Field("UserID") String UserID,
+            @Field("Response") JSONArray jsonArray,
+            @Field("Staticstics") String Staticstics,
+            @Field("Submit_Exam_Paper") boolean Submit_Exam_Paper
+    );
+
+    @POST("fetch-top-scorers.php")
+    @FormUrlEncoded
+    Call<TestTopRanker> fetchTopRanker(
+            @Field("PaperID") String PaperID,
+            @Field("UserID") String UserID
+    );
+
+    @POST("fetch-section-subscription-plan.php")
+    Call<TestSubscription> getSubscriptionDetails(
+            @Query("ExamSectionId") String ExamSectionId,
+            @Query("auth_code") String auth_code
+    );
+
+    @POST("insert-exam-payment-initiated-ots.php")
+    @FormUrlEncoded
+    Call<TestSeriesPayment> fetchTestPaymentData(
+            @Field("course_id") String course_id,
+            @Field("user_id") String user_id,
+            @Field("amount_org_id") String amount_org_id,
+            @Field("org_id") String org_id,
+            @Field("subscription_id") String subscription_id
+    );
 }

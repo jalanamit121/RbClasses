@@ -17,6 +17,8 @@
     <item name="colorAccent">@color/colorAccent</item>
 
     <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
 
 </style>
 
@@ -26,6 +28,7 @@
     <item name="windowActionBar">false</item>
 
     <item name="windowNoTitle">true</item>
+
 
 </style>
 
@@ -57,7 +60,7 @@
 
     <style name="parent.contentLayout">
 
-    <item name="android:background">@color/contentBodyColor</item>
+    <item name="android:background">@color/gradientLightBlue</item>
 
     <!-- <item name="android:padding">@dimen/normalPadding</item>-->
 

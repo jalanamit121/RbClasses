@@ -2,7 +2,13 @@ package com.winbee.rbclasses;
 
 public class LocalData {
 
+    public static String OrgId="WB_009";
+    public static String AuthCode="WB_009";
+
+
+
     public static String File="";
+    public static String Username="";
     public static String ContentLink="";
     public static String LiveId="";
     public static String MobileNumber="";
@@ -53,4 +59,10 @@ public class LocalData {
 
     public static  String Otp="";
     public static  String Mobile="";
+    public static  String TestBuckedId="";
+    public static  String TestName="";
+    public static  String TestDisplayPrice="";
+    public static  String TestDiscountPrice="";
+    public static  String TestDiscription="";
+    public static  String TotalTest="";
 }

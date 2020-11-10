@@ -62,7 +62,7 @@ public class CourseFragment extends Fragment {
     progressBarUtil   =  new ProgressBarUtil(getContext());
     course_recycle =view.findViewById(R.id.all_course);
     layout_mycourse =view.findViewById(R.id.layout_mycourse);
-    refresh_course =view.findViewById(R.id.refresh_course);
+
     layout_mycourse.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -70,16 +70,11 @@ public class CourseFragment extends Fragment {
         startActivity(intent);
       }
     });
+    refresh_course =view.findViewById(R.id.refresh_course);
     refresh_course.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
       @Override
       public void onRefresh() {
         callCourseApiService();
-        new Handler().postDelayed(new Runnable() {
-          @Override
-          public void run() {
-            refresh_course.setRefreshing(false);
-          }
-        },4000);
       }
     });
     UserID = SharedPrefManager.getInstance(getActivity()).refCode().getUserId();
@@ -107,9 +102,12 @@ public class CourseFragment extends Fragment {
           adapter = new AllCourseAdapter(getActivity(), courseModels);
           course_recycle.setAdapter(adapter);
           progressBarUtil.hideProgress();
+          refresh_course.setRefreshing(false);
 
         }
         else{
+          progressBarUtil.hideProgress();
+          refresh_course.setRefreshing(false);
           System.out.println("Suree: response code"+response.message());
           Toast.makeText(getContext(),"Ërror due to" + response.message(),Toast.LENGTH_SHORT).show();
         }

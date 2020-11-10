@@ -39,7 +39,7 @@ public class LiveFragment extends Fragment {
   private ProgressBarUtil progressBarUtil;
   private AllLiveClassAdapter adapter;
   RelativeLayout today_classes;
-  SwipeRefreshLayout refresh_list;
+  private SwipeRefreshLayout refresh_course;
   private ImageView img_share,WebsiteHome;
   String UserID,android_id;
 
@@ -62,8 +62,15 @@ public class LiveFragment extends Fragment {
     video_list_recycler =view.findViewById(R.id.all_liveClasses);
     today_classes =view.findViewById(R.id.today_classes);
     UserID=SharedPrefManager.getInstance(getContext()).refCode().getUserId();
-    android_id = Settings.Secure.getString(getContext().getContentResolver(),
-            Settings.Secure.ANDROID_ID);
+    android_id = Settings.Secure.getString(getContext().getContentResolver(),Settings.Secure.ANDROID_ID);
+    refresh_course =view.findViewById(R.id.refresh_course);
+    refresh_course.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+      @Override
+      public void onRefresh() {
+        callLiveApiService();
+      }
+    });
+
     callLiveApiService();
   }
   private void callLiveApiService() {
@@ -77,12 +84,19 @@ public class LiveFragment extends Fragment {
         int statusCode = response.code();
         liveList = new ArrayList();
         if(statusCode==200) {
-          if (response.body().getError() == false) {
-            System.out.println("Suree body: " + response.body());
-            liveList = new ArrayList<>(Arrays.asList(Objects.requireNonNull(videoContent).getData()));
-            adapter = new AllLiveClassAdapter(getActivity(), liveList);
-            video_list_recycler.setAdapter(adapter);
-            progressBarUtil.hideProgress();
+          if (!response.body().getError()) {
+            if (response.body().getData()!=null) {
+              System.out.println("Suree body: " + response.body());
+              liveList = new ArrayList<>(Arrays.asList(Objects.requireNonNull(videoContent).getData()));
+              adapter = new AllLiveClassAdapter(getActivity(), liveList);
+              video_list_recycler.setAdapter(adapter);
+              progressBarUtil.hideProgress();
+              refresh_course.setRefreshing(false);
+            }else {
+              today_classes.setVisibility(View.VISIBLE);
+              progressBarUtil.hideProgress();
+              refresh_course.setRefreshing(false);
+            }
           }else{
             android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getContext());
             alertDialogBuilder.setTitle("Alert");
@@ -97,9 +111,12 @@ public class LiveFragment extends Fragment {
 
             android.app.AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
+            progressBarUtil.hideProgress();
           }
         }
         else{
+          progressBarUtil.hideProgress();
+          refresh_course.setRefreshing(false);
           System.out.println("Suree: response code"+response.message());
           Toast.makeText(getContext(),"Ërror due to" + response.message(),Toast.LENGTH_SHORT).show();
         }

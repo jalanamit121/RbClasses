@@ -62,7 +62,7 @@
 
     <string name="login_desc">Enter your login details to access your account</string>
 
-
+    <string name="went_wrong">Something Went Wrong</string>
     <string-array name="option">
 
     <item>Select Correct Option</item>

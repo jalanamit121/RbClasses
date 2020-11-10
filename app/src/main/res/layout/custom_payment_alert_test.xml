@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check Out - Course"
+            android:textColor="@color/edit_text"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"/>
+
+       <TextView
+           android:id="@+id/txt_cancel"
+           android:layout_width="30dp"
+           android:layout_height="30dp"
+           android:textSize="30sp"
+           android:drawableStart="@drawable/ic_baseline_close_24"
+           android:layout_alignParentEnd="true"
+           android:layout_marginRight="10dp"/>
+        <RelativeLayout
+            android:id="@+id/layout_payment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_cancel"
+            android:layout_margin="5dp"
+            android:background="@drawable/payment_alert"
+            android:elevation="2dp"
+            android:layout_marginTop="5dp">
+        <TextView
+            android:id="@+id/txt_course"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Course Name"
+            android:gravity="center"
+            android:textColor="@color/header"
+            android:layout_marginTop="10dp"
+            android:textSize="22sp"
+            android:fontFamily="@font/proximanovaregular"/>
+
+        <TextView
+            android:id="@+id/txt_fee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Price Details"
+            android:textSize="18sp"
+            android:textColor="@color/edit_text"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_below="@id/txt_course"/>
+
+
+            <TextView
+                android:id="@+id/total_price"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Total Price          :"
+                android:textSize="15sp"
+                android:textColor="@color/edit_text"
+                android:layout_below="@id/txt_fee"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"/>
+
+        <ImageView
+            android:id="@+id/img_rupee"
+            android:layout_height="16dp"
+            android:layout_width="20dp"
+            android:layout_marginTop="10dp"
+            android:visibility="visible"
+            android:src="@drawable/ic_rupee"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/total_price"
+            android:layout_below="@id/txt_fee" />
+
+        <TextView
+            android:id="@+id/txt_discount"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:visibility="visible"
+            android:textSize="16dp"
+            android:textColor="#A59D9D"
+            android:layout_marginTop="7dp"
+            android:text="1500"
+            android:layout_below="@id/txt_fee"
+            android:layout_toRightOf="@id/img_rupee"
+            android:layout_marginRight="5dp"/>
+
+            <TextView
+                android:id="@+id/discount_price"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Discount Price   :"
+                android:textSize="15sp"
+                android:textColor="@color/edit_text"
+                android:layout_below="@id/total_price"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"/>
+
+        <ImageView
+            android:id="@+id/img_rupee2"
+            android:layout_height="16dp"
+            android:layout_width="20dp"
+            android:layout_marginTop="15dp"
+            android:visibility="visible"
+            android:src="@drawable/ic_rupee"
+            android:layout_marginStart="10dp"
+            android:layout_below="@id/total_price"
+            android:layout_toRightOf="@id/payable_price"/>
+
+        <TextView
+            android:id="@+id/txt_discount_price"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:visibility="visible"
+            android:layout_marginTop="10dp"
+            android:textSize="16dp"
+            android:textColor="#A59D9D"
+            android:text="1500"
+            android:layout_toRightOf="@id/img_rupee1"
+            android:layout_below="@id/total_price"
+            android:layout_marginRight="10dp"/>
+            <TextView
+                android:id="@+id/payable_price"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Payable Price     : "
+                android:textSize="15sp"
+                android:textColor="@color/edit_text"
+                android:layout_below="@id/discount_price"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"/>
+
+            <ImageView
+                android:id="@+id/img_rupee1"
+                android:layout_height="16dp"
+                android:layout_width="20dp"
+                android:layout_marginTop="15dp"
+                android:visibility="visible"
+                android:src="@drawable/ic_rupee"
+                android:layout_marginStart="10dp"
+                android:layout_below="@id/discount_price"
+                android:layout_toRightOf="@id/payable_price"/>
+
+            <TextView
+                android:id="@+id/txt_actual_price"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:visibility="visible"
+                android:layout_marginTop="10dp"
+                android:textSize="18dp"
+                android:textColor="#111"
+                android:text="1500"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/img_rupee1"
+                android:layout_below="@id/discount_price"
+                android:layout_marginRight="10dp"/>
+        <TextView
+            android:id="@+id/txt_pervious_attempt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PAY NOW"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/white"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/proximanovaregular"
+            android:background="@color/header"
+            android:padding="14dp"
+            android:textSize="14sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/txt_actual_price" />
+
+        </RelativeLayout>
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/layout_payment"-->
+<!--            android:layout_margin="5dp"-->
+<!--            android:elevation="2dp"-->
+<!--            android:background="@drawable/comingsoon_bg"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:layout_marginTop="5dp">-->
+<!--            <TextView-->
+<!--                android:id="@+id/txt_support"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Supported Payment Methods / Wallets"-->
+<!--                android:textSize="15sp"-->
+<!--                android:gravity="center"-->
+<!--                android:textColor="@color/edit_text"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginBottom="5dp"-->
+<!--                android:layout_marginStart="10dp" />-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/linear_layout"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:weightSum="3"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_below="@id/txt_support"-->
+<!--                android:layout_marginTop="5dp">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="5dp"-->
+<!--                    android:gravity="center"-->
+<!--                    android:layout_marginBottom="5dp"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:layout_weight="1">-->
+<!--                    <ImageView-->
+<!--                        android:layout_width="30dp"-->
+<!--                        android:layout_height="30dp"-->
+<!--                        android:src="@drawable/phonepay"-->
+<!--                        android:layout_gravity="center" />-->
+<!--                </LinearLayout>-->
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="5dp"-->
+<!--                    android:layout_marginBottom="5dp"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:layout_weight="1">-->
+<!--                    <ImageView-->
+<!--                        android:layout_width="50dp"-->
+<!--                        android:layout_height="30dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:src="@drawable/paytm"-->
+<!--                        />-->
+<!--                </LinearLayout>-->
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="5dp"-->
+<!--                    android:layout_marginBottom="5dp"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:layout_weight="1">-->
+<!--                    <ImageView-->
+<!--                        android:layout_width="60dp"-->
+<!--                        android:layout_height="30dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:src="@drawable/bhimicon"-->
+<!--                        />-->
+<!--                </LinearLayout>-->
+
+<!--            </LinearLayout>-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:weightSum="3"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:layout_below="@id/linear_layout"-->
+<!--                android:layout_marginTop="5dp">-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_marginBottom="5dp"-->
+<!--                android:layout_marginStart="5dp"-->
+<!--                android:layout_weight="1">-->
+<!--                <ImageView-->
+<!--                    android:layout_width="60dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:src="@drawable/cardpayment"-->
+<!--                   />-->
+<!--            </LinearLayout>-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_marginBottom="5dp"-->
+<!--                android:layout_marginStart="5dp"-->
+<!--                android:layout_weight="1">-->
+<!--                <ImageView-->
+<!--                    android:layout_width="60dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:src="@drawable/mastercard"-->
+<!--                    />-->
+<!--            </LinearLayout>-->
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="5dp"-->
+<!--                    android:layout_marginBottom="5dp"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:layout_weight="1">-->
+<!--                    <ImageView-->
+<!--                        android:layout_width="60dp"-->
+<!--                        android:layout_height="30dp"-->
+<!--                        android:src="@drawable/globepayicon"-->
+<!--                       />-->
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
+
+<!--        </RelativeLayout>-->
+    </RelativeLayout>
+
+</RelativeLayout>

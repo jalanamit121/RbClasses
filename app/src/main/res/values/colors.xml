@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-    <color name="colorPrimary">#FCFCFC</color>
+    <color name="colorPrimary">#092873</color>
     <color name="colorPrimaryDark">#092873</color>
     <color name="colorAccent">#FF402D</color>
     <color name="bottomNavigationTextColor">#B2B2B2</color>
@@ -16,6 +16,9 @@
     <color name="dashboard_subtitle">#B7B7CC</color>
     <color name="home_header">#9CBBF0</color>
     <color name="header">#092873</color>//#71A3F5
+    <color name="grey">#9096A3</color>
+
+    <color name="back_color">#f3f7fa</color>
     <!--colors for light mode-->
 
 
@@ -68,5 +71,11 @@
     <color name="color4">#EEBE5C</color>
     <color name="color5">#8778E9</color>
     <color name="back_courses">#f8fafb</color>
+
+
+    <color name="R">#FFA726</color>
+    <color name="Python">#66BB6A</color>
+    <color name="CPP">#EF5350</color>
+    <color name="Java">#29B6F6</color>
 
 </resources>

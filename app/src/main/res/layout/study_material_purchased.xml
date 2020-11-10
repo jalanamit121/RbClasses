@@ -32,6 +32,7 @@
           android:textSize="18sp"
           android:textColor="#092873"
           android:layout_marginTop="5dp"
+          android:layout_marginEnd="30dp"
           android:text="Pdf"
           android:layout_toRightOf="@id/live_image"/>
       <TextView

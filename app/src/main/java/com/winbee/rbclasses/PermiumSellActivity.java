@@ -102,9 +102,8 @@ public class PermiumSellActivity extends AppCompatActivity implements PaymentRes
         layout_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(PermiumSellActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-//                Intent doubt = new Intent(MainActivity.this,DoubtActivity.class);
-//                startActivity(doubt);
+                Intent doubt = new Intent(PermiumSellActivity.this,SubjectActivity.class);
+                startActivity(doubt);
             }
         });
         layout_current = findViewById(R.id.layout_current);
@@ -184,6 +183,7 @@ public class PermiumSellActivity extends AppCompatActivity implements PaymentRes
 
     public void startPayment() {
         Checkout checkout = new Checkout();
+        checkout.setKeyID("rzp_live_T1TF9yvc1fd5il");
 
         String str = LocalData.DiscountPrice;
         Double inum = Double.parseDouble(str);

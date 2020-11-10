@@ -109,7 +109,8 @@ public class StudyMaterial extends AppCompatActivity implements NavigationView.O
     layout_test.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Toast.makeText(StudyMaterial.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+        Intent doubt = new Intent(StudyMaterial.this,SubjectActivity.class);
+        startActivity(doubt);
       }
     });
     layout_current = findViewById(R.id.layout_current);

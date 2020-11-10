@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-    <menu xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+    <menu
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Profile" android:icon="@drawable/ic_adress" android:id="@+id/profile"/>
+    <item android:title="Profile"
+        android:icon="@drawable/ic_adress"
+        android:id="@+id/profile"/>
 
-    <item android:title="About Us" android:icon="@drawable/ic_adress" android:id="@+id/about"/>
+    <item android:title="About Us"
+        android:icon="@drawable/ic_adress"
+        android:id="@+id/about" />
 
-    <item android:title="WebSite" android:icon="@drawable/ic_adress" android:id="@+id/website"/>
+    <item android:title="WebSite"
+        android:icon="@drawable/ic_adress"
+        android:id="@+id/website"/>
 
     <item android:title="Share" android:icon="@drawable/ic_share_black_24dp" android:id="@+id/share"/>
 

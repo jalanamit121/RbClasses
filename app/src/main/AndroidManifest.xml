@@ -17,6 +17,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".AllPurchasedTestActivity"/>
+        <activity android:name=".DemoOnlineTestActivity"/>
+        <activity android:name=".TestSubscriptionActivity"/>
+        <activity android:name=".TestRankActivity"/>
+        <activity android:name=".OnlineTestActivity"/>
+        <activity android:name=".OnlineQuestionActivity"/>
+        <activity android:name=".TestSolutionActivity"/>
+        <activity android:name=".ViewResultActivity"/>
+        <activity android:name=".InstructionsActivity"/>
+        <activity android:name=".SubjectActivity"/>
         <activity android:name=".YouTubeComplete"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar"
@@ -93,9 +103,9 @@
 <!--            android:name="com.razorpay.ApiKey"-->
 <!--            android:value="rzp_live_Bc4ITN4OG0PCjn" />  -->
 
-        <meta-data
-            android:name="com.razorpay.ApiKey"
-            android:value="rzp_live_T1TF9yvc1fd5il" />
+<!--        <meta-data-->
+<!--            android:name="com.razorpay.ApiKey"-->
+<!--            android:value="rzp_live_T1TF9yvc1fd5il" />-->
     </application>
 
 </manifest>

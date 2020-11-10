@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:id="@+id/layout_mycourse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/circularbordersolid"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/course_image"
+            android:layout_marginTop="5dp"
+            android:layout_height="40dp"
+            android:layout_width="40dp"
+            android:layout_marginBottom="5dp"
+            android:elevation="1dp"
+            app:civ_border_color="@color/edit_text"
+            app:civ_border_width="0.5dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/rblogo"
+            android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:id="@+id/txt_mycourses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Test Series"
+            android:layout_toRightOf="@id/course_image"
+            android:textColor="@color/header"
+            android:layout_marginStart="10dp"
+            android:textStyle="bold"
+            android:textSize="19sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tap here to view Purchased Test Series "
+            android:layout_below="@id/txt_mycourses"
+            android:layout_toRightOf="@id/course_image"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"/>
+    </RelativeLayout>
+        <io.supercharge.shimmerlayout.ShimmerLayout
+            android:id="@+id/shimmerLayout"
+            app:shimmer_animation_duration="1200"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/layout_mycourse"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <include layout="@layout/item_place_holder_layout"/>
+            </LinearLayout>
+        </io.supercharge.shimmerlayout.ShimmerLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_subject"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/layout_mycourse"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
+    <include
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        layout="@layout/footer"/>
+</RelativeLayout>

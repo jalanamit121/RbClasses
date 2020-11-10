@@ -107,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void userValidation() {
         final String mobile = editTextUsername.getText().toString();
+        LocalData.Username=editTextUsername.getText().toString();
         final String password = editTextPassword.getText().toString();
         //validating inputs
         if (TextUtils.isEmpty(mobile)) {

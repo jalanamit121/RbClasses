@@ -86,7 +86,8 @@ public class CurrentAffairsActivity extends AppCompatActivity {
         layout_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(CurrentAffairsActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                Intent doubt = new Intent(CurrentAffairsActivity.this,SubjectActivity.class);
+                startActivity(doubt);
 //                Intent doubt = new Intent(MainActivity.this,DoubtActivity.class);
 //                startActivity(doubt);
             }

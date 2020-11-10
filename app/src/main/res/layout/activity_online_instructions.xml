@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context=".Activity.InstructionsActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="70dp">
+            <RelativeLayout
+                android:id="@+id/layout_textname"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="7dp">
+            <TextView
+                android:id="@+id/tv_subject_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="Loading Paper Name../"
+                android:textColor="#FD3478C8"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/layout_instruction"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#2DDFDADA"
+                android:layout_below="@id/layout_textname">
+                <TextView
+                    android:id="@+id/text1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginBottom="7dp"
+                    android:padding="8dp"
+                    android:textColor="#111"
+                    android:textStyle="bold"
+                    android:text="Please read the Following instructions very carefully"/>
+                <TextView
+                    android:id="@+id/text2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7sp"
+                    android:layout_below="@id/text1"
+                    android:textSize="15sp"
+                    android:textColor="@color/edit_text"
+                    android:padding="5dp"
+                    android:text=""/>
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+
+
+
+
+    </ScrollView>
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true">
+        <RelativeLayout
+            android:id="@+id/layout_start_test"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_toRightOf="@id/layout_home">
+            <ImageView
+                android:id="@+id/image_history"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_history_black_24dp"
+                />
+            <TextView
+                android:id="@+id/start_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="START TEST"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/image_history"
+                android:layout_centerInParent="true"
+                android:textColor="#fff"/>
+
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

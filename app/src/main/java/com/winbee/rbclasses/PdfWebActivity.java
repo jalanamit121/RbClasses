@@ -64,7 +64,6 @@ public class PdfWebActivity extends AppCompatActivity  {
     private BottomNavigationView bottomNavigationView;
     private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
     private static final int REQUEST_CODE = 101;
-    String IMEINumber;
     String UserMobile,UserPassword,android_id;
 
     // @SuppressLint("SetJavaScriptEnabled")
@@ -118,7 +117,8 @@ public class PdfWebActivity extends AppCompatActivity  {
         layout_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(PdfWebActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                Intent doubt = new Intent(PdfWebActivity.this,SubjectActivity.class);
+                startActivity(doubt);
             }
         });
         layout_current = findViewById(R.id.layout_current);
@@ -188,13 +188,6 @@ public class PdfWebActivity extends AppCompatActivity  {
         }
     }
 
-//    private class HelloWebViewClient extends WebViewClient {
-//        @Override
-//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//            view.loadUrl(LocalData.NotesData);
-//            return true;
-//        }
-//    }
 
     private void displayWebView() {
         webView.getSettings().setJavaScriptEnabled(true);

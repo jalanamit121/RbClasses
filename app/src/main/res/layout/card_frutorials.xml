@@ -26,17 +26,7 @@
         android:padding="10dp" />
 
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/live_status"
-        android:layout_marginTop="5dp"
-        android:textColor="#EB3939"
-        android:layout_marginRight="30dp"
-        android:layout_alignParentEnd="true"
-        android:visibility="visible"
-        android:textSize="14sp"
-        android:text=""/>
+
 
     <TextView
         android:layout_height="wrap_content"
@@ -62,6 +52,20 @@
         android:layout_marginLeft="5dp"
         android:layout_below="@id/title"
         android:layout_toRightOf="@id/youtubeThubnail"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/notstarted"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/edit_text"
+            android:textSize="15sp"
+            android:text="YouTube Video"
+            android:textStyle="bold"
+            android:layout_marginLeft="5dp"
+            android:layout_below="@id/teacher"
+            android:layout_toRightOf="@id/youtubeThubnail"/>
+
 
         <TextView
             android:layout_height="wrap_content"

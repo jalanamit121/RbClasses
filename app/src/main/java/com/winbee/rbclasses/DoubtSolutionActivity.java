@@ -99,7 +99,8 @@ public class DoubtSolutionActivity extends AppCompatActivity {
         layout_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(DoubtSolutionActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                Intent doubt = new Intent(DoubtSolutionActivity.this,SubjectActivity.class);
+                startActivity(doubt);
             }
         });
         layout_current = findViewById(R.id.layout_current);

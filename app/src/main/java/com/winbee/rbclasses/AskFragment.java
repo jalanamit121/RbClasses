@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -24,6 +26,7 @@ import com.google.firebase.firestore.auth.User;
 import com.winbee.rbclasses.NewModels.AskDoubt;
 import com.winbee.rbclasses.NewModels.AskDoubtArray;
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
+import com.winbee.rbclasses.Utils.Variable;
 import com.winbee.rbclasses.WebApi.ClientApi;
 import com.winbee.rbclasses.adapter.AskDoubtAdapter;
 import com.winbee.rbclasses.model.AskDoubtQuestion;
@@ -47,11 +50,13 @@ public class AskFragment extends Fragment {
     EditText editTextQuestionTitle,editTextQuestionDescription;
     private ProgressBarUtil progressBarUtil;
     Button submit;
-    private ImageView WebsiteHome,img_share;
     private AskDoubtAdapter adapter;
     private ArrayList<AskDoubtArray> list;
     private RecyclerView askedQuestion;
+    private LinearLayout footer;
     String User_id,android_id;
+    public boolean isKeyBoardVisible = false;
+
 
 
     public AskFragment() {
@@ -68,15 +73,26 @@ public class AskFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         editTextQuestionTitle=view.findViewById(R.id.editTextQuestionTitleFragment);
+        editTextQuestionTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isKeyBoardVisible = true;
+            }
+        });
         editTextQuestionDescription=view.findViewById(R.id.editTextQuestionDescriptionFragment);
+        editTextQuestionDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isKeyBoardVisible = true;
+            }
+        });
         progressBarUtil   =  new ProgressBarUtil(getContext());
         User_id = SharedPrefManager.getInstance(getContext()).refCode().getUserId();
         android_id = Settings.Secure.getString(getContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        WebsiteHome=view.findViewById(R.id.WebsiteHome);
-        img_share=view.findViewById(R.id.img_share);
         askedQuestion = view.findViewById(R.id.gec_asked_question_recycle);
         submit=view.findViewById(R.id.buttonSubmit);
+        footer=view.findViewById(R.id.footer);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +100,7 @@ public class AskFragment extends Fragment {
             }
         });
         callAskedQuestionApiService();
+        layoutSettings();
     }
     private void userValidation() {
         final String title = editTextQuestionTitle.getText().toString();
@@ -171,6 +188,16 @@ public class AskFragment extends Fragment {
         });
 
         builder.show();
+    }
+    private void layoutSettings() {
+
+        if (isKeyBoardVisible) {
+            footer.setVisibility(View.GONE);
+           // Log.d(TAG, "layoutSettings: "+Variable.time);
+        }else {
+            footer.setVisibility(View.VISIBLE);
+           // Log.d(TAG, "layoutSettings: "+Variable.time);
+        }
     }
 
     private void callAskedQuestionApiService(){

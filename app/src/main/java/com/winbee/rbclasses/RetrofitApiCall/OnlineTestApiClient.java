@@ -12,11 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class OnlineTestApiClient {
-//    static final String fetchSectionDetails="fetch-section-details.php";
-//    static final String fetchSIACDetails="fetch-section-individual-assessment-cover-details.php";
-//    static final String fetchSIADDATA="fetch-section-individual-assessment-data.php";
 
-  private static final String BASE_URL="https://onlinetest.adarshsardarshahar.com/api/";
+  private static final String BASE_URL="http://ots.rbclasses.com/api/";
   private static Retrofit retrofit = null;
 
 

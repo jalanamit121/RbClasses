@@ -48,32 +48,32 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
     public void onBindViewHolder(@NonNull final AllLiveClassAdapter.ViewHolder holder, final int position) {
 
         if (list.get(position).getClass_status_dec().equalsIgnoreCase("Live")){
-            holder.live_status.setText("Live");
-            holder.live_status.setVisibility(View.GONE);
             holder.image_gif.setVisibility(View.VISIBLE);
             holder.date.setVisibility(View.GONE);
+            holder.notstarted.setVisibility(View.GONE);
         }else if (list.get(position).getClass_status_dec().equalsIgnoreCase("Completed")){
-            holder.live_status.setText("");
-            holder.live_status.setVisibility(View.GONE);
             holder.image_gif.setVisibility(View.GONE);
             holder.date.setVisibility(View.VISIBLE);
+            holder.notstarted.setVisibility(View.GONE);
         }else if (list.get(position).getClass_status_dec().equalsIgnoreCase("Not Started Yet")){
-            holder.live_status.setText("Scheduled");
-            holder.live_status.setVisibility(View.VISIBLE);
+           // holder.live_status.setText("Scheduled");
+            holder.notstarted.setVisibility(View.VISIBLE);
             holder.image_gif.setVisibility(View.GONE);
 
         }
 
+        holder.notstarted.setText("Scheduled");
         holder.title.setText(Html.fromHtml(list.get(position).getTopic()));
         holder.date.setText(Html.fromHtml(list.get(position).getPublished()));
         Picasso.get().load(list.get(position).getThumbnail()).placeholder(R.drawable.wateer_mark_image).fit().into(holder.youtubeThubnail);
         holder.teacher.setText(Html.fromHtml(list.get(position).getFaculty()));
         if (list.get(position).getClassType().equals(2)) { //classtype 2 means- recoded video
-            holder.live_status.setVisibility(View.GONE);
+           // holder.live_status.setVisibility(View.GONE);
             if (list.get(position).getAccessType().equals(1) ) {//access type 1 means - recroded free video
                     holder.img_lock.setVisibility(View.GONE);
                     holder.img_Unlock.setVisibility(View.VISIBLE);
                     holder.image_gif.setVisibility(View.GONE);
+                holder.notstarted.setVisibility(View.GONE);
                     holder.date.setVisibility(View.VISIBLE);
                     holder.card_view.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -89,6 +89,7 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
                 holder.img_lock.setVisibility(View.VISIBLE);
                 holder.img_Unlock.setVisibility(View.GONE);
                 holder.image_gif.setVisibility(View.GONE);
+                holder.notstarted.setVisibility(View.GONE);
                 holder.date.setVisibility(View.GONE);
                 holder.card_view.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -139,11 +140,12 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
                     }
                 });
             } else if (list.get(position).getAccessType().equals(2)) {// access type 2 means- paid live class
-                holder.live_status.setVisibility(View.VISIBLE);
+              //  holder.live_status.setVisibility(View.VISIBLE);
                 holder.img_lock.setVisibility(View.VISIBLE);
                 holder.img_Unlock.setVisibility(View.GONE);
                 holder.image_gif.setVisibility(View.VISIBLE);
                 holder.date.setVisibility(View.GONE);
+                holder.notstarted.setVisibility(View.GONE);
             }
 
         }
@@ -158,7 +160,7 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView title,teacher,live_status,date,status;
+        private TextView title,teacher,notstarted,date,status;
         private CardView card_view;
         private GifImageView image_gif;
         private ImageView img_lock,img_Unlock,youtubeThubnail;
@@ -169,8 +171,9 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
             img_lock= itemView.findViewById(R.id.img_lock);
             img_Unlock= itemView.findViewById(R.id.img_Unlock);
             title = itemView.findViewById(R.id.title);
+            notstarted = itemView.findViewById(R.id.notstarted);
             teacher = itemView.findViewById(R.id.teacher);
-            live_status = itemView.findViewById(R.id.live_status);
+           // live_status = itemView.findViewById(R.id.live_status);
             date = itemView.findViewById(R.id.date);
             //status = itemView.findViewById(R.id.status);
             card_view = itemView.findViewById(R.id.card_view);

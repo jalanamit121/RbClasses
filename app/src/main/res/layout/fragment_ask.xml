@@ -29,7 +29,10 @@
 </LinearLayout>
 
 
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:gravity="center">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:gravity="center">
 
     <EditText
         android:background="@drawable/bottom_layout"
@@ -72,7 +75,8 @@
 
 </LinearLayout>
 
-    <LinearLayout android:background="@drawable/circularbordersolidbottom" android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="horizontal" android:padding="18dp" android:visibility="gone">
+    <LinearLayout
+        android:background="@drawable/circularbordersolidbottom" android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="horizontal" android:padding="18dp" android:visibility="gone">
 
     <EditText android:background="@null" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/editTextDocumentId" android:textSize="14sp" android:fontFamily="@font/proximanovaregular" android:inputType="text" android:textColorHint="@color/edit_text" android:hint="DocumentId"/>
 
@@ -107,5 +111,7 @@
 </RelativeLayout>
 
 </ScrollView>
-
+    <include
+        layout="@layout/footer"
+        android:visibility="gone"/>
 </FrameLayout>

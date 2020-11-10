@@ -1,15 +1,14 @@
 package com.winbee.rbclasses;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +21,7 @@ import com.winbee.rbclasses.NewModels.VideoContent;
 import com.winbee.rbclasses.NewModels.VideoContentArray;
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.WebApi.ClientApi;
-import com.winbee.rbclasses.adapter.AllLiveClassAdapter;
 import com.winbee.rbclasses.adapter.AllPurchasedLiveClassAdapter;
-import com.winbee.rbclasses.model.CourseContentModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,10 +39,8 @@ public class LivePurchasedFragment extends Fragment {
   private ProgressBarUtil progressBarUtil;
   private AllPurchasedLiveClassAdapter adapter;
   RelativeLayout today_classes;
-  SwipeRefreshLayout refresh_list;
-  private ImageView img_share,WebsiteHome;
   String UserID,android_id;
-
+  private SwipeRefreshLayout refresh_course;
 
 
   public LivePurchasedFragment() {
@@ -64,6 +59,13 @@ public class LivePurchasedFragment extends Fragment {
     progressBarUtil   =  new ProgressBarUtil(getContext());
     video_list_recycler =view.findViewById(R.id.all_liveClasses);
     today_classes =view.findViewById(R.id.today_classes);
+    refresh_course =view.findViewById(R.id.refresh_course);
+    refresh_course.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+      @Override
+      public void onRefresh() {
+        callLiveApiService();
+      }
+    });
     UserID=SharedPrefManager.getInstance(getContext()).refCode().getUserId();
     android_id = Settings.Secure.getString(getContext().getContentResolver(),
             Settings.Secure.ANDROID_ID);
@@ -86,6 +88,7 @@ public class LivePurchasedFragment extends Fragment {
             adapter = new AllPurchasedLiveClassAdapter(getActivity(), liveList);
             video_list_recycler.setAdapter(adapter);
             progressBarUtil.hideProgress();
+            refresh_course.setRefreshing(false);
           }else{
             android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getContext());
             alertDialogBuilder.setTitle("Alert");
@@ -100,9 +103,12 @@ public class LivePurchasedFragment extends Fragment {
 
             android.app.AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
+            refresh_course.setRefreshing(false);
           }
         }
         else{
+          progressBarUtil.hideProgress();
+          refresh_course.setRefreshing(false);
           System.out.println("Suree: response code"+response.message());
           Toast.makeText(getContext(),"Ërror due to" + response.message(),Toast.LENGTH_SHORT).show();
         }

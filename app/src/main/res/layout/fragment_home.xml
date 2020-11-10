@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-    <RelativeLayout tools:context=".HomeFragment" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_height="match_parent" android:layout_width="match_parent" xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+    tools:context=".HomeFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/refresh_home" android:layout_marginBottom="65dp">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/refresh_home"
+        android:layout_marginBottom="60dp">
 
-    <androidx.recyclerview.widget.RecyclerView android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/sek_home_recycle" android:layout_marginBottom="65dp" app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" android:nestedScrollingEnabled="false" android:layout_marginTop="5dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/sek_home_recycle"
+        android:layout_marginBottom="65dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:nestedScrollingEnabled="false"
+        android:layout_marginTop="5dp"/>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

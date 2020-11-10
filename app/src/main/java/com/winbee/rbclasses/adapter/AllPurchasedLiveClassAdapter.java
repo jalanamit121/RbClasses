@@ -46,10 +46,9 @@ public class AllPurchasedLiveClassAdapter extends RecyclerView.Adapter<AllPurcha
     public void onBindViewHolder(@NonNull AllPurchasedLiveClassAdapter.ViewHolder holder, final int position) {
 
         if (list.get(position).getClass_status_dec().equalsIgnoreCase("Live")){
-            holder.live_status.setText("Live");
-            holder.live_status.setVisibility(View.GONE);
             holder.date.setVisibility(View.GONE);
             holder.image_gif.setVisibility(View.VISIBLE);
+            holder.notstarted.setVisibility(View.GONE);
             holder.card_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -60,10 +59,9 @@ public class AllPurchasedLiveClassAdapter extends RecyclerView.Adapter<AllPurcha
                 }
             });
         }else if (list.get(position).getClass_status_dec().equalsIgnoreCase("Completed")){
-            holder.live_status.setText("");
-            holder.live_status.setVisibility(View.GONE);
             holder.date.setVisibility(View.VISIBLE);
             holder.image_gif.setVisibility(View.GONE);
+            holder.notstarted.setVisibility(View.GONE);
             holder.card_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -74,9 +72,8 @@ public class AllPurchasedLiveClassAdapter extends RecyclerView.Adapter<AllPurcha
                 }
             });
         }else if (list.get(position).getClass_status_dec().equalsIgnoreCase("NA")){
-                holder.live_status.setText("");
-            holder.live_status.setVisibility(View.GONE);
             holder.image_gif.setVisibility(View.GONE);
+            holder.notstarted.setVisibility(View.GONE);
             holder.date.setVisibility(View.VISIBLE);
                 holder.card_view.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -88,9 +85,9 @@ public class AllPurchasedLiveClassAdapter extends RecyclerView.Adapter<AllPurcha
                     }
                 });
         }else if (list.get(position).getClass_status_dec().equalsIgnoreCase("Not Started Yet")){
-            holder.live_status.setText("Scheduled");
-            holder.live_status.setVisibility(View.VISIBLE);
             holder.image_gif.setVisibility(View.GONE);
+            holder.notstarted.setVisibility(View.VISIBLE);
+            holder.date.setVisibility(View.VISIBLE);
 
         }
         holder.title.setText(Html.fromHtml(list.get(position).getTopic()));
@@ -105,7 +102,7 @@ public class AllPurchasedLiveClassAdapter extends RecyclerView.Adapter<AllPurcha
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView title,teacher,live_status,date,status;
+        private TextView title,teacher,date,notstarted;
         private CardView card_view;
         private GifImageView image_gif;
         private ImageView img_lock,youtubeThubnail;
@@ -116,9 +113,9 @@ public class AllPurchasedLiveClassAdapter extends RecyclerView.Adapter<AllPurcha
             img_lock= itemView.findViewById(R.id.img_lock);
             title = itemView.findViewById(R.id.title);
             teacher = itemView.findViewById(R.id.teacher);
-            live_status = itemView.findViewById(R.id.live_status);
             date = itemView.findViewById(R.id.date);
             card_view = itemView.findViewById(R.id.card_view);
+            notstarted = itemView.findViewById(R.id.notstarted);
         }
     }
 }
