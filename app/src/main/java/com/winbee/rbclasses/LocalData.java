@@ -4,6 +4,7 @@ public class LocalData {
 
     public static String OrgId="WB_009";
     public static String AuthCode="WB_009";
+    public static String razorPayKey="";
 
 
 

@@ -201,6 +201,7 @@ public class LiveDataActivity extends AppCompatActivity implements PaymentResult
     }
     public void startPayment() {
         Checkout checkout = new Checkout();
+        checkout.setKeyID(LocalData.razorPayKey);
 
         String str = LocalData.DiscountPrice;
         Double inum = Double.parseDouble(str);

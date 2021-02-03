@@ -7,6 +7,7 @@ import com.winbee.rbclasses.NewModels.CourseContent;
 import com.winbee.rbclasses.NewModels.DailyUpdate;
 import com.winbee.rbclasses.NewModels.LiveMessage;
 import com.winbee.rbclasses.NewModels.LogOut;
+import com.winbee.rbclasses.NewModels.RazorPayModel;
 import com.winbee.rbclasses.NewModels.TestSeriesPayment;
 import com.winbee.rbclasses.NewModels.TestSubscription;
 import com.winbee.rbclasses.NewModels.TestTopRanker;
@@ -378,4 +379,7 @@ public interface ClientApi {
             @Field("org_id") String org_id,
             @Field("subscription_id") String subscription_id
     );
+
+    @POST("ThirdPartyAPI/RazorPay/config_details.php")
+    Call<RazorPayModel> getRazorPay();
 }

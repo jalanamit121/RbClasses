@@ -37,6 +37,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.winbee.rbclasses.NewModels.LogOut;
+import com.winbee.rbclasses.NewModels.RazorPayModel;
 import com.winbee.rbclasses.RetrofitApiCall.ApiClient;
 import com.winbee.rbclasses.Utils.AppUpdateChecker;
 import com.winbee.rbclasses.ViewPager.ViewPagerAdapter;
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         AppUpdateChecker appUpdateChecker=new AppUpdateChecker(this);  //pass the activity in constructure
         appUpdateChecker.checkForUpdate(false); //mannual check false here
 
-
+        callRazorPayService();
         UserMobile=SharedPrefManager.getInstance(this).refCode().getUsername();
         UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
         android_id = Settings.Secure.getString(getContext().getContentResolver(),
@@ -212,7 +213,37 @@ public class MainActivity extends AppCompatActivity {
         finish();
         super.onBackPressed();
     }
+    // for razor pay
+    private void callRazorPayService() {
+        progressBarUtil.showProgress();
+        ClientApi apiCAll = ApiClient.getClient().create(ClientApi.class);
+        Call<RazorPayModel> call = apiCAll.getRazorPay();
+        call.enqueue(new Callback<RazorPayModel>() {
+            @Override
+            public void onResponse(Call<RazorPayModel> call, Response<RazorPayModel> response) {
+                int statusCode = response.code();
+                if (statusCode == 200 && response.body()!=null ) {
+                    progressBarUtil.hideProgress();
+                    LocalData.razorPayKey=response.body().getAPI_Key();
+//
+                } else {
+                    progressBarUtil.hideProgress();
+                    System.out.println("Suree: response code" + response.message());
+                    Toast.makeText(getApplicationContext(), "NetWork Issue,Please Check Network Connection", Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<RazorPayModel> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Failed" + t.getMessage(), Toast.LENGTH_SHORT).show();
+//                Intent intent= new Intent(MainActivity.this,ServerDownMessage.class);
+//                startActivity(intent);
+//                finish();
+                progressBarUtil.hideProgress();
+                //System.out.println("Suree: Error " + t.getMessage());
+            }
+        });
+    }
 
 
     private void logout() {

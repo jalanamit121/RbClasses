@@ -195,7 +195,8 @@ public class TestSubscriptionAdapter extends RecyclerView.Adapter<TestSubscripti
         public void startPayment() {
 
             Checkout checkout = new Checkout();
-            checkout.setKeyID("rzp_live_T1TF9yvc1fd5il");
+//            checkout.setKeyID("rzp_live_T1TF9yvc1fd5il");
+            checkout.setKeyID(LocalData.razorPayKey);
 
             String str = String.valueOf(list.get(getAdapterPosition()).getDiscountPrice());
             Double inum = Double.parseDouble(str);
