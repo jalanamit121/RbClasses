@@ -230,6 +230,8 @@ public class MainActivity extends AppCompatActivity {
         }else if(id == R.id.about){
             Intent intent = new Intent(MainActivity.this,AboutUsActivity.class);
             startActivity(intent);
+        }else if(id == R.id.download){
+            startActivity(new Intent(this,ShowDownloadCourse.class));
         }
         return super.onOptionsItemSelected(item);
 
