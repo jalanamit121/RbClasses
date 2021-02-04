@@ -95,57 +95,57 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
 
 
         holder.txt_message.setText(Html.fromHtml(list1.get(position).getCourse_Closed_details().getClosed_Course_Message()));
-      if (list1.get(position).getIs_Course_Closed_notification()){
-          holder.view.setVisibility(View.VISIBLE);
-          if (list1.get(position).getCourse_Closed_details().getIs_Course_Closed()){
-              holder.txt_message.setVisibility(View.VISIBLE);
-          }else if (!list1.get(position).getCourse_Closed_details().getIs_Course_Closed()){
-              holder.txt_message.setVisibility(View.VISIBLE);
-          }
-
-          if (list1.get(position).getCourse_Closed_details().getIs_timing_show()){
-              holder.tv_timer.setVisibility(View.VISIBLE);
-          }else if (!list1.get(position).getCourse_Closed_details().getIs_timing_show()){
-              holder.tv_timer.setVisibility(View.GONE);
-          }
-
-      }else if (!list1.get(position).getIs_Course_Closed_notification()){
-          holder.txt_message.setVisibility(View.GONE);
-          holder.tv_timer.setVisibility(View.GONE);
-          holder.view.setVisibility(View.GONE);
-
-      }
-
-            if (list1.get(position).getPaid().equals(0) && list1.get(position).getShow_Course()) {
-                holder.layout1.setVisibility(View.VISIBLE);
-                holder.txt_course.setText(Html.fromHtml(list1.get(position).getBucket_Name()));
-                holder.txt_discount.setText(Html.fromHtml(list1.get(position).getDisplay_price()));
-                holder.txt_discount.setPaintFlags(holder.txt_discount.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                holder.txt_actual_price.setText(Html.fromHtml(list1.get(position).getDiscount_price()));
-                Picasso.get().load(list1.get(position).getBucket_Image()).placeholder(R.drawable.wateer_mark_image).fit().into(holder.course_image);
-                holder.layout1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        LocalData.ChildId = list1.get(position).getChild_Link();
-                        LocalData.PayImage = list1.get(position).getBucket_Cover_Image();
-                        LocalData.Discription = list1.get(position).getBucket_Name();
-                        LocalData.TotalVideo = String.valueOf(list1.get(position).getTotal_Video());
-                        LocalData.TotalDocument = String.valueOf(list1.get(position).getTotal_Document());
-                        LocalData.DiscountPrice = list1.get(position).getDiscount_price();
-                        LocalData.ActualPrice = list1.get(position).getDisplay_price();
-                        LocalData.CourseId = list1.get(position).getBucket_ID();
-                        LocalData.CourseClosed = list1.get(position).getCourse_Closed_details().getIs_Course_Closed();
-                        LocalData.IsNotification = list1.get(position).getNotification().getIs_Active();
-                        LocalData.NotificationMessage = list1.get(position).getNotification().getMessage();
-                        LocalData.PaymentClosed = list1.get(position).getCourse_Closed_details().getIs_Course_Closed_purchase_Message();
-                        LocalData.CourseMessage = list1.get(position).getCourse_Closed_details().getClosed_Course_Message();
-                        Intent intent = new Intent(context, LiveDataActivity.class);
-                        context.startActivity(intent);
-                    }
-                });
-            } else if (list1.get(position).getPaid().equals(1)) {
-                holder.layout1.setVisibility(View.GONE);
+        if (list1.get(position).getIs_Course_Closed_notification()){
+            holder.view.setVisibility(View.VISIBLE);
+            if (list1.get(position).getCourse_Closed_details().getIs_Course_Closed()){
+                holder.txt_message.setVisibility(View.VISIBLE);
+            }else if (!list1.get(position).getCourse_Closed_details().getIs_Course_Closed()){
+                holder.txt_message.setVisibility(View.VISIBLE);
             }
+
+            if (list1.get(position).getCourse_Closed_details().getIs_timing_show()){
+                holder.tv_timer.setVisibility(View.VISIBLE);
+            }else if (!list1.get(position).getCourse_Closed_details().getIs_timing_show()){
+                holder.tv_timer.setVisibility(View.GONE);
+            }
+
+        }else if (!list1.get(position).getIs_Course_Closed_notification()){
+            holder.txt_message.setVisibility(View.GONE);
+            holder.tv_timer.setVisibility(View.GONE);
+            holder.view.setVisibility(View.GONE);
+
+        }
+
+        if (list1.get(position).getPaid().equals(0) && list1.get(position).getShow_Course()) {
+            holder.layout1.setVisibility(View.VISIBLE);
+            holder.txt_course.setText(Html.fromHtml(list1.get(position).getBucket_Name()));
+            holder.txt_discount.setText(Html.fromHtml(list1.get(position).getDisplay_price()));
+            holder.txt_discount.setPaintFlags(holder.txt_discount.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.txt_actual_price.setText(Html.fromHtml(list1.get(position).getDiscount_price()));
+            Picasso.get().load(list1.get(position).getBucket_Image()).placeholder(R.drawable.wateer_mark_image).fit().into(holder.course_image);
+            holder.layout1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LocalData.ChildId = list1.get(position).getChild_Link();
+                    LocalData.PayImage = list1.get(position).getBucket_Cover_Image();
+                    LocalData.Discription = list1.get(position).getBucket_Name();
+                    LocalData.TotalVideo = String.valueOf(list1.get(position).getTotal_Video());
+                    LocalData.TotalDocument = String.valueOf(list1.get(position).getTotal_Document());
+                    LocalData.DiscountPrice = list1.get(position).getDiscount_price();
+                    LocalData.ActualPrice = list1.get(position).getDisplay_price();
+                    LocalData.CourseId = list1.get(position).getBucket_ID();
+                    LocalData.CourseClosed = list1.get(position).getCourse_Closed_details().getIs_Course_Closed();
+                    LocalData.IsNotification = list1.get(position).getNotification().getIs_Active();
+                    LocalData.NotificationMessage = list1.get(position).getNotification().getMessage();
+                    LocalData.PaymentClosed = list1.get(position).getCourse_Closed_details().getIs_Course_Closed_purchase_Message();
+                    LocalData.CourseMessage = list1.get(position).getCourse_Closed_details().getClosed_Course_Message();
+                    Intent intent = new Intent(context, LiveDataActivity.class);
+                    context.startActivity(intent);
+                }
+            });
+        } else if (list1.get(position).getPaid().equals(1)) {
+            holder.layout1.setVisibility(View.GONE);
+        }
         if (list1.get(position).getDiscount_price().equalsIgnoreCase("0.00")) {
             holder.img_rupee.setVisibility(View.GONE);
             holder.img_rupee1.setVisibility(View.GONE);
@@ -261,4 +261,3 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
 
     }
 }
-

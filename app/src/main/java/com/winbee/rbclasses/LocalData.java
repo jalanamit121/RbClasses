@@ -27,6 +27,7 @@ public class LocalData {
     public static String CourseMessage="";
     public static String NotificationMessage="";
     public static String PaymentClosed="";
+
     public static Boolean CourseClosed;
     public static Boolean IsNotification;
 
@@ -66,4 +67,7 @@ public class LocalData {
     public static  String TestDiscountPrice="";
     public static  String TestDiscription="";
     public static  String TotalTest="";
+    public static String Topic;
+    public static String Subject;
+    public static String CourseName1;
 }

@@ -76,6 +76,8 @@ public class AllPurchasedCourseAdapter extends RecyclerView.Adapter<AllPurchased
                 @Override
                 public void onClick(View view) {
                     LocalData.ChildId=list1.get(position).getChild_Link();
+                    LocalData.CourseName1=list1.get(position).getBucket_Name();
+                    LocalData.Discription=list1.get(position).getBucket_Name();
                     LocalData.NotificationMessage = list1.get(position).getNotification().getMessage();
                     LocalData.IsNotification=list1.get(position).getNotification().getIs_Active();
                     Intent intent = new Intent(context, LiveDataPurchasedActivity.class);

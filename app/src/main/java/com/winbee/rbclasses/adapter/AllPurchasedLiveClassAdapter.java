@@ -52,10 +52,15 @@ public class AllPurchasedLiveClassAdapter extends RecyclerView.Adapter<AllPurcha
             holder.card_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    LocalData.Topic=list.get(position).getTopic();
+                    LocalData.Subject=list.get(position).getSubject();
+
                     LocalData.LiveId = list.get(position).getURL();
                     LocalData.DocumentId = list.get(position).getDocumentId();
                     Intent intent = new Intent(context, YoutubeLibaray.class);
                     context.startActivity(intent);
+
+                   //ek or jgh tha na
                 }
             });
         }else if (list.get(position).getClass_status_dec().equalsIgnoreCase("Completed")){
@@ -65,12 +70,17 @@ public class AllPurchasedLiveClassAdapter extends RecyclerView.Adapter<AllPurcha
             holder.card_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    LocalData.Topic=list.get(position).getTopic();
+                    LocalData.Subject=list.get(position).getSubject();
+
                     LocalData.LiveId = list.get(position).getURL();
                     LocalData.DocumentId = list.get(position).getDocumentId();
                     Intent intent = new Intent(context, YouTubeComplete.class);
                     context.startActivity(intent);
                 }
             });
+            LocalData.Topic=list.get(position).getTopic();
+            LocalData.Subject=list.get(position).getSubject();
         }else if (list.get(position).getClass_status_dec().equalsIgnoreCase("NA")){
             holder.image_gif.setVisibility(View.GONE);
             holder.notstarted.setVisibility(View.GONE);
@@ -78,12 +88,17 @@ public class AllPurchasedLiveClassAdapter extends RecyclerView.Adapter<AllPurcha
                 holder.card_view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        LocalData.Topic=list.get(position).getTopic();
+                        LocalData.Subject=list.get(position).getSubject();
+
                         LocalData.LiveId = list.get(position).getURL();
                         LocalData.DocumentId = list.get(position).getDocumentId();
                         Intent intent = new Intent(context, YouTubeComplete.class);
                         context.startActivity(intent);
                     }
                 });
+            LocalData.Topic=list.get(position).getTopic();
+            LocalData.Subject=list.get(position).getSubject();
         }else if (list.get(position).getClass_status_dec().equalsIgnoreCase("Not Started Yet")){
             holder.image_gif.setVisibility(View.GONE);
             holder.notstarted.setVisibility(View.VISIBLE);
@@ -92,6 +107,10 @@ public class AllPurchasedLiveClassAdapter extends RecyclerView.Adapter<AllPurcha
         }
         holder.title.setText(Html.fromHtml(list.get(position).getTopic()));
         holder.date.setText(Html.fromHtml(list.get(position).getPublished()));
+
+// subject and course same aarha he sab me
+        //alag to hai
+// same hi aarha course name change he but subject same he har course me change ni ho rha dekho
         Picasso.get().load(list.get(position).getThumbnail()).placeholder(R.drawable.wateer_mark_image).fit().into(holder.youtubeThubnail);
         holder.teacher.setText(Html.fromHtml(list.get(position).getFaculty()));
     }

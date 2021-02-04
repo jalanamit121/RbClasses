@@ -161,6 +161,8 @@ public class YouTubeVideoList extends AppCompatActivity {
             public void onResponse(Call<CourseContent> call, Response<CourseContent> response) {
                 CourseContent courseContent = response.body();
                 int statusCode = response.code();
+                //yaha par response ko print karwao
+                Log.d("12345", "onResponse: "+response.body().toString());
                 courseModels = new ArrayList();
                 if(statusCode==200) {
                     if (response.body().getError()==false) {

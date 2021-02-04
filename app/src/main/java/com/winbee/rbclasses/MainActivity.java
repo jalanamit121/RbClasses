@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -79,6 +81,30 @@ public class MainActivity extends AppCompatActivity {
         progressBarUtil = new ProgressBarUtil(this);
         //   new GetLastesVersion().execute();
         //firebase push notification
+
+
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+        } else {
+            connected = false;
+        }
+
+
+        if (connected) {
+            doYourStuff();
+        }else {
+
+            startActivity(new Intent(this,OfflineDownloadActivity.class));
+            this.finish();
+        }
+
+    }
+
+    private void doYourStuff(){
         if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
             NotificationChannel channel = new NotificationChannel("","Notifications", NotificationManager.IMPORTANCE_DEFAULT);
 
@@ -117,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         layout_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
                 Intent doubt = new Intent(MainActivity.this,SubjectActivity.class);
                 startActivity(doubt);
             }
