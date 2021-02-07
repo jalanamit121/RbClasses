@@ -36,7 +36,7 @@ public class ShowDownloadCourse extends AppCompatActivity implements AdapterCour
         String pathtem = Environment.getExternalStorageDirectory().getAbsolutePath()
                 + "/Android/data/"
                 + this.getBaseContext().getPackageName()
-                + "/files/Download/"+ SharedPrefManager.getInstance(this).refCode().getUsername()+"/";
+                + "/files/.Download/"+ SharedPrefManager.getInstance(this).refCode().getUsername()+"/";
         File file = new File(pathtem);
         searchVid(file,"");
 
@@ -92,7 +92,7 @@ public class ShowDownloadCourse extends AppCompatActivity implements AdapterCour
             path = Environment.getExternalStorageDirectory().getAbsolutePath()
                     + "/Android/data/"
                     + this.getBaseContext().getPackageName()
-                    + "/files/Download/"+SharedPrefManager.getInstance(this).refCode().getUsername()
+                    + "/files/.Download/"+SharedPrefManager.getInstance(this).refCode().getUsername()
                     +"/"+pathCourse.get(position).getName();
 
                 File file = new File(path);

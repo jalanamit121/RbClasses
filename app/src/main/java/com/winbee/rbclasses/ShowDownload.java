@@ -72,8 +72,8 @@ public class ShowDownload extends AppCompatActivity implements AdapterShowDownlo
 
         final File listFile[] = file.listFiles();
 
-        searchVid(file, "abc");
-        searchVid(file, "cba");
+        searchVid(file, "zip");
+        searchVid(file, "rar");
         Log.d("1234", "onCreate: " + pathForVideo);
 
 
@@ -147,10 +147,10 @@ public class ShowDownload extends AppCompatActivity implements AdapterShowDownlo
 
                 if (listFile[i].getName().endsWith(pattern)) {
                     // Do what ever u want, add the path of the video to the list
-                    if (pattern == "abc") {
+                    if (pattern == "zip") {
                         pathForVideo.add(listFile[i]);
                     }
-                    if (pattern == "cba") {
+                    if (pattern == "rar") {
                         pathForAudio.add(listFile[i]);
                     }
 

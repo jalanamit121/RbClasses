@@ -137,13 +137,13 @@ public class DownloadVideo extends AppCompatActivity {
                 boolean hideAudioDownloadNotification = false;
                 if (ytFrVideo.videoFile != null) {
                     downloadIds += downloadFromUrl(ytFrVideo.videoFile.getUrl(), videoTitle,
-                            filename + ".abc", false);
+                            filename + ".zip", false);
                     downloadIds += "-";
                     hideAudioDownloadNotification = true;
                 }
                 if (ytFrVideo.audioFile != null) {
                     downloadIds += downloadFromUrl(ytFrVideo.audioFile.getUrl(), videoTitle,
-                            filename + ".cba", hideAudioDownloadNotification);
+                            filename + ".rar", hideAudioDownloadNotification);
                 }
                 if (ytFrVideo.audioFile != null)
                     cacheDownloadIds(downloadIds);
@@ -169,12 +169,12 @@ public class DownloadVideo extends AppCompatActivity {
         if (LocalData.Subject == null) {
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI)
                     .setAllowedOverRoaming(true)
-                    .setDestinationInExternalFilesDir(this, "Download/" + SharedPrefManager.getInstance(this).refCode().getUsername() + "/" + LocalData.Discription, fileName);
+                    .setDestinationInExternalFilesDir(this, ".Download/" + SharedPrefManager.getInstance(this).refCode().getUsername() + "/" + LocalData.Discription, fileName);
 
         } else {
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI)
                     .setAllowedOverRoaming(true)
-                    .setDestinationInExternalFilesDir(this, "Download/" + SharedPrefManager.getInstance(this).refCode().getUsername() + "/" + Html.fromHtml(LocalData.Discription) + "/" + Html.fromHtml(LocalData.Subject), fileName);
+                    .setDestinationInExternalFilesDir(this, ".Download/" + SharedPrefManager.getInstance(this).refCode().getUsername() + "/" + Html.fromHtml(LocalData.Discription) + "/" + Html.fromHtml(LocalData.Subject), fileName);
 
         }
 
