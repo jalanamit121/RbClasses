@@ -41,7 +41,7 @@ import retrofit2.Response;
 import static com.balsikandar.crashreporter.CrashReporter.getContext;
 
 public class LiveDataPurchasedActivity extends AppCompatActivity {
-    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
+    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt,layout_download;
     private RelativeLayout layout_notification;
     private TextView txt_notification;
     String UserMobile,UserPassword,android_id;
@@ -66,7 +66,14 @@ public class LiveDataPurchasedActivity extends AppCompatActivity {
             layout_notification.setVisibility(View.GONE);
         }
 
-
+        layout_download = findViewById(R.id.layout_download);
+        layout_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent live = new Intent(LiveDataPurchasedActivity.this, ShowDownloadCourse.class);
+                startActivity(live);
+            }
+        });
         layout_home = findViewById(R.id.layout_home);
         layout_home.setOnClickListener(new View.OnClickListener() {
             @Override

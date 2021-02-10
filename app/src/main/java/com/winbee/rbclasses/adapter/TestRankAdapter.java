@@ -26,13 +26,13 @@ public class TestRankAdapter extends RecyclerView.Adapter<TestRankAdapter.Custom
 
     @NonNull
     @Override
-    public TestRankAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_test_rank_adapter,parent,false);
-        return new TestRankAdapter.CustomViewHolder(view);
+        return new CustomViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TestRankAdapter.CustomViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(@NonNull CustomViewHolder viewHolder, final int position) {
 //        final SectionDetailsDataModel sectionDetailsDataModel = sectionDetailsDataModelList.get(position);
 
         viewHolder.txt_name.setText(testTopRankerArrays.get(position).getName());

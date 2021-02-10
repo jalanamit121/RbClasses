@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean onLiveFragment = false;
     private boolean onHomeFragment = true;
     private ImageView WebsiteHome, img_share;
-    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
+    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt,layout_download;
     boolean version = false;
     String sCurrentVersion, sLastestVersion;
     private ProgressBarUtil progressBarUtil;
@@ -137,6 +137,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent live = new Intent(MainActivity.this, YouTubeVideoList.class);
+                startActivity(live);
+            }
+        });
+        layout_download = findViewById(R.id.layout_download);
+        layout_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent live = new Intent(MainActivity.this, ShowDownloadCourse.class);
                 startActivity(live);
             }
         });

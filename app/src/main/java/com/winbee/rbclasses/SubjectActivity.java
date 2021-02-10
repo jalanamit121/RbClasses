@@ -41,7 +41,7 @@ import static com.balsikandar.crashreporter.CrashReporter.getContext;
 public class SubjectActivity extends AppCompatActivity {
     private ShimmerLayout shimmerLayout;
     private RecyclerView recycle_subject;
-    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
+    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt,layout_download;
     private Toast toast_msg;
     private RelativeLayout layout_mycourse;
     String UserId,UserMobile,UserPassword,android_id;
@@ -73,6 +73,14 @@ public class SubjectActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(SubjectActivity.this,AllPurchasedTestActivity.class);
                 startActivity(intent);
+            }
+        });
+        layout_download = findViewById(R.id.layout_download);
+        layout_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent live = new Intent(SubjectActivity.this, ShowDownloadCourse.class);
+                startActivity(live);
             }
         });
         layout_home = findViewById(R.id.layout_home);

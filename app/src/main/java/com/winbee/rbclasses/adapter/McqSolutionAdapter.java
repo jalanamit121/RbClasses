@@ -27,13 +27,13 @@ public class McqSolutionAdapter extends RecyclerView.Adapter<McqSolutionAdapter.
 
     @NonNull
     @Override
-    public McqSolutionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mcq_solution_adapter,parent, false);
-        return  new McqSolutionAdapter.ViewHolder(view);
+        return  new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull McqSolutionAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         //setting data toAd apter List
 
         holder.text_user.setText(list.get(position).getUsername());

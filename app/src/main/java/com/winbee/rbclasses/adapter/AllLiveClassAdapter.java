@@ -39,15 +39,15 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
 
     @NonNull
     @Override
-    public AllLiveClassAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_frutorials,parent, false);
-        return  new AllLiveClassAdapter.ViewHolder(view);
+        return  new ViewHolder(view);
     }
     //okay..lets run
     // done boss thank you soo much...you there?yes
 
     @Override
-    public void onBindViewHolder(@NonNull final AllLiveClassAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         if (list.get(position).getClass_status_dec().equalsIgnoreCase("Live")){
             holder.image_gif.setVisibility(View.VISIBLE);

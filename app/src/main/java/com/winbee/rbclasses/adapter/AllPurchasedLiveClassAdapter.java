@@ -37,13 +37,13 @@ public class AllPurchasedLiveClassAdapter extends RecyclerView.Adapter<AllPurcha
 
     @NonNull
     @Override
-    public AllPurchasedLiveClassAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_live,parent, false);
-        return  new AllPurchasedLiveClassAdapter.ViewHolder(view);
+        return  new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AllPurchasedLiveClassAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         if (list.get(position).getClass_status_dec().equalsIgnoreCase("Live")){
             holder.date.setVisibility(View.GONE);

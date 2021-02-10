@@ -32,13 +32,13 @@ public class AskDoubtAdapter extends RecyclerView.Adapter<AskDoubtAdapter.ViewHo
 
     @NonNull
     @Override
-    public AskDoubtAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.askedquestionadapter,parent, false);
-        return  new AskDoubtAdapter.ViewHolder(view);
+        return  new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AskDoubtAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         //setting data toAd apter List
         holder.txt_ask_title.setText(Html.fromHtml(list.get(position).getFile_name_to_show()));
         holder.txt_ask_question.setText(Html.fromHtml(list.get(position).getFile_description()));

@@ -17,16 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
-        <activity android:name="OfflineDownloadActivity"/>
-
-        <activity android:name="ShowDownload"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
-
-        <activity android:name="ShowDownloadCourse"
-            />
-        <activity android:name="DownloadVideo"
-            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".AllPurchasedTestActivity"/>
         <activity android:name=".DemoOnlineTestActivity"/>
         <activity android:name=".TestSubscriptionActivity"/>
@@ -39,6 +29,7 @@
         <activity android:name=".SubjectActivity"/>
         <activity android:name=".YouTubeComplete"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustUnspecified" ></activity>
         <activity
             android:name=".YoutubeLibaray"
@@ -75,7 +66,12 @@
         <activity
             android:name=".StudyMaterial"
             android:theme="@style/AppTheme.NoActionBar" />
-
+        <activity
+            android:name=".YoutubePlayer"
+            android:configChanges="orientation|screenSize"
+            android:label="RB Classes"
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="adjustUnspecified" />
         <activity android:name=".YouTubeVideoList" />
         <activity
             android:name=".DashboardCourseActivity"

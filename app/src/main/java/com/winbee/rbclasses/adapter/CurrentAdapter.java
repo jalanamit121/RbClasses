@@ -31,13 +31,13 @@ public class CurrentAdapter extends RecyclerView.Adapter<CurrentAdapter.ViewHold
 
     @NonNull
     @Override
-    public CurrentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.current_adapter,parent, false);
-        return  new CurrentAdapter.ViewHolder(view);
+        return  new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CurrentAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         //setting data toAd apter List
 
         holder.branchname.setText(Html.fromHtml(courseDatumList.get(position).getItemDescription()));

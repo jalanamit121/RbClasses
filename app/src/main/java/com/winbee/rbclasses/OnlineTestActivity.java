@@ -45,7 +45,7 @@ public class OnlineTestActivity extends AppCompatActivity {
     private Toast toast_msg;
     String UserId,UserMobile,UserPassword,android_id;
     private  ProgressBarUtil progressBarUtil;
-    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
+    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt,layout_download;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +74,14 @@ public class OnlineTestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent live = new Intent(OnlineTestActivity.this, MainActivity.class);
+                startActivity(live);
+            }
+        });
+        layout_download = findViewById(R.id.layout_download);
+        layout_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent live = new Intent(OnlineTestActivity.this, ShowDownloadCourse.class);
                 startActivity(live);
             }
         });

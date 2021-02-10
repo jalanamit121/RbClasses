@@ -53,7 +53,7 @@ import static com.winbee.rbclasses.LocalData.UserName;
 
 public class LiveDataActivity extends AppCompatActivity implements PaymentResultWithDataListener {
     private Button buy_course;
-    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
+    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt,layout_download;
     private RelativeLayout layout_course_closed,layout_notification;
     private TextView txt_course_closed,txt_notification;
     private ProgressBarUtil progressBarUtil;
@@ -86,7 +86,14 @@ public class LiveDataActivity extends AppCompatActivity implements PaymentResult
                 startActivity(home);
             }
         });
-
+        layout_download = findViewById(R.id.layout_download);
+        layout_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent live = new Intent(LiveDataActivity.this, ShowDownloadCourse.class);
+                startActivity(live);
+            }
+        });
         layout_course = findViewById(R.id.layout_course);
         layout_course.setOnClickListener(new View.OnClickListener() {
             @Override
