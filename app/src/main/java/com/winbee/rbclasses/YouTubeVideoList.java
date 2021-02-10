@@ -50,7 +50,7 @@ public class YouTubeVideoList extends AppCompatActivity {
     private AllPurchasedCourseAdapter adapter;
     private RelativeLayout today_classes;
     String UserID;
-    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
+    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt,layout_download;
     private static final int REQUEST_CODE = 101;
     String IMEINumber;
     String UserMobile,UserPassword,android_id;
@@ -86,6 +86,14 @@ public class YouTubeVideoList extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(YouTubeVideoList.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+            }
+        });
+        layout_download = findViewById(R.id.layout_download);
+        layout_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent live = new Intent(YouTubeVideoList.this, ShowDownloadCourse.class);
+                startActivity(live);
             }
         });
         layout_current = findViewById(R.id.layout_current);
@@ -161,6 +169,8 @@ public class YouTubeVideoList extends AppCompatActivity {
             public void onResponse(Call<CourseContent> call, Response<CourseContent> response) {
                 CourseContent courseContent = response.body();
                 int statusCode = response.code();
+                //yaha par response ko print karwao
+                Log.d("12345", "onResponse: "+response.body().toString());
                 courseModels = new ArrayList();
                 if(statusCode==200) {
                     if (response.body().getError()==false) {

@@ -33,13 +33,13 @@ public class AllPurchasedNotesAdapter extends RecyclerView.Adapter<AllPurchasedN
 
   @NonNull
   @Override
-  public AllPurchasedNotesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+  public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.study_material_purchased,parent, false);
-    return  new AllPurchasedNotesAdapter.ViewHolder(view);
+    return  new ViewHolder(view);
   }
 
   @Override
-  public void onBindViewHolder(@NonNull AllPurchasedNotesAdapter.ViewHolder holder, final int position) {
+  public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
 
 

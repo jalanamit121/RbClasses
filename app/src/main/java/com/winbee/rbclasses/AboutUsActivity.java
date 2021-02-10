@@ -35,7 +35,7 @@ import retrofit2.Response;
 import static com.balsikandar.crashreporter.CrashReporter.getContext;
 
 public class AboutUsActivity extends AppCompatActivity {
-    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
+    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt,layout_download;
     private TextView aboutus_textview10,aboutus_textview15;
     String UserMobile,UserPassword,android_id;
     private  ProgressBarUtil progressBarUtil;
@@ -83,7 +83,14 @@ public class AboutUsActivity extends AppCompatActivity {
                 startActivity(home);
             }
         });
-
+        layout_download = findViewById(R.id.layout_download);
+        layout_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent live = new Intent(AboutUsActivity.this, ShowDownloadCourse.class);
+                startActivity(live);
+            }
+        });
         layout_course = findViewById(R.id.layout_course);
         layout_course.setOnClickListener(new View.OnClickListener() {
             @Override

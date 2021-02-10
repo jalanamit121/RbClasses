@@ -46,7 +46,7 @@ public class CurrentAffairsActivity extends AppCompatActivity {
     private CurrentAdapter currentAdapter;
     private RecyclerView sek_home_recycle;
     private RelativeLayout today_classes;
-    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
+    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt,layout_download;
     private static final int REQUEST_CODE = 101;
     String IMEINumber;
     String UserMobile,UserPassword,android_id,User_id;
@@ -73,7 +73,14 @@ public class CurrentAffairsActivity extends AppCompatActivity {
                 startActivity(home);
             }
         });
-
+        layout_download = findViewById(R.id.layout_download);
+        layout_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent live = new Intent(CurrentAffairsActivity.this, ShowDownloadCourse.class);
+                startActivity(live);
+            }
+        });
         layout_course = findViewById(R.id.layout_course);
         layout_course.setOnClickListener(new View.OnClickListener() {
             @Override

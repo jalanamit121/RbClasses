@@ -62,7 +62,7 @@ public class PdfWebActivity extends AppCompatActivity  {
     String googleDocs = "https://docs.google.com/viewer?url=";
     private ImageView img_share,WebsiteHome;
     private BottomNavigationView bottomNavigationView;
-    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
+    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt,layout_download;
     private static final int REQUEST_CODE = 101;
     String UserMobile,UserPassword,android_id;
 
@@ -104,7 +104,14 @@ public class PdfWebActivity extends AppCompatActivity  {
                 startActivity(home);
             }
         });
-
+        layout_download = findViewById(R.id.layout_download);
+        layout_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent live = new Intent(PdfWebActivity.this, ShowDownloadCourse.class);
+                startActivity(live);
+            }
+        });
         layout_course = findViewById(R.id.layout_course);
         layout_course.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,7 +178,7 @@ public class PdfWebActivity extends AppCompatActivity  {
     }
     public  boolean haveStoragePermission() {
         if (Build.VERSION.SDK_INT >= 23) {
-            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
                 Log.e("Permission error","You have permission");
                 return true;

@@ -51,7 +51,7 @@ public class DoubtSolutionActivity extends AppCompatActivity {
     EditText editTextGiveSolution;
     ImageView submit_solution,WebsiteHome,img_share;
     private TextView txt_user,txt_time,txt_ask_title,txt_ask_question,txt_commments;
-    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
+    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt,layout_download;
     private static final int REQUEST_CODE = 101;
     String IMEINumber;
     String UserMobile,UserPassword,android_id;
@@ -86,7 +86,14 @@ public class DoubtSolutionActivity extends AppCompatActivity {
                 startActivity(home);
             }
         });
-
+        layout_download = findViewById(R.id.layout_download);
+        layout_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent live = new Intent(DoubtSolutionActivity.this, ShowDownloadCourse.class);
+                startActivity(live);
+            }
+        });
         layout_course = findViewById(R.id.layout_course);
         layout_course.setOnClickListener(new View.OnClickListener() {
             @Override

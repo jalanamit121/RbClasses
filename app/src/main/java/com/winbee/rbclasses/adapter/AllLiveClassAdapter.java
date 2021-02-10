@@ -39,13 +39,15 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
 
     @NonNull
     @Override
-    public AllLiveClassAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_frutorials,parent, false);
-        return  new AllLiveClassAdapter.ViewHolder(view);
+        return  new ViewHolder(view);
     }
+    //okay..lets run
+    // done boss thank you soo much...you there?yes
 
     @Override
-    public void onBindViewHolder(@NonNull final AllLiveClassAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         if (list.get(position).getClass_status_dec().equalsIgnoreCase("Live")){
             holder.image_gif.setVisibility(View.VISIBLE);
@@ -82,6 +84,8 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
                             LocalData.DocumentId = list.get(position).getDocumentId();
                             Intent intent = new Intent(context, YouTubeComplete.class);
                             context.startActivity(intent);
+                            LocalData.Topic=list.get(position).getTopic();
+                            LocalData.Subject=list.get(position).getSubject();
                         }
                     });
 
@@ -137,6 +141,9 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
                         else if (list.get(position).getClass_status_dec().equalsIgnoreCase("Not Started Yet")) {
                             Toast.makeText(context, "Class Not Started", Toast.LENGTH_SHORT).show();
                         }
+
+                        LocalData.Topic=list.get(position).getTopic();
+                        LocalData.Subject=list.get(position).getSubject();
                     }
                 });
             } else if (list.get(position).getAccessType().equals(2)) {// access type 2 means- paid live class
@@ -149,6 +156,7 @@ public class AllLiveClassAdapter  extends RecyclerView.Adapter<AllLiveClassAdapt
             }
 
         }
+
 
     }
 

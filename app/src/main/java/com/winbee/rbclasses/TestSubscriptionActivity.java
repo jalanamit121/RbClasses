@@ -49,7 +49,7 @@ public class TestSubscriptionActivity extends AppCompatActivity implements Payme
             txt_amount,txt_course,txt_txn_id;
     private ProgressBarUtil progressBarUtil;
     Button btn_demo,go_back,btn_course,go_back_failed;
-    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
+    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt,layout_download;
 
 
     @Override
@@ -113,7 +113,14 @@ public class TestSubscriptionActivity extends AppCompatActivity implements Payme
                 finish();
             }
         });
-
+        layout_download = findViewById(R.id.layout_download);
+        layout_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent live = new Intent(TestSubscriptionActivity.this, ShowDownloadCourse.class);
+                startActivity(live);
+            }
+        });
         btn_course=findViewById(R.id.btn_course);
         btn_course.setOnClickListener(new View.OnClickListener() {
             @Override

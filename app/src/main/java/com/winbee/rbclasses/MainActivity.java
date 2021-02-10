@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean onLiveFragment = false;
     private boolean onHomeFragment = true;
     private ImageView WebsiteHome, img_share;
-    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
+    private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt,layout_download;
     boolean version = false;
     String sCurrentVersion,sLastestVersion;
     private ProgressBarUtil progressBarUtil;
@@ -79,6 +81,30 @@ public class MainActivity extends AppCompatActivity {
         progressBarUtil = new ProgressBarUtil(this);
         //   new GetLastesVersion().execute();
         //firebase push notification
+
+
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+        } else {
+            connected = false;
+        }
+
+
+        if (connected) {
+            doYourStuff();
+        }else {
+
+            startActivity(new Intent(this,OfflineDownloadActivity.class));
+            this.finish();
+        }
+
+    }
+
+    private void doYourStuff(){
         if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
             NotificationChannel channel = new NotificationChannel("","Notifications", NotificationManager.IMPORTANCE_DEFAULT);
 
@@ -113,11 +139,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(live);
             }
         });
+        layout_download = findViewById(R.id.layout_download);
+        layout_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent live = new Intent(MainActivity.this, ShowDownloadCourse.class);
+                startActivity(live);
+            }
+        });
         layout_test = findViewById(R.id.layout_test);
         layout_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
                 Intent doubt = new Intent(MainActivity.this,SubjectActivity.class);
                 startActivity(doubt);
             }
@@ -204,6 +238,8 @@ public class MainActivity extends AppCompatActivity {
         }else if(id == R.id.about){
             Intent intent = new Intent(MainActivity.this,AboutUsActivity.class);
             startActivity(intent);
+        }else if(id == R.id.download){
+            startActivity(new Intent(this,ShowDownloadCourse.class));
         }
         return super.onOptionsItemSelected(item);
 

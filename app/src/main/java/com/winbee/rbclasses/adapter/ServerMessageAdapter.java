@@ -30,13 +30,13 @@ public class ServerMessageAdapter extends RecyclerView.Adapter<ServerMessageAdap
 
     @NonNull
     @Override
-    public ServerMessageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message,parent, false);
-        return  new ServerMessageAdapter.ViewHolder(view);
+        return  new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ServerMessageAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         //setting data toAd apter List
 
         holder.txt_user.setText(Html.fromHtml(list.get(position).getUserName()));

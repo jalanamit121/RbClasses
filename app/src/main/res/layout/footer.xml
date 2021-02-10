@@ -12,7 +12,7 @@
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:background="@drawable/bottom_layout"
-        android:weightSum="4"
+        android:weightSum="5"
         android:visibility="visible"
         android:id="@+id/footer">
 
@@ -53,25 +53,50 @@
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:id="@+id/layout_test"
+        android:id="@+id/layout_download"
         android:layout_weight="1" android:layout_marginTop="5dp" android:orientation="vertical">
 
-    <ImageView android:layout_height="25dp" android:layout_width="25dp" android:id="@+id/image_test" android:src="@drawable/ic_teacher" android:layout_gravity="center"/>
+    <ImageView android:layout_height="25dp"
+        android:layout_width="25dp"
+        android:id="@+id/image_download"
+        android:src="@drawable/ic_cloud"
+        android:layout_gravity="center"/>
 
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:id="@+id/text_test"
+        android:id="@+id/text_download"
         android:layout_marginTop="5dp"
         android:layout_gravity="center"
         android:textColor="#111"
         android:textStyle="bold"
-        android:layout_below="@id/image_test"
+        android:layout_below="@id/image_download"
         android:textSize="12sp"
-        android:text="Test series"/>
+        android:text="Offline Videos"/>
 
 </LinearLayout>
 
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/layout_test"
+            android:layout_weight="1" android:layout_marginTop="5dp" android:orientation="vertical">
+
+            <ImageView android:layout_height="25dp" android:layout_width="25dp" android:id="@+id/image_test" android:src="@drawable/ic_teacher" android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/text_test"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:textColor="#111"
+                android:textStyle="bold"
+                android:layout_below="@id/image_test"
+                android:textSize="12sp"
+                android:text="Test series"/>
+
+        </LinearLayout>
 
 
 
