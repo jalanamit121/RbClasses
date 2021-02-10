@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    android:background="#F8F5F5"
+    android:background="#FFFFFF"
     android:focusable="true"
     tools:context=".YoutubeLibaray">
 
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/relative_layout_live"
-        android:background="#F8F5F5"
+        android:background="#FFFFFF"
         android:layout_below="@id/youtube_player">
 
         <androidx.recyclerview.widget.RecyclerView

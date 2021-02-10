@@ -1,115 +1,200 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-    <RelativeLayout
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true">
 
 
     <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
         android:background="@drawable/bottom_layout"
-        android:weightSum="4"
         android:visibility="visible"
-        android:id="@+id/footer">
+        android:orientation="horizontal"
+      >
 
 
-    <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/layout_course"
-        android:layout_weight="1"
-        android:visibility="gone"
-        android:layout_marginTop="5dp"
-        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/layout_course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-    <ImageView android:layout_height="25dp" android:layout_width="25dp" android:id="@+id/image_course" android:src="@drawable/ic_online_class" android:layout_gravity="center"/>
-
-    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/text_course" android:layout_marginTop="5dp" android:layout_gravity="center" android:textColor="#111" android:layout_below="@id/image_test" android:textSize="12sp" android:text="My Course"/>
-
-</LinearLayout>
-        <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/layout_home" android:layout_weight="1" android:layout_marginTop="5dp" android:orientation="vertical">
-
-            <ImageView android:layout_height="25dp" android:layout_width="25dp" android:id="@+id/image_home" android:src="@drawable/ic_home" android:layout_gravity="center"/>
+            <ImageView
+                android:id="@+id/image_course"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_online_class" />
 
             <TextView
-                android:layout_height="wrap_content"
+                android:id="@+id/text_course"
                 android:layout_width="wrap_content"
-                android:id="@+id/text_home"
-                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_test"
                 android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="My Course"
                 android:textColor="#111"
-                android:textStyle="bold"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_home"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/image_home"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_home" />
+
+            <TextView
+                android:id="@+id/text_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/image_home"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="Home"
+                android:textColor="#111"
                 android:textSize="12sp"
-                android:text="Home"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/layout_test"
-        android:layout_weight="1" android:layout_marginTop="5dp" android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/layout_test"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-    <ImageView android:layout_height="25dp" android:layout_width="25dp" android:id="@+id/image_test" android:src="@drawable/ic_teacher" android:layout_gravity="center"/>
+            <ImageView
+                android:id="@+id/image_test"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_teacher" />
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/text_test"
-        android:layout_marginTop="5dp"
-        android:layout_gravity="center"
-        android:textColor="#111"
-        android:textStyle="bold"
-        android:layout_below="@id/image_test"
-        android:textSize="12sp"
-        android:text="Test series"/>
+            <TextView
+                android:id="@+id/text_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_test"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="Test series"
+                android:textColor="#111"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
-</LinearLayout>
-
-
-
-
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/layout_current" android:layout_weight="1" android:layout_marginTop="5dp" android:orientation="vertical">
-
-    <ImageView android:layout_height="25dp" android:layout_width="25dp" android:id="@+id/image_current" android:src="@drawable/ic_current" android:layout_gravity="center"/>
-
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/text_current"
-        android:layout_marginTop="5dp"
-        android:layout_gravity="center"
-        android:textColor="#111"
-        android:textStyle="bold"
-        android:layout_below="@id/image_current"
-        android:textSize="12sp"
-        android:text="Current Affairs"/>
-
-</LinearLayout>
+        </LinearLayout>
 
 
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/layout_doubt" android:layout_weight="1" android:layout_marginTop="5dp" android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/layout_current"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-    <ImageView android:layout_height="25dp" android:layout_width="25dp" android:id="@+id/image_doubt" android:src="@drawable/ic_exam" android:layout_gravity="center"/>
+            <ImageView
+                android:id="@+id/image_current"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_current" />
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/text_doubt"
-        android:layout_marginTop="5dp"
-        android:layout_gravity="center"
-        android:textStyle="bold"
-        android:textColor="#111"
-        android:layout_below="@id/image_home" android:textSize="12sp" android:text="Ask Doubt"/>
+            <TextView
+                android:id="@+id/text_current"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_current"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="Current Affairs"
+                android:textColor="#111"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
-</LinearLayout>
+        </LinearLayout>
 
-</LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_doubt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/image_doubt"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_exam" />
+
+            <TextView
+                android:id="@+id/text_doubt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_home"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="Ask Doubt"
+                android:textColor="#111"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_download"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:onClick="gotoDownload"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/image_download"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_baseline_arrow_circle_down_24" />
+
+            <TextView
+                android:id="@+id/text_download"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_home"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="Downloads"
+                android:textColor="#111"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

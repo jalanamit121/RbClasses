@@ -1,6 +1,7 @@
 package com.winbee.rbclasses;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -66,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
     private ImageView WebsiteHome, img_share;
     private LinearLayout layout_course, layout_test, layout_home, layout_current, layout_doubt;
     boolean version = false;
-    String sCurrentVersion,sLastestVersion;
+    String sCurrentVersion, sLastestVersion;
     private ProgressBarUtil progressBarUtil;
-    String UserMobile,UserPassword;
+    String UserMobile, UserPassword;
     String android_id;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -96,28 +97,28 @@ public class MainActivity extends AppCompatActivity {
 
         if (connected) {
             doYourStuff();
-        }else {
+        } else {
 
-            startActivity(new Intent(this,OfflineDownloadActivity.class));
+            startActivity(new Intent(this, OfflineDownloadActivity.class));
             this.finish();
         }
 
     }
 
-    private void doYourStuff(){
-        if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel("","Notifications", NotificationManager.IMPORTANCE_DEFAULT);
+    private void doYourStuff() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("", "Notifications", NotificationManager.IMPORTANCE_DEFAULT);
 
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
 
         }
-        AppUpdateChecker appUpdateChecker=new AppUpdateChecker(this);  //pass the activity in constructure
+        AppUpdateChecker appUpdateChecker = new AppUpdateChecker(this);  //pass the activity in constructure
         appUpdateChecker.checkForUpdate(false); //mannual check false here
 
         callRazorPayService();
-        UserMobile=SharedPrefManager.getInstance(this).refCode().getUsername();
-        UserPassword=SharedPrefManager.getInstance(this).refCode().getPassword();
+        UserMobile = SharedPrefManager.getInstance(this).refCode().getUsername();
+        UserPassword = SharedPrefManager.getInstance(this).refCode().getPassword();
         android_id = Settings.Secure.getString(getContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         FirebaseMessaging.getInstance().subscribeToTopic("rbclasses")
@@ -144,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-                Intent doubt = new Intent(MainActivity.this,SubjectActivity.class);
+                Intent doubt = new Intent(MainActivity.this, SubjectActivity.class);
                 startActivity(doubt);
             }
         });
@@ -164,6 +165,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        LinearLayout layout_download;
+        layout_download = findViewById(R.id.layout_download);
+        layout_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ShowDownloadCourse.class));
+            }
+        });
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -205,42 +220,44 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.logout) {
             logout();
-        }else if(id == R.id.website){
+        } else if (id == R.id.website) {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.rbclasses.com"));
             startActivity(intent);
 
-        }else if(id == R.id.share){
+        } else if (id == R.id.share) {
             try {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, "RB Classes");
-                String shareMessage= "\nRB Classes download the application.\n ";
-                shareMessage = shareMessage + "\nhttps://play.google.com/store/apps/details?id="+getPackageName() ;
+                String shareMessage = "\nRB Classes download the application.\n ";
+                shareMessage = shareMessage + "\nhttps://play.google.com/store/apps/details?id=" + getPackageName();
                 shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                 startActivity(Intent.createChooser(shareIntent, "choose one"));
-            } catch(Exception e) {
+            } catch (Exception e) {
             }
 
-        }else if(id == R.id.rate){
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" +getPackageName())));
+        } else if (id == R.id.rate) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
 
-        }else if(id == R.id.profile){
-            Intent intent = new Intent(MainActivity.this,DashboardCourseActivity.class);
+        } else if (id == R.id.profile) {
+            Intent intent = new Intent(MainActivity.this, DashboardCourseActivity.class);
             startActivity(intent);
-        }else if(id == R.id.about){
-            Intent intent = new Intent(MainActivity.this,AboutUsActivity.class);
+        } else if (id == R.id.about) {
+            Intent intent = new Intent(MainActivity.this, AboutUsActivity.class);
             startActivity(intent);
-        }else if(id == R.id.download){
-            startActivity(new Intent(this,ShowDownloadCourse.class));
+        } else if (id == R.id.download) {
+            startActivity(new Intent(this, ShowDownloadCourse.class));
         }
         return super.onOptionsItemSelected(item);
 
     }
+
     @Override
-    public void onBackPressed () {
+    public void onBackPressed() {
         finish();
         super.onBackPressed();
     }
+
     // for razor pay
     private void callRazorPayService() {
         progressBarUtil.showProgress();
@@ -250,9 +267,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RazorPayModel> call, Response<RazorPayModel> response) {
                 int statusCode = response.code();
-                if (statusCode == 200 && response.body()!=null ) {
+                if (statusCode == 200 && response.body() != null) {
                     progressBarUtil.hideProgress();
-                    LocalData.razorPayKey=response.body().getAPI_Key();
+                    LocalData.razorPayKey = response.body().getAPI_Key();
 //
                 } else {
                     progressBarUtil.hideProgress();
@@ -278,26 +295,26 @@ public class MainActivity extends AppCompatActivity {
 
         progressBarUtil.showProgress();
         ClientApi mService = ApiClient.getClient().create(ClientApi.class);
-        Call<LogOut> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001",android_id);
+        Call<LogOut> call = mService.refCodeLogout(3, UserMobile, UserPassword, "RBC001", android_id);
         call.enqueue(new Callback<LogOut>() {
             @Override
             public void onResponse(Call<LogOut> call, Response<LogOut> response) {
                 int statusCode = response.code();
-                if (statusCode == 200 && response.body().getLoginStatus()!=false) {
-                    if (response.body().getError()==false){
+                if (statusCode == 200 && response.body().getLoginStatus() != false) {
+                    if (response.body().getError() == false) {
                         progressBarUtil.hideProgress();
                         SharedPrefManager.getInstance(MainActivity.this).logout();
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         finish();
-                    }else{
+                    } else {
                         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(
                                 MainActivity.this);
                         alertDialogBuilder.setTitle("Alert");
                         alertDialogBuilder
                                 .setMessage(response.body().getError_Message())
                                 .setCancelable(false)
-                                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
+                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
                                         forceLogout();
                                     }
                                 });
